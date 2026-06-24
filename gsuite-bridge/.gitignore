@@ -1,0 +1,14 @@
+# Never ship the real secrets or local state
+.env
+.onboarded
+
+# Python noise
+__pycache__/
+*.pyc
+
+# OS noise
+.DS_Store
+
+# Local render/scratch output
+*.png
+/tmp/
