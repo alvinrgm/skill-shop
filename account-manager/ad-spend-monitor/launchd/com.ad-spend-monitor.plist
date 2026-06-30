@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Daily ad-spend monitor — runs once a day at a fixed local hour.
+  StartCalendarInterval uses local time, so the Hour below is the hour on the
+  machine's own clock.
+
+  BEFORE INSTALLING: replace every __PACKAGE_DIR__ below with the ABSOLUTE path
+  to this package on your machine. __PACKAGE_DIR__ is the directory that
+  contains the `ad-spend-monitor/` folder (the package root). For example, if
+  the package lives at /Users/you/account-manager-portable, then
+  __PACKAGE_DIR__ = /Users/you/account-manager-portable.
+  Also point the python path at the interpreter where you installed
+  requirements.txt (a venv's bin/python, or your system python3).
+
+  Install:
+      cp launchd/com.ad-spend-monitor.plist ~/Library/LaunchAgents/
+      launchctl load ~/Library/LaunchAgents/com.ad-spend-monitor.plist
+
+  Uninstall:
+      launchctl unload ~/Library/LaunchAgents/com.ad-spend-monitor.plist
+      rm ~/Library/LaunchAgents/com.ad-spend-monitor.plist
+
+  CAVEAT: launchd only fires when the machine is awake. If it's asleep at the
+  scheduled hour, the run is skipped (StartCalendarInterval does NOT catch up by
+  default). For machine-closed reliability, port to GitHub Actions or a small
+  always-on VM.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.ad-spend-monitor</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>__PACKAGE_DIR__/.venv/bin/python</string>
+        <string>__PACKAGE_DIR__/ad-spend-monitor/monitor.py</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>__PACKAGE_DIR__/ad-spend-monitor</string>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>9</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>__PACKAGE_DIR__/ad-spend-monitor/history/launchd-stdout.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>__PACKAGE_DIR__/ad-spend-monitor/history/launchd-stderr.log</string>
+
+    <key>RunAtLoad</key>
+    <false/>
+</dict>
+</plist>

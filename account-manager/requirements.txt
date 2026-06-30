@@ -1,0 +1,7 @@
+# AI Account Manager — Python dependencies
+# Install:  pip install -r requirements.txt
+python-dotenv      # load .env (bridge URL, webhooks, API keys)
+requests           # HTTP to the Apps Script bridge, Slack, Triple Whale
+matplotlib         # report charts / table images
+google-genai       # Gemini — creative-intel video CV (from google import genai)
+google-ads         # Google Ads API — serving checks + ad-spend-monitor (optional; only if you use the Google Ads features)

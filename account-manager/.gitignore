@@ -1,0 +1,11 @@
+# never commit secrets or local state
+.env
+runtime/.env
+ad-spend-monitor/.env
+**/state/
+**/history/
+**/snapshots/*
+__pycache__/
+*.pyc
+.DS_Store
+.onboarded

@@ -1,0 +1,156 @@
+# dependencies.yml — the manifest. SINGLE SOURCE OF TRUTH for the installer.
+# SETUP.md, doctor.sh, .env.example and the SKILL.md onboarding gate are all generated from this.
+#
+# types:
+#   env-key        a key the code reads from .env       → doctor checks the var is set
+#   mcp            a per-user MCP connection            → Claude verifies the tools exist (not shell)
+#   cli            a command-line tool                  → doctor checks `command -v`
+#   python         pip packages                         → doctor checks `python3 -c 'import ...'`
+#   account-manual a service the user stands up themselves (no turnkey API key) → manual, doctor prints link
+#
+# Philosophy: the CORE loop (weekly reporting deck) needs Claude Code + Python + your own bridge +
+# Slack + a client roster + at least one data source. Every DATA SOURCE and the creative/Meta
+# features are individually OPTIONAL (required: false) — wire up only the ones you use.
+
+package: account-manager
+
+# Operational path/targeting vars (set in .env or shell; sensible package-relative defaults).
+path_vars:
+  - name: AM_ROSTER_DIR
+    default: "<package>/runtime/clients"
+    purpose: folder of per-client config (one <slug>/account.md each). Copy runtime/clients/_template to start.
+  - name: AM_ENV
+    default: "<package>/runtime/.env"
+    purpose: the .env the runtime + creative-intel load (bridge url, webhook, api keys)
+  - name: DECK_PID
+    default: "(none)"
+    purpose: target Google Slides deck id for the reporting prepend (or set deck_id per-client in account.md)
+  - name: LOGO_URL
+    default: "(none)"
+    purpose: your logo image url for deck headers
+
+deps:
+  # ---------------- REQUIRED (core loop) ----------------
+  - name: Claude Code
+    id: claude_code
+    type: cli
+    required: true
+    powers: the runtime that executes the 6 skills (this whole system is Claude-Code skills)
+    get_url: https://claude.com/claude-code
+    install: "see the install guide at the link"
+    verify: "command -v claude"
+
+  - name: Python packages
+    id: python_deps
+    type: python
+    required: true
+    powers: HTTP to the bridge/Slack, report chart/table images, (optional) Gemini + Google Ads
+    install: "pip install -r requirements.txt"
+    verify: "python3 -c 'import requests, dotenv, matplotlib'"
+
+  - name: Google Apps Script bridge (self-deployed)
+    id: bridge
+    type: account-manual
+    required: true
+    powers: ALL Google Slides/Docs/Sheets/Drive writes — the reporting deck build + weekly prepend
+    get_url: https://script.google.com
+    connect: "deploy bridge/Code.gs as a web app under YOUR Google account, set your own SECRET, enable the Slides API. Full walkthrough → bridge/SETUP.md"
+    keys: [BRIDGE_URL, BRIDGE_SECRET]
+    where: ".env → BRIDGE_URL (your /exec url) + BRIDGE_SECRET (the secret you set in Code.gs)"
+    verify: "python3 bridge/verify_bridge.py \"$BRIDGE_URL\" \"$BRIDGE_SECRET\""
+
+  - name: Slack incoming webhook
+    id: slack
+    type: env-key
+    required: true
+    powers: the ONLY outbound channel — DMs you the BLUF/recommendations to review (recommend-only; never messages clients)
+    key: SLACK_WEBHOOK
+    get_url: https://api.slack.com/messaging/webhooks
+    tier: "free"
+    where: ".env → SLACK_WEBHOOK"
+    verify: "[ -n \"$SLACK_WEBHOOK\" ]"
+
+  - name: Client roster
+    id: roster
+    type: account-manual
+    required: true
+    powers: per-client config the skills read (objective, ROAS floor, channels, data sources, deck id)
+    connect: "cp -R runtime/clients/_template runtime/clients/<your-slug>, then fill account.md / strategy.md"
+    where: "runtime/clients/<slug>/account.md  (or point AM_ROSTER_DIR elsewhere)"
+    verify: "ls runtime/clients/*/account.md 2>/dev/null | grep -qv _template"
+
+  # ---------------- OPTIONAL (data sources — wire up what you use) ----------------
+  - name: Google Ads API
+    id: google_ads
+    type: env-key
+    required: false
+    powers: Google account-ops diagnose ladder, serving/disapproval checks, ad-spend-monitor Google spend
+    key: GOOGLE_ADS_DEVELOPER_TOKEN   # + CLIENT_ID / CLIENT_SECRET / REFRESH_TOKEN / LOGIN_CUSTOMER_ID
+    get_url: https://developers.google.com/google-ads/api/docs/first-call/overview
+    tier: "free API; needs a developer token + OAuth app"
+    where: ".env → GOOGLE_ADS_DEVELOPER_TOKEN, GOOGLE_ADS_CLIENT_ID, GOOGLE_ADS_CLIENT_SECRET, GOOGLE_ADS_REFRESH_TOKEN, GOOGLE_ADS_LOGIN_CUSTOMER_ID"
+    verify: "python3 -c 'import google.ads.googleads' 2>/dev/null && [ -n \"$GOOGLE_ADS_DEVELOPER_TOKEN\" ]"
+
+  - name: Meta Marketing API
+    id: meta_api
+    type: env-key
+    required: false
+    powers: ad-spend-monitor Meta daily spend (direct Graph API, system-user token)
+    key: META_ACCESS_TOKEN
+    get_url: https://developers.facebook.com/docs/marketing-apis/get-started
+    tier: "free API; long-lived system-user token, ads_read scope"
+    where: ".env → META_ACCESS_TOKEN"
+    verify: "[ -n \"$META_ACCESS_TOKEN\" ]"
+
+  - name: Triple Whale API
+    id: triplewhale
+    type: env-key
+    required: false
+    powers: blended / NC-ROAS attribution data for reporting (falls back gracefully if absent)
+    key: TRIPLEWHALE_API_KEY
+    get_url: https://developers.triplewhale.com
+    tier: "requires a Triple Whale account"
+    where: ".env → TRIPLEWHALE_API_KEY"
+    verify: "[ -n \"$TRIPLEWHALE_API_KEY\" ]"
+
+  - name: Gemini API (google-genai)
+    id: gemini
+    type: env-key
+    required: false
+    powers: creative-intel per-second video CV analysis of ad creative
+    key: GEMINI_API_KEY
+    get_url: https://aistudio.google.com/apikey
+    tier: "free tier available; paid for volume"
+    where: ".env → GEMINI_API_KEY"
+    verify: "python3 -c 'from google import genai' 2>/dev/null && [ -n \"$GEMINI_API_KEY\" ]"
+
+  # ---------------- OPTIONAL (MCP connections — Claude verifies, not the shell) ----------------
+  - name: Meta Ads (MCP)
+    id: meta_mcp
+    type: mcp
+    required: false
+    powers: pull Meta ad/adset/campaign metrics, retention quartiles, opportunity score, audiences, comments, Ads Library (feeds meta-ops + creative-intel)
+    get_url: https://github.com/ (search "meta ads mcp" — pick a maintained server)
+    connect: "claude mcp add meta-ads <connector-url>   # or add to .mcp.json"
+    mcp_tool_probe: "mcp__*__*meta* or your chosen server's ad-insights tool"
+    where: "MCP connection (per-user) — not a .env key. Alternatively pass Meta data in as JSON."
+
+  - name: Shopify (MCP)
+    id: shopify_mcp
+    type: mcp
+    required: false
+    powers: order/revenue truth-check for attribution in the weekly report
+    get_url: https://shopify.dev
+    connect: "claude mcp add shopify <connector-url>"
+    mcp_tool_probe: "mcp__*__run-analytics-query / list-orders"
+    where: "MCP connection (per-user)"
+
+  - name: Granola (MCP)
+    id: granola_mcp
+    type: mcp
+    required: false
+    powers: pull client/CMO call transcripts during strategy BACKFILL (strategy-review)
+    get_url: https://granola.ai
+    connect: "claude mcp add granola <connector-url>"
+    mcp_tool_probe: "mcp__*__get_meeting_transcript"
+    where: "MCP connection (per-user)"
