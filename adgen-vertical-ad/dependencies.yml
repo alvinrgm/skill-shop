@@ -1,0 +1,96 @@
+# dependencies.yml — adgen-vertical-ad (3D/CGI ad workflow). Worked example for make-portable.
+# Source of truth → generates SETUP.md, doctor.sh, and the SKILL onboarding gate.
+
+package: adgen-vertical-ad
+trust_level: public   # scrubbed for public distribution — no client names, no personal paths
+
+path_vars:
+  - name: ADGEN_HOME
+    default: "$HOME/Claude/adgen"
+    purpose: root of the runtime folder (lib/, CLIENTS.md, per-client asset folders)
+  - name: ADGEN_ROOT
+    default: "$HOME/Claude/adgen"
+    purpose: alias some scripts read for the same runtime root (defaults match ADGEN_HOME)
+
+deps:
+  - name: Google Gemini "Nano Banana Pro"
+    id: gemini
+    type: env-key
+    required: true
+    powers: ALL still images — character refs, contact sheets, environment sheets, scene start-frames, product composites
+    key: GEMINI_API_KEY
+    get_url: https://aistudio.google.com/apikey
+    tier: "paid API key, ~pennies per image"
+    where: ".env → GEMINI_API_KEY"
+    verify: "python3 scripts/gen_image.py --out /tmp/_doctor.png --prompt 'a single red apple, plain background' --size 1K && test -s /tmp/_doctor.png"
+
+  - name: ElevenLabs
+    id: elevenlabs
+    type: env-key
+    required: true
+    powers: character voices, lip-synced inside seedance via a role:audio reference
+    key: ELEVENLABS_API_KEY
+    get_url: https://elevenlabs.io/app/settings/api-keys
+    tier: "Creator tier ~$22/mo (needed for v3 model + all voices)"
+    where: ".env → ELEVENLABS_API_KEY"
+
+  - name: Higgsfield (seedance)
+    id: higgsfield
+    type: mcp
+    required: true
+    powers: ALL video clips (seedance_2_0, 9:16, ≤15s/clip)
+    get_url: https://higgsfield.ai
+    connect: "Add the Higgsfield MCP via Claude connectors settings (or `claude mcp add`). Grab the exact connector URL from Higgsfield's MCP setup page — CONFIRM, don't guess."
+    mcp_tool_probe: "mcp__*__generate_video"
+    tier: "credit-based — buy credits; each clip costs tens of credits"
+    where: "MCP connection (per-user) — NOT a .env key"
+
+  - name: Suno
+    id: suno
+    type: account-manual
+    required: false
+    powers: music bed (added in Final Cut, never baked into clips)
+    get_url: https://suno.com
+    tier: "subscription"
+    where: "manual — you generate the track and drop it into FCP"
+
+  - name: ffmpeg
+    id: ffmpeg
+    type: cli
+    required: true
+    powers: linear stringout concat + ken-burns product shots (ships ffprobe, used for clip QA/duration checks)
+    install: "brew install ffmpeg"
+    verify: "ffmpeg -version && ffprobe -version"
+
+  - name: OpenAI Whisper
+    id: whisper
+    type: cli
+    required: true
+    powers: QA — transcribe clip audio to confirm dialogue landed
+    install: "pip install openai-whisper"
+    verify: "whisper --help"
+
+  - name: Python packages
+    id: pydeps
+    type: python
+    required: true
+    powers: image gen + assembly scripts
+    install: "pip install -r requirements.txt   # requests, python-dotenv, google-genai, pyyaml"
+    verify: "python3 -c 'import requests, yaml, dotenv'"
+
+  - name: Final Cut Pro 12.2
+    id: fcp
+    type: app
+    required: false
+    powers: open the FCPXML deliverable and finish the cut (mix, caption, reframe, export)
+    get_url: "macappstore://apps.apple.com/app/final-cut-pro/id424389933"
+    tier: "$299 one-time, Mac only"
+    where: "desktop app"
+
+  - name: Hedra
+    id: hedra
+    type: alvin-only   # legacy key from the author's old config — recipients never set this up
+    required: false
+    key: HEDRA_API_KEY
+    powers: LEGACY — not used by the current pipeline
+    note: "Appears in old config. Skip it — the current pipeline does not call Hedra."
