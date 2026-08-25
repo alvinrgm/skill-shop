@@ -58,3 +58,7 @@ interactively. Live decks are edited additively (never wiped-and-rebuilt).
 
 ## License
 [CC BY 4.0](LICENSE.txt). Build on it freely; attribution appreciated.
+
+
+---
+Built and battle-tested at [Rise Growth Marketing](https://www.risegm.com/skills?utm_source=github&utm_medium=skill&utm_content=account-manager). More free skills, and the story of the systems behind them, at that link.

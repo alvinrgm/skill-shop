@@ -40,3 +40,7 @@ human may have edited — make in-place edits. Full notes in `SKILL.md` and `SET
 
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — see [LICENSE.txt](LICENSE.txt).
 Created by Alvin Ding. Feedback → this repo's Issues.
+
+
+---
+Built and battle-tested at [Rise Growth Marketing](https://www.risegm.com/skills?utm_source=github&utm_medium=skill&utm_content=gsuite-bridge). More free skills, and the story of the systems behind them, at that link.

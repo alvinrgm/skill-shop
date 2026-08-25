@@ -1,0 +1,24 @@
+# Your Gemini API key lives in config.yml. It is a live payment credential billed to your
+# team's Google account. Never commit it, and note that copying or zipping this folder
+# carries the key with it.
+config.yml
+config*.y*ml
+profile.yml
+!config.example.yml
+!profile.example.yml
+*.env
+.env*
+*.bak
+*.save
+*~
+
+# Local setup marker and run output
+.onboarded
+outputs/
+cleanroom-out/
+!samples/outputs/
+
+# Python / OS noise
+__pycache__/
+*.pyc
+.DS_Store

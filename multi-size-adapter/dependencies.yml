@@ -1,0 +1,70 @@
+# multi-size-creative-adapter — dependency manifest (single source of truth for SETUP.md + doctor.sh).
+# Local engine + one external API (Google Gemini) for native re-composition. No MCP connections,
+# no other external infrastructure, nothing published anywhere.
+
+package: multi-size-creative-adapter
+trust_level: team   # scrubbed for teammates' own machines/accounts
+
+deps:
+  - name: Claude Code
+    id: claude_code
+    type: app
+    required: true
+    powers: "The app you actually talk to. It reads this skill, runs every command for you, looks at each generated image to check it, and writes the review sheet. Nothing here is meant to be typed into a terminal by hand."
+    install: "https://claude.com/claude-code -- install it, sign in with your work account, then open this folder in it. Needs a Claude subscription or API access; usage of Claude itself is billed separately from the Google image generation."
+    verify: "You are reading this inside Claude Code, so it is installed."
+
+  - name: Python 3
+    id: python3
+    type: cli
+    required: true
+    powers: "Runs the engine under the hood. The user never types Python; Claude runs it for them."
+    install: "Mac: usually already installed. Windows: https://www.python.org/downloads/ (tick 'Add Python to PATH'). On a managed work laptop this may need IT."
+    verify: "python3 --version (Mac/Linux) or python --version (Windows)"
+
+  - name: Pillow
+    id: pillow
+    type: python
+    required: false   # Not needed to GENERATE the four built-in formats (they come back at the
+                      # right shape and are written straight to disk). It IS needed to MEASURE
+                      # outputs during verification, and for opt-in extra shapes that need a crop.
+                      # Claude installs it unattended when a run needs it.
+    powers: "Two things: measuring outputs during verification (scripts/measure.py -- safe zones, dead space, legal band), and cropping for opt-in formats outside the four built-ins."
+    install: "python3 -m pip install --user Pillow   (note: 'python3 -m pip', not bare 'pip3' -- the bare form fails on some Python installs with an 'externally-managed-environment' error)"
+    verify: "python3 -c 'import PIL; print(PIL.__version__)'"
+
+  - name: Gemini API key
+    id: gemini_api_key
+    type: credential
+    required: true
+    billing_required: true   # image models have no free tier; the key must be on a billed project
+    scope: shared-once   # ONE key for the whole team, created once by the team lead; each
+                         # user just pastes it into their own config.yml. Do NOT have every
+                         # user create their own key unless the team decides that on purpose.
+    powers: "The generative model (gemini-3-pro-image-preview) that natively re-composes each size."
+    install: "Team lead: aistudio.google.com -> Get API key -> Create API key, THEN set up billing on that project (Cloud Billing account + payment method; $10 minimum on Prepay). Image models are NOT on the Gemini free tier, so an unbilled key fails. Full walkthrough: SETUP.md 'For the team lead'. Everyone else: paste the shared key into config.yml (gemini_api_key: ...)."
+    verify: "Mac/Linux: bash doctor.sh   Windows: powershell -ExecutionPolicy Bypass -File doctor.ps1"
+    cost_note: "$0.134 per generated image at the resolution this tool uses, per Google's published pricing. 10 creatives x 4 formats = 40 images, about $5.40. Retries are billed too; Claude shows expected and worst-case before every batch."
+
+# ---------------------------------------------------------------------------
+# Clean-room certification (make-portable Phase 6.6 ship gate).
+# ONE command that cold-runs the pipeline from a freshly-unzipped, empty room with only the
+# operator's key installed. If this cannot pass, the package is not shippable -- a run on the
+# author's machine proves nothing, because the author's workspace already has everything.
+# ---------------------------------------------------------------------------
+entry_run: "python3 scripts/selftest.py --out cleanroom-out"
+
+certify:
+  exit_code: 0
+  min_bytes: 200            # catches empty stubs. The generated image is separately checked
+                            # inside selftest.py, which fails if the bytes are not a usable
+                            # image of the right shape -- a size floor here would only have to
+                            # be loose enough for the (legitimately small) review sheet.
+  empty_dirs:
+    - cleanroom-out         # must hold no outputs before the run; the run creates them
+  artifacts:
+    - "cleanroom-out/selftest/1080x1080/base*"
+    - "cleanroom-out/selftest/review-sheet.md"
+  # The audit gate must check something the PRODUCT claims, not just that a key exists.
+  # This measures the generated image: real content, correct shape, legal band actually blank.
+  audit: "python3 scripts/measure.py \"$(ls cleanroom-out/selftest/1080x1080/base* | head -1)\""

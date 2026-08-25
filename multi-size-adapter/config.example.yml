@@ -1,0 +1,9 @@
+# multi-size-creative-adapter — SECRET FILE. Copy to config.yml.
+# This file holds ONE thing: your team's Gemini key. It is kept separate from your preferences
+# (profile.yml) on purpose, so Claude can read your settings on every run without ever reading
+# your credential into the chat transcript.
+#
+# Claude saves the key here for you without it passing through the chat. You should never need
+# to open this file. The GEMINI_API_KEY environment variable works too.
+
+gemini_api_key: ""

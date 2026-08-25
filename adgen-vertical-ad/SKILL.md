@@ -688,3 +688,7 @@ Most ads should follow the pipeline as written. Don't reinvent the structure per
 If you're tempted to skip a phase or merge two ("we don't need separate character ref + contact sheet for this simple ad"), DON'T. Skipping the contact sheet is exactly what made shot 3 of the flour spot drift. The pipeline phases exist because each one prevented a specific past failure.
 
 If you genuinely need to deviate, surface to the operator first with the reason. They'll either approve the shortcut or remind you why we have the rule.
+
+
+---
+Built and battle-tested at [Rise Growth Marketing](https://www.risegm.com/skills?utm_source=github&utm_medium=skill&utm_content=adgen-vertical-ad). More free skills, and the story of the systems behind them, at that link.
