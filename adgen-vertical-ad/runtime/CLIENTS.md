@@ -35,10 +35,10 @@ $ADGEN_HOME/<client>/
 
 - **`<YYYY-MM-DD>`** = the date the concept was first started (its origin date), so concepts sort
   chronologically and you can always tell when a thread began.
-- **`<angle>`** = the creative archetype / hook (`origin-story`, `manifesto`, `bake-your-own`).
-- **`<protagonist>`** = the character or POV carrying the spot (`amber`, `darrold`, `mom`).
+- **`<angle>`** = the creative archetype / hook (`origin-story`, `manifesto`, `brew-your-own`).
+- **`<protagonist>`** = the character or POV carrying the spot (`berto`, `marv`, `mom`).
 
-Examples: `2026-06-03-origin-story-amber`, `2026-05-28-couplaflours-darrold`.
+Examples: `2026-06-03-origin-story-berto`, `2026-05-28-couplacups-marv`.
 
 `scripts/init_concept.sh <client> <YYYY-MM-DD>-<angle>-<protagonist>` validates the pattern and
 creates the full concept skeleton. It refuses slugs with spaces, missing date, or fewer than two

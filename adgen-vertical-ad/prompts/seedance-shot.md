@@ -82,14 +82,14 @@ Every seedance video prompt should contain these elements, in roughly this order
 AUDIO: [Voice description — VERBATIM across all shots for this character] says [emotional state]: '[exact dialogue line]'. Background: [ambient + SFX]. [Music: yes/no]. [Anti-instructions: NO other voices, etc.].
 ```
 
-## Filled example (Amber intro shot)
+## Filled example (Berto intro shot)
 
 ```
-Claymation stop-motion shot. Slow subtle camera push-in toward character, slight gentle sway from breeze. Golden Kansas wheat field at sunrise, warm soft light, hopeful peaceful atmosphere.
+Claymation stop-motion shot. Slow subtle camera push-in toward character, slight gentle sway from breeze. Golden highland coffee farm at sunrise, warm soft light, hopeful peaceful atmosphere.
 
-The Amber wheat character (a tall stalk of wheat with a friendly old farmer's face on the grain head, handlebar mustache, tiny straw hat, kind crinkled eyes) speaks directly to camera with calm warmth, his mustache moves as he talks, his eyes crinkle.
+The Berto bean character (a slender heirloom coffee plant topped by one oversized warm-brown bean with a friendly old farmer's face, handlebar mustache, tiny straw hat, kind crinkled eyes) speaks directly to camera with calm warmth, his mustache moves as he talks, his eyes crinkle.
 
-AUDIO: Warm gravelly old-timey Kansas farmer voice says clearly: 'Howdy. Name's Amber. Been feedin' America since 1873.' Background: gentle wheat field rustle, distant birdsong, soft warm wind. NO music. Hopeful, peaceful, restorative atmosphere.
+AUDIO: Warm gravelly old-timey highland farmer voice says clearly: 'Howdy. Name's Berto. Been wakin' up the valley since 1892.' Background: gentle coffee farm hillside rustle, distant birdsong, soft warm wind. NO music. Hopeful, peaceful, restorative atmosphere.
 ```
 
 ## Filled example (rap shot with external audio ref)
@@ -97,9 +97,9 @@ AUDIO: Warm gravelly old-timey Kansas farmer voice says clearly: 'Howdy. Name's 
 When passing external audio (Suno, ElevenLabs), DON'T include the lyrics in the prompt — the audio carries them. Describe only the visual performance and energy:
 
 ```
-Hip-hop music video shot, claymation stop-motion aesthetic. Low-angle hero shot, slow push-in, then dolly-around the character. Vast industrial monoculture wheat field at dystopian dawn, harsh flat industrial morning light.
+Hip-hop music video shot, claymation stop-motion aesthetic. Low-angle hero shot, slow push-in, then dolly-around the character. Vast industrial industrial coffee plantation at dystopian dawn, harsh flat industrial morning light.
 
-The hybridized modern wheat character (short squat glossy wheat with bulbous bred-for-yield grain head, vacant dead-inside eyes, gold chains around stalk) raps to camera, lip-syncing precisely to the provided audio track. His mouth and head bob in sync with the beat and lyrics, head nodding to the cadence, deadpan unblinking expression. Subtle cracks of sadness leak through the deadpan facade.
+The hybridized instant bean character (a short squat glossy freeze-dried bean, bulbous bred-for-yield body, vacant dead-inside eyes, gold chains) raps to camera, lip-syncing precisely to the provided audio track. His mouth and head bob in sync with the beat and lyrics, head nodding to the cadence, deadpan unblinking expression. Subtle cracks of sadness leak through the deadpan facade.
 
 [Background details — monoculture clones, agricultural plane in distance, etc.]
 ```
@@ -107,19 +107,19 @@ The hybridized modern wheat character (short squat glossy wheat with bulbous bre
 ## Filled example (action / abduction shot)
 
 ```
-Claymation stop-motion shot. Camera locked, slight ominous push-in. Sterile cold mid-century 1953 laboratory with white tile walls, harsh surgical light overhead casting dramatic shadow. Medical horror atmosphere, cold sterile lighting contrasts with warm tones of the wheat character.
+Claymation stop-motion shot. Camera locked, slight ominous push-in. Sterile cold mid-century 1968 laboratory with white tile walls, harsh surgical light overhead casting dramatic shadow. Medical horror atmosphere, cold sterile lighting contrasts with warm tones of the bean character.
 
-The Amber wheat character (tall stalk with old farmer's face, handlebar mustache, scared eyes, mustache drooping) is strapped down with leather restraints to a metal lab examination table. A gloved scientist's hand enters frame from the right holding a large hypodermic syringe filled with glowing radioactive green liquid (NORIN 10), and slowly pushes the needle into the wheat stalk. Amber's eyes widen in terror, his body twitches and starts to TRANSFORM — stalk shrinks shorter, grain head swells unnaturally bulbous, color drains from warm gold to pale glossy yellow.
+The Berto bean character (slender plant topped by the big farmer-faced bean, handlebar mustache, scared eyes, mustache drooping) is strapped down with leather restraints to a metal lab examination table. A gloved scientist's hand enters frame from the right holding a large hypodermic syringe filled with glowing radioactive green liquid (ROBUSTA-X), and slowly pushes the needle into the coffee plant. Berto's eyes widen in terror, his body twitches and starts to TRANSFORM — the plant shrinks shorter, the bean swells unnaturally bulbous, color drains from warm brown to pale glossy tan.
 
-AUDIO: Warm gravelly old-timey Kansas farmer voice (the same Amber voice as other shots), narrating his own abduction with rising distress: 'Big agriculture started experimentin' on me to grow more, faster... and... YAAARRGGHHHH!' His voice cracks into a horrified scream as the injection takes hold. Background SFX: low ominous medical hum, syringe injection sound, distant beeping equipment. NO music. NO other voices, NO corporate narrator — only Amber's own voice.
+AUDIO: Warm gravelly old-timey highland farmer voice (the same Berto voice as other shots), narrating his own abduction with rising distress: 'Big agriculture started experimentin' on me to grow more, faster... and... YAAARRGGHHHH!' His voice cracks into a horrified scream as the injection takes hold. Background SFX: low ominous medical hum, syringe injection sound, distant beeping equipment. NO music. NO other voices, NO corporate narrator — only Berto's own voice.
 ```
 
 ## Filled example (product hero / CTA shot)
 
 ```
-Cinematic product hero shot, claymation stop-motion aesthetic. Slow elegant camera push-in toward the flagship heritage flour bag (exactly as in the start frame), sitting on a warm wooden farmhouse counter. Subtle gentle motion: flour dust drifts in the air, soft window light flickers warmly, very slight tilt-shift miniature feel.
+Cinematic product hero shot, claymation stop-motion aesthetic. Slow elegant camera push-in toward the flagship heirloom beans bag (exactly as in the start frame), sitting on a warm wooden farmhouse counter. Subtle gentle motion: coffee dust drifts in the air, soft window light flickers warmly, very slight tilt-shift miniature feel.
 
-AUDIO: The same warm gravelly old-timey Kansas farmer voice (Amber character voice from other shots) with a confident closing tone says clearly: '[Brand name]. Tall wheat, real bread, no apologies.' Background: very soft kitchen ambient, gentle warm acoustic guitar single sustained note. Closing CTA atmosphere — hopeful, definitive, conclusive. Pronounce the brand name clearly.
+AUDIO: The same warm gravelly old-timey highland farmer voice (Berto character voice from other shots) with a confident closing tone says clearly: '[Brand name]. Real beans, real mornings, no apologies.' Background: very soft kitchen ambient, gentle warm acoustic guitar single sustained note. Closing CTA atmosphere — hopeful, definitive, conclusive. Pronounce the brand name clearly.
 ```
 
 ## Voice description registry (use these EXACT strings)
@@ -128,8 +128,8 @@ For consistency across shots, use these exact voice descriptions:
 
 | Character | Exact voice description |
 |---|---|
-| Amber (wholesome wheat farmer) | "warm gravelly old-timey Kansas farmer voice" |
-| Modern Wheat (hybridized rapper) | (uses external Suno audio — no native voice) |
+| Berto (wholesome bean farmer) | "warm gravelly old-timey highland farmer voice" |
+| Instant Bean (hybridized rapper) | (uses external Suno audio — no native voice) |
 | Cold corporate narrator (rarely used) | "cold corporate male narrator with detached voice" |
 
 When you add a new character, define their voice description ONCE in `reference/voice-consistency.md` and use that exact string verbatim in every prompt.

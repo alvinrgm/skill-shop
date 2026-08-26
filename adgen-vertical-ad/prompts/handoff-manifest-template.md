@@ -4,7 +4,7 @@ The handoff folder is the end-state deliverable: separate-tracks assets that the
 
 ## Why this exists
 
-Past mistake (the flour brand "ask your grandma," May 2026): only built the handoff folder reactively after the operator said "this auto-stringout is unusable, give me the stems." Should have been planned at Phase 1 as the canonical deliverable, not invented at Phase 7 after auto-assembly failures.
+Past mistake (the coffee brand "ask your abuelo," May 2026): only built the handoff folder reactively after the operator said "this auto-stringout is unusable, give me the stems." Should have been planned at Phase 1 as the canonical deliverable, not invented at Phase 7 after auto-assembly failures.
 
 The auto-stringout (a single mp4 with all clips concatenated and audio mixed by ffmpeg) is fragile. Auto-mix decisions about ducking, overlay timing, and ambient bed transitions cannot match what the operator would do in FCP with proper editing eyes/ears. The handoff folder bypasses the fragile auto-mix and gives the operator the raw parallel tracks.
 
@@ -69,8 +69,8 @@ Two sub-sections:
 
 **Kiora narrator script:**
 ```
-[01_intro]  A few months ago... his bread wasn't loving him back.
-[02_friend] Then a friend told him about heritage wheat.
+[01_intro]  A few months ago... his coffee wasn't loving him back.
+[02_friend] Then a friend told him about single-origin beans.
 ...
 ```
 
@@ -97,7 +97,7 @@ Be explicit about what the operator still has to do in FCP:
 ### 6 — Files at risk / flag for review
 
 Be honest. Surface known-imperfect clips:
-→ "shot_05c sourdough — verify the slice now reads as artisan sourdough not white bread"
+→ "shot_05c pour-over — verify the cup now reads as slow pour-over not instant"
 → "shot_02_dinner bag stability — verify label stays facing camera the full 5s"
 → "voice consistency between seedance dad shots and Kiora narrator may feel like 'two different people' — that's expected since they ARE two different voices by design"
 
@@ -141,7 +141,7 @@ cp audio/kiora/*.mp3 handoff/audio_kiora/
 [ -f audio/music_bed.mp3 ] && cp audio/music_bed.mp3 handoff/audio_music/
 
 # Copy key refs (concept product composite from this concept; logo from the brand-global kit)
-cp refs/product/heritage_white_front.png handoff/refs/
+cp refs/product/heirloom_roast_front.png handoff/refs/
 cp ../../brand/logo.png handoff/refs/
 
 # Build manifest (separately — too long for shell here)

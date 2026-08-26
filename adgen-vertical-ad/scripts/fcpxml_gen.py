@@ -348,10 +348,10 @@ def build_fcpxml(clips, project_name, event_name=None, folder_name=None,
     # errors from FCP (2026-06-02).
     #
     # Naming convention used in adgen (Option A):
-    #   --event       = client name (the flour brand, the pet-wipes brand, etc.)
-    #   --project-name = concept timeline (Amber Origin Spot, etc.)
+    #   --event       = client name (the coffee brand, the pet brand, etc.)
+    #   --project-name = concept timeline (Berto Origin Spot, etc.)
     # For multiple timeline iterations of one concept, suffix the project name
-    # (e.g., "Amber Origin Spot — v1", "Amber Origin Spot — 9x16").
+    # (e.g., "Berto Origin Spot — v1", "Berto Origin Spot — 9x16").
     if folder_name:
         print(f"warning: --folder/{folder_name!r} is ignored — FCPXML doesn't "
               f"allow project-grouping folders inside events. Encode the "
@@ -469,7 +469,7 @@ def main():
     ap.add_argument("--output", required=True, help="Output .fcpxml path")
     ap.add_argument("--project-name", default="ad_v1", help="Project name shown in FCP")
     ap.add_argument("--event", help="FCP event the project goes under (per FCPXML DTD, events sit directly inside <library>). In adgen we use this for the CLIENT name. Match an EXISTING event name in your library to merge re-imports into one place. Defaults to project-name if omitted.")
-    ap.add_argument("--folder", help="DEPRECATED — FCPXML doesn't support project-grouping folders. Anything passed here is warned-and-ignored; group via project naming instead (e.g., 'Amber Origin Spot — v1').")
+    ap.add_argument("--folder", help="DEPRECATED — FCPXML doesn't support project-grouping folders. Anything passed here is warned-and-ignored; group via project naming instead (e.g., 'Berto Origin Spot — v1').")
     ap.add_argument("--manifest", help="Optional YAML manifest with clips list")
     ap.add_argument("--narrator", help="Path to narrator audio (placed on lane -1 spanning the full timeline). REQUIRED for any Strategy B spot with 11L VO.")
     ap.add_argument("--music", help="Path to music bed audio (placed on lane -2 spanning the full timeline).")

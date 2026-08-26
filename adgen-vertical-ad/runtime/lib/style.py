@@ -55,7 +55,7 @@ FORMATS: dict[str, FormatSpec] = {
         safe_zone=SafeZone(top=0.14, bottom=0.14, left=0.04, right=0.04),
         caption_y_frac=0.82,       # below subject, above reply-box zone
         # Arial Black at 52px with 2-line wrap. Longest split line of the
-        # brief's max caption ("americans bake with", 19 chars) lands ~555px,
+        # brief's max caption ("the smoothest beans", 19 chars) lands ~555px,
         # fitting comfortably inside 662px usable width minus the box's ~36px
         # horizontal padding (~626px text budget). Heavy sans-serif is the
         # legibility floor — stroke-only styles were rejected twice.

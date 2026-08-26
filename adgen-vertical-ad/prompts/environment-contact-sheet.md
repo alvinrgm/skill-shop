@@ -102,7 +102,7 @@ NO characters in any panel. NO captions other than the panel labels.
 NO product placement.
 ```
 
-## Example — Dad's kitchen (the "ask your grandma" spot)
+## Example — Dad's kitchen (the "ask your abuelo" spot)
 
 ```
 Environment reference contact sheet for "Dad's suburban family kitchen" — the

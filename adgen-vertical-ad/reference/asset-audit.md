@@ -95,16 +95,16 @@ Don't just dump the file list. Synthesize:
 
 HAVE:
 ✓ Logo: refs/logo.png (PNG, transparent bg)
-✓ Product hero: product images/heritage_white_front.png (front of bag, clean shot)
-✓ Product back: product images/heritage_white_back.png
-✓ Moodboard: 9 reference shots in moodboard/ (kitchens, dough, bread)
+✓ Product hero: product images/heirloom_roast_front.png (front of bag, clean shot)
+✓ Product back: product images/heirloom_roast_back.png
+✓ Moodboard: 9 reference shots in moodboard/ (kitchens, brew bars, pour-overs)
 ✓ Brand bible: bible.md (voice + positioning notes)
 ✓ Prior ad: brand_spot_9x16.mp4 (previous spot for reference)
 
 MISSING (will need to generate):
-✗ Wheat character refs (no character in existing assets — generative shot)
-✗ 1953 lab setting (generative)
-✗ Modern hybridized wheat character (generative)
+✗ Bean character refs (no character in existing assets — generative shot)
+✗ 1968 lab setting (generative)
+✗ Modern hybridized bean character (generative)
 ✗ Composed product hero in farmhouse setting (use existing product image as ref)
 
 PROPOSAL:
@@ -122,7 +122,7 @@ Examples of what this means in practice:
 
 | Wrong | Right |
 |---|---|
-| Generate a fake burlap bag with the brand logo printed on it | Use the existing product hero image (`heritage_white_front.png`) as a `role: image` ref to nano_banana_2 to compose it in a scene |
+| Generate a fake burlap bag with the brand logo printed on it | Use the existing product hero image (`heirloom_roast_front.png`) as a `role: image` ref to nano_banana_2 to compose it in a scene |
 | Recreate the brand logo in a stylized way | Use the existing logo PNG. Pass it as image ref, reference it in prompt as "the brand logo from the reference image" |
 | Generate a synthetic product photo | Use the existing product photo |
 | Make up brand colors | Read them from the brand bible or the existing logo |
@@ -179,9 +179,9 @@ ASK: "Found two logo files: `logo_v1.png` and `logo_v2_new.png`. Which is curren
 When generating new assets that will be reused across ads, name them with a version stamp (paths are concept-relative — `concepts/<slug>/refs/...`):
 
 ```
-refs/characters/amber_v1.png    # First generation
-refs/characters/amber_v2.png    # After the operator's revision
-refs/characters/amber_v2_sheet.png  # Contact sheet for v2
+refs/characters/berto_v1.png    # First generation
+refs/characters/berto_v2.png    # After the operator's revision
+refs/characters/berto_v2_sheet.png  # Contact sheet for v2
 ```
 
 Don't overwrite. Old versions are useful for A/B comparison and rollback. If a character gets reused in a later concept, promote the locked version to `brand/characters/<name>/` per the character-promotion rule.
@@ -195,25 +195,25 @@ When you finish an ad and the brand folder gains new generated assets, leave a n
 
 ## Brand-global kit (brand/ — provided by the operator / brand, or promoted)
 - brand/logo.png — primary logo
-- brand/product-images/heritage_white_front.png — flagship product hero, front
-- brand/product-images/heritage_white_back.png — flagship product hero, back
-- brand/characters/amber/ — promoted brand mascot (sheet + bible), reused across concepts
+- brand/product-images/heirloom_roast_front.png — flagship product hero, front
+- brand/product-images/heirloom_roast_back.png — flagship product hero, back
+- brand/characters/berto/ — promoted brand mascot (sheet + bible), reused across concepts
 
 ## Per-concept generated assets
 ### concepts/2026-04-acme-ad/
-- refs/characters/amber_v2.png — Amber hero ref (1900s wheat farmer character)
-- refs/characters/amber_v2_sheet.png — Amber 3x3 contact sheet
-- refs/characters/modern_wheat_v1.png — Hybridized modern wheat (rapper antagonist)
-- refs/environments/1953_lab.png — Mid-century laboratory abduction setting
-- refs/environments/monoculture_field.png — Industrial wheat monoculture
-- refs/scenes/shot_01_field_intro.png — Amber in golden wheat field at sunrise
-- refs/scenes/shot_06_bag_hero.png — the flour brand bag in farmhouse kitchen
+- refs/characters/berto_v2.png — Berto hero ref (1890s bean farmer character)
+- refs/characters/berto_v2_sheet.png — Berto 3x3 contact sheet
+- refs/characters/instant_bean_v1.png — Hybridized instant bean (rapper antagonist)
+- refs/environments/1968_lab.png — Mid-century laboratory abduction setting
+- refs/environments/plantation_field.png — Industrial coffee plantation
+- refs/scenes/shot_01_field_intro.png — Berto in golden coffee farm hillside at sunrise
+- refs/scenes/shot_06_bag_hero.png — the coffee brand bag in farmhouse kitchen
 
 ### Voice IDs used
-- Amber: seedance native, prompt "warm gravelly old-timey Kansas farmer voice"
-- Modern wheat rapper: external Suno track (audio file in audio/wheat_rap_full.mp3)
+- Berto: seedance native, prompt "warm gravelly old-timey highland farmer voice"
+- Instant bean rapper: external Suno track (audio file in audio/bean_rap_full.mp3)
 
 ## Last updated: <iso date>
 ```
 
-This gives the next ad project a head-start. If a new ad for the brand needs the Amber character, the next session can REUSE `amber_v2_sheet.png` instead of regenerating.
+This gives the next ad project a head-start. If a new ad for the brand needs the Berto character, the next session can REUSE `berto_v2_sheet.png` instead of regenerating.

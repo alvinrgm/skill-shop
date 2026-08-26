@@ -67,7 +67,7 @@ seedance-native take (skip the 11L setup) and accepts that the voice will drift 
 won't match the next ad. Even then, use IDENTICAL voice-description prompt language for a character
 in every shot. Default is still B.
 
-**Past mistake (the flour brand "ask your grandma," May 2026):** defaulted to seedance-native because it
+**Past mistake (the coffee brand "ask your abuelo," May 2026):** defaulted to seedance-native because it
 was the cheap default and the old rule discouraged 11L. The spot needed locked voice (couplabeers
 structure, 8 narrator beats). Took v1 → v2 → v3 and ~200 wasted credits to pivot. With 11L-as-
 default, v1 would have shipped clean.
@@ -101,7 +101,7 @@ Each video clip generated with seedance native audio enabled (default). Voice + 
 **When to use:** spots with NO spoken voice (pure visual + music + SFX), or a deliberate
 cheap/throwaway test cut. NOT the default for talking spots anymore — Strategy B (11L lip-sync) is.
 
-**If you do use it for a talking spot (escape hatch only):** use IDENTICAL prompt language for the same character in every shot. Example: every Amber shot includes "warm gravelly old-timey Kansas farmer voice" word-for-word. Variation in description = variation in voice. Accept that the voice still drifts clip-to-clip and won't match the next ad — that's exactly why B is the default.
+**If you do use it for a talking spot (escape hatch only):** use IDENTICAL prompt language for the same character in every shot. Example: every Berto shot includes "warm gravelly old-timey highland farmer voice" word-for-word. Variation in description = variation in voice. Accept that the voice still drifts clip-to-clip and won't match the next ad — that's exactly why B is the default.
 
 ### Strategy B — Continuous external audio + visuals lip-synced to it
 

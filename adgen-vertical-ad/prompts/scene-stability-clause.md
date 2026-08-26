@@ -34,7 +34,7 @@ Replace `{N}` with the shot duration in seconds.
 
 ## Custom enumeration
 
-When the model has a specific bad habit on a project, enumerate the forbidden additions explicitly. Example from the pet-wipes brand:
+When the model has a specific bad habit on a project, enumerate the forbidden additions explicitly. Example from the pet brand:
 
 ```
 DO NOT add a clothesline. DO NOT add hanging laundry. DO NOT add tiny shirts,

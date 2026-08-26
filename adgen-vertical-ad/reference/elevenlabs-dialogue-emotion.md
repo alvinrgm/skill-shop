@@ -27,7 +27,7 @@ POST https://api.elevenlabs.io/v1/text-to-dialogue
   "inputs": [
     { "voice_id": "<lefty_id>",  "text": "[nervous] aw c'mon... Righty, I'm STUCK to the wall again." },
     { "voice_id": "<righty_id>", "text": "[deadpan][tired] The sticking?" },
-    { "voice_id": "<lefty_id>",  "text": "[exasperated] The sticking. And the sweat... swamp's risin'." }
+    { "voice_id": "<lefty_id>",  "text": "[exasperated] The elastic. It's diggin' a trench again." }
   ],
   "model_id": "eleven_v3",
   "settings": { "stability": 0.4, "similarity_boost": 0.75, "style": 0.12, "use_speaker_boost": true },
@@ -81,7 +81,7 @@ but start from the list above.
 - Layer for nuance: `[nervous][whispers]`, `[tired][deadpan]`, `[frustrated] [sighs]`.
 - Surround the tag with emotionally-consistent text — `[excited] we're bouncin'!` lands; `[excited]
   please hold` fights the voice and fails.
-- **Punctuation IS delivery:** ellipses `...` = weight/pause; ALL-CAPS word = emphasis (`BAT WING!`);
+- **Punctuation IS delivery:** ellipses `...` = weight/pause; ALL-CAPS word = emphasis (`TRENCH FOOT!`);
   a mid-line dash `like this—` = cut-off/interruption.
 - Minimum viable length: at least a couple of sentences of context per call; single bare words read
   inconsistently. (Per-shot dialogue calls satisfy this naturally.)

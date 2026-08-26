@@ -4,7 +4,7 @@ When the operator shares a real ad, sketch, music video, or short film as a tona
 
 ## Why this exists
 
-Past mistake (the flour brand "ask your grandma," May 2026): the operator referenced the SNL Couplabeers skit at Phase 2 as the tonal/structural inspiration. Used it for surface cues (script lines, "ask your grandma" punchline, suburban-mockumentary register) but never deconstructed its STRUCTURAL architecture. Couplabeers has a specific audio pattern (husband narrates over flashbacks while characters speak in-scene around him + fake pharma announcer interrupts) that defines the entire downstream pipeline. Missed it. Defaulted to per-clip seedance audio (Strategy A) when the reference required continuous-narrator (Strategy B). Cost ~200 credits in re-fires.
+Past mistake (the coffee brand "ask your abuelo," May 2026): the operator referenced the SNL Couplabeers skit at Phase 2 as the tonal/structural inspiration. Used it for surface cues (script lines, "ask your abuelo" punchline, suburban-mockumentary register) but never deconstructed its STRUCTURAL architecture. Couplabeers has a specific audio pattern (husband narrates over flashbacks while characters speak in-scene around him + fake pharma announcer interrupts) that defines the entire downstream pipeline. Missed it. Defaulted to per-clip seedance audio (Strategy A) when the reference required continuous-narrator (Strategy B). Cost ~200 credits in re-fires.
 
 A reference-spot deconstruction at Phase 1.5 catches this. The 5-axis analysis is fast (~10 minutes) and feeds directly into the Phase 2 breakdown's audio architecture column.
 
@@ -135,7 +135,7 @@ The breakdown's `Music + SFX` column should reflect Axis 3.
 The number of shots should align with Axis 4 beats.
 ```
 
-## Worked example — SNL Couplabeers for the "ask your grandma" spot
+## Worked example — SNL Couplabeers for the "ask your abuelo" spot
 
 If this had been run at Phase 1.5 (instead of skipped), the output would have been:
 
@@ -160,7 +160,7 @@ First-person testimonial. The husband (the patient in the parody) narrates retro
 ## Axis 3 — Music role
 Continuous sad-piano pharma-ad bed throughout. The MUSIC ITSELF is the format reference — the somber piano is what tells the viewer "this is a pharma ad" before any clinical claims appear. Music ducks under the fake-clinical-claims voiceover. Goes slightly warmer in transformation moments. Returns to sad piano in confrontation.
 
-→ Implication: Suno continuous bed across whole flour-brand spot, low volume, slight warming in shots 3-5.
+→ Implication: Suno continuous bed across whole coffee-brand spot, low volume, slight warming in shots 3-5.
 
 ## Axis 4 — Format-mimicry beats
 1. Somber testimonial open ("a few months ago anxiety was ruining my life")
@@ -172,12 +172,12 @@ Continuous sad-piano pharma-ad bed throughout. The MUSIC ITSELF is the format re
 7. "Ask your doctor" CTA
 8. Family confrontation close
 
-For the spot: hit beats 1, 2 (friend = doctor analog), 3, 4, 5, 6 ("you may notice..."), 7 ("ask your grandma"), 8 (pantry stockpile).
+For the spot: hit beats 1, 2 (friend = doctor analog), 3, 4, 5, 6 ("you may notice..."), 7 ("ask your abuelo"), 8 (pantry stockpile).
 
 ## Axis 5 — Punchline structure
 Main punchline = format mismatch (a normal thing reframed as medicine). Recurring micro-punchlines = the husband's increasingly inappropriate behavior delivered with deadpan-positive narrator framing. Final punchline = family confrontation interrupted by his calm "no" while wife is mid-question.
 
-For the spot: equivalent = "ask your grandma" tagline punchlines the entire pharma-format. Pantry stockpile + dead-serious "MY heritage bread" closes the bit.
+For the spot: equivalent = "ask your abuelo" tagline punchlines the entire pharma-format. Pantry stockpile + dead-serious "MY heirloom brew" closes the bit.
 
 ## Implications for our spot
 → Narrator architecture: Strategy B with hybrid. 11L Kiora carries 7-8 narrator beats, seedance handles 5 in-scene moments.

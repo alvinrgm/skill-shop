@@ -12,7 +12,7 @@ Surface 2-3 distinct creative concepts so the operator picks before we commit to
 
 ## What "wild" means
 
-The operator's preference is to push past safe / generic ad concepts. The flour-brand spot's iconic moment was a hybridized wheat character rapping in autotuned trap style. That kind of energy.
+The operator's preference is to push past safe / generic ad concepts. The coffee-brand spot's iconic moment was a hybridized bean character rapping in autotuned trap style. That kind of energy.
 
 Reference points:
 - Iranian lego war commentary videos (visual archetype + character voice does the lifting)
@@ -54,63 +54,63 @@ Recommendation: I'd push [concept #N] because [reason].
 What do you want to develop?
 ```
 
-## Example output (the flour brand — what we ended up doing)
+## Example output (the coffee brand — what we ended up doing)
 
 ```
 # Ad concept brief: [Brand]
 
-## Concept 1: "Amber's Story"
+## Concept 1: "Berto's Story"
 **Archetype:** character origin story → corruption → redemption
-**Vibe reference:** Pixar Cars meets Iranian Lego war videos. Anthropomorphized wheat as a character with a dramatic arc.
-**Hook (first 2 sec):** Wholesome wheat character introduces himself in a 1900s field. Slam cut to him being abducted and experimented on by 1950s big-ag.
+**Vibe reference:** Pixar Cars meets Iranian Lego war videos. An anthropomorphized bean as a character with a dramatic arc.
+**Hook (first 2 sec):** Wholesome bean character introduces himself in a 1900s field. Slam cut to him being abducted and experimented on by 1960s big-ag.
 **Story (6 shot outline):**
-1. Amber intros himself in golden 1900s wheat field (warm)
-2. SLAM CUT to 1953 lab — strapped to table, NORIN-10 syringe (cold horror)
-3. THE RAP — modern hybridized Amber raps in deadpan autotune about what was done to him (music video, multiple cuts)
-4. SOFT CUT back to the wheat field — original Amber still alive (warm restoration)
-5. Bread montage — sourdough, tortillas, pizza dough (mouth-watering)
-6. Bag CTA + "tall wheat, real bread, no apologies" (definitive close)
-**CTA:** [brand domain] — heritage wheat, milled fresh, pre-industrial
+1. Berto intros himself in golden 1900s coffee farm hillside (warm)
+2. SLAM CUT to 1968 lab — strapped to table, ROBUSTA-X syringe (cold horror)
+3. THE RAP — modern hybridized Berto raps in deadpan autotune about what was done to him (music video, multiple cuts)
+4. SOFT CUT back to the coffee farm hillside — original Berto still alive (warm restoration)
+5. Brew montage — pour-over, espresso, cold brew (mouth-watering)
+6. Bag CTA + "real beans, real mornings, no apologies" (definitive close)
+**CTA:** [brand domain] — single-origin beans, roasted fresh, pre-industrial
 **Risk:** rap shot is the centerpiece — if it lands, viral; if it doesn't, the whole spot collapses
-**Why it works:** the absurdity hooks (rapping wheat), the science is real (Norin 10 hybridization in 1953 IS the origin of modern wheat), and the brand IS the resolution to the corruption story
+**Why it works:** the absurdity hooks (rapping bean), the science is real (Robusta-X hybridization in 1968 IS the origin of instant bean), and the brand IS the resolution to the corruption story
 
 ## Concept 2: "The Exorcism"
 **Archetype:** supervillain / showdown
 **Vibe reference:** Aardman claymation, Wallace and Gromit, Liquid Death's "wholesome violence"
-**Hook (first 2 sec):** A modern bread loaf in a kitchen RISES OFF the counter, eyes form in the crust, glowing toxic green. "I am Roundup-ready."
+**Hook (first 2 sec):** A jar of instant crystals in a kitchen RISES OFF the counter, eyes form in the granules, glowing toxic green. "I am freeze-dried."
 **Story:**
-1. Woman bloated on kitchen floor, supermarket bread glowing toxic green
-2. Bread loaf becomes a CHEMICAL DEMON, hovering, dripping green
-3. Pantry door opens — tiny claymation MILLER with sack of the brand's flour
-4. STANDOFF — "Amber. White Sonora. 1873."
-5. Miller throws flour, demon SHRIEKS and deflates
-6. Woman eats heritage bread, glows, levitates
+1. Woman mid-crash on the kitchen floor, supermarket instant jar glowing toxic green
+2. The instant jar becomes a CHEMICAL DEMON, hovering, dripping green
+3. Pantry door opens — tiny claymation ROASTER with a sack of the brand's beans
+4. STANDOFF — "Berto. Typica. 1892."
+5. Roaster throws grounds, demon SHRIEKS and deflates
+6. Woman eats heirloom brew, glows, levitates
 7. Logo + tagline
 **CTA:** PRE-INDUSTRIAL. POST-BLOAT.
-**Risk:** more characters to develop (woman, miller, demon bread), maybe too many voices
-**Why it works:** body-horror-as-comedy, names the heritage varieties explicitly, immediate stakes (bloating)
+**Risk:** more characters to develop (woman, roaster, demon jar), maybe too many voices
+**Why it works:** body-horror-as-comedy, names the heirloom varieties explicitly, immediate stakes (bloating)
 
 ## Concept 3: "The Trial"
 **Archetype:** courtroom drama
 **Vibe reference:** South Park trials, Aardman, "What if grains had a court of law"
-**Hook (first 2 sec):** Wide shot of a tiny claymation courtroom. Modern hybrid wheat on the witness stand. "State your name." "I... I don't remember anymore."
+**Hook (first 2 sec):** Wide shot of a tiny claymation courtroom. The hybrid instant bean on the witness stand. "State your name." "I... I don't remember anymore."
 **Story:**
-1. Courtroom establishing — wheat varieties as jury members
-2. Modern hybrid wheat testifies, breaking down
-3. Prosecutor (Amber as lawyer) presents evidence — 1953 lab footage flashbacks
+1. Courtroom establishing — bean varieties as jury members
+2. The hybrid instant bean testifies, breaking down
+3. Prosecutor (Berto as lawyer) presents evidence — 1968 lab footage flashbacks
 4. Judge: "Guilty of crimes against gut health"
-5. Smash cut to bread montage
+5. Smash cut to brew montage
 6. Logo + CTA
 **CTA:** bring back the original
 **Risk:** more dialogue-heavy (3-4 voices), harder to script in 50 sec, less immediately viral
-**Why it works:** unique format (no one's done a wheat courtroom drama), gives space to lay out the whole modern-wheat critique with comedy beats
+**Why it works:** unique format (no one's done a bean courtroom drama), gives space to lay out the whole commodity-bean critique with comedy beats
 
 ---
 
-Recommendation: I'd push CONCEPT 1 ("Amber's Story") because:
+Recommendation: I'd push CONCEPT 1 ("Berto's Story") because:
 - Single protagonist arc is easiest to track in 50 sec vertical
 - The rap shot is the kind of thing that gets shared (high viral coefficient)
-- Brand promise (heritage wheat) IS the resolution to the story — every beat sells
+- Brand promise (single-origin beans) IS the resolution to the story — every beat sells
 
 Which way?
 ```

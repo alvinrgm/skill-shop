@@ -67,7 +67,7 @@ class EndCardSource(Source):
             ], "endcard-frame-nologo")
 
         # Static still: no motion on the logo — motion looked weird with the
-        # embossed wheat-stalk mark. Loop the single frame for the target duration.
+        # embossed brand mark. Loop the single frame for the target duration.
         scenes_dir = ctx.run_dir / "scenes"
         scenes_dir.mkdir(exist_ok=True)
         out = scenes_dir / "end_card.mp4"

@@ -4,7 +4,7 @@ The breakdown is the Hollywood-studio-style pre-production document for the spot
 
 ## Why this exists
 
-Past mistake (the "ask your grandma" spot run, May 2026): wrote `script.md` with visual + dialogue mixed in one column, never explicitly designed the audio architecture. Defaulted to Strategy A (per-clip seedance native audio) at Phase 5 because that's the cheap path. But the spot's couplabeers structure REQUIRED Strategy B (continuous narrator). Took 3 stringouts (v1 / v2 / v3) and ~200 wasted credits to pivot.
+Past mistake (the "ask your abuelo" spot run, May 2026): wrote `script.md` with visual + dialogue mixed in one column, never explicitly designed the audio architecture. Defaulted to Strategy A (per-clip seedance native audio) at Phase 5 because that's the cheap path. But the spot's couplabeers structure REQUIRED Strategy B (continuous narrator). Took 3 stringouts (v1 / v2 / v3) and ~200 wasted credits to pivot.
 
 The breakdown forces the audio architecture decision at Phase 2 when it's ~$0 to change. Adding a column for "Narrator VO (11L)" alongside "In-scene dialogue (seedance)" makes the architecture VISIBLE in the table → if rows 1, 4, 6, 7b all have 11L populated, that's a Strategy B spot and we know it upfront.
 
@@ -56,24 +56,24 @@ Below the breakdown table, list each voice with its source-of-truth lock:
 
 For 11L voices, always log the voice_id. Without it, voice consistency across re-fires is lost.
 
-## Worked example — the "ask your grandma" spot
+## Worked example — the "ask your abuelo" spot
 
 For reference. This is what the breakdown SHOULD have looked like at Phase 2 (instead of the split script.md + storyboard.md that we built):
 
 | # | Sec | Visual | In-scene dialogue (seedance) | Narrator VO (11L Kiora) | Music + SFX | Char refs | Env refs |
 |---|---|---|---|---|---|---|---|
-| 1 | 5 | Dad at kitchen island, weary, mouth closed throughout | — | "A few months ago... his bread wasn't loving him back." | continuous warm piano (see brief) | dad_sheet | kitchen_sheet (cold) |
-| 2 | 5 | Dinner party. Friend slides bag toward Dad. Dad silent, examines label | FRIEND: "Dude. You should try this." | "Then a friend told him about heritage wheat." (overlays at t=2.5s) | (continuous bed) | dad_sheet, friend_hero | dinner_party |
+| 1 | 5 | Dad at kitchen island, weary, mouth closed throughout | — | "A few months ago... his coffee wasn't loving him back." | continuous warm piano (see brief) | dad_sheet | kitchen_sheet (cold) |
+| 2 | 5 | Dinner party. Friend slides bag toward Dad. Dad silent, examines label | FRIEND: "Dude. You should try this." | "Then a friend told him about single-origin beans." (overlays at t=2.5s) | (continuous bed) | dad_sheet, friend_hero | dinner_party |
 | 2b | 5 | Dad alone, examining bag at counter. Bridge beat. | — | "He gave it a try. And within a few weeks... he was a different person." | (continuous bed) | dad_sheet | kitchen_sheet (warm) |
-| 3 | 5 | Transformation cuts (loaf, bloat reduced, kid hair tousle, Jane reaction) | DAD: "Jane. You look amazing. Have you been working out?"<br><br>WIFE (off-screen): "...What?" | — | (continuous bed) | dad_sheet, wife_hero, kid_hero | kitchen_sheet (warm) |
-| 4 | 9 | Slow product b-roll. Bag + flour cascade + dough kneading. NO CHARACTERS. **→ Rule 2: ken-burns candidate (still + VO overlay, skip seedance)** | — | "[Brand] heritage wheat. Stone-milled. Minimally processed. The wheat your great-grandma actually baked with." | (continuous bed) | — | — (use pack_sheet hero pull) |
-| 5a | 4 | Dad with loaf to face, single tear, eyes closed | — | "You may notice... some changes." | (continuous bed) | dad_sheet | kitchen_sheet (oven amber) |
-| 5b | 4 | Dad in garage with sourdough jar, intimate whisper | DAD whisper: "You're doing great, Geoffrey." | — | (continuous bed) | dad_sheet | garage_night |
-| 5c | 4 | Dad at BBQ, holding sourdough slice up to sun | DAD stage-whisper: "Look at this color." | — | (continuous bed) | dad_sheet | backyard_bbq |
-| 5d | 4 | Dad refusing bread basket at chain restaurant | DAD: "I'm good, thank you." | — | (continuous bed) | dad_sheet, wife_hero, kid_hero | chain_italian |
-| 6 | 5 | Midnight kitchen. Dad pouring heritage white into mixer. Wife in doorway. | WIFE (mid-shot): "Honey?" | "Heritage white flour..." (t=0.3s) + "...you may find yourself going back for more." (t=2.5s) | (continuous bed) | dad_sheet, wife_hero | kitchen_sheet (night) |
-| 7a | 5 | Pantry stockpile beat. Dad caught with row of bags behind him. Family in doorway. | WIFE: "Honey, can we talk?"<br><br>DAD to camera: "No. It's MY heritage bread." | — | (continuous bed) | dad_sheet, wife_hero, kid_hero | pantry |
-| 7b | 4 | Clean product end card. Bag centered on counter. Logo lockup fades in. **→ Rule 2: ken-burns candidate** | — | "[Brand]. Ask your grandma." | (continuous bed → fade) | — | — (still over pack_sheet) |
+| 3 | 5 | Transformation cuts (first sip, jitters gone, kid hair tousle, Jane reaction) | DAD: "Jane. You look amazing. Have you been working out?"<br><br>WIFE (off-screen): "...What?" | — | (continuous bed) | dad_sheet, wife_hero, kid_hero | kitchen_sheet (warm) |
+| 4 | 9 | Slow product b-roll. Bag + bean cascade + slow pour-over. NO CHARACTERS. **→ Rule 2: ken-burns candidate (still + VO overlay, skip seedance)** | — | "[Brand] single-origin beans. Small-batch roasted. Minimally processed. The coffee your abuelo actually drank." | (continuous bed) | — | — (use pack_sheet hero pull) |
+| 5a | 4 | Dad with steaming mug to face, single tear, eyes closed | — | "You may notice... some changes." | (continuous bed) | dad_sheet | kitchen_sheet (oven amber) |
+| 5b | 4 | Dad in garage with cold-brew jar, intimate whisper | DAD whisper: "You're doing great, Geoffrey." | — | (continuous bed) | dad_sheet | garage_night |
+| 5c | 4 | Dad at BBQ, holding a glass of cold brew up to the sun | DAD stage-whisper: "Look at this color." | — | (continuous bed) | dad_sheet | backyard_bbq |
+| 5d | 4 | Dad refusing diner drip at a chain restaurant | DAD: "I'm good, thank you." | — | (continuous bed) | dad_sheet, wife_hero, kid_hero | chain_italian |
+| 6 | 5 | Midnight kitchen. Dad pouring heirloom roast into mixer. Wife in doorway. | WIFE (mid-shot): "Honey?" | "Heirloom dark roast..." (t=0.3s) + "...you may find yourself going back for more." (t=2.5s) | (continuous bed) | dad_sheet, wife_hero | kitchen_sheet (night) |
+| 7a | 5 | Pantry stockpile beat. Dad caught with row of bags behind him. Family in doorway. | WIFE: "Honey, can we talk?"<br><br>DAD to camera: "No. It's MY heirloom brew." | — | (continuous bed) | dad_sheet, wife_hero, kid_hero | pantry |
+| 7b | 4 | Clean product end card. Bag centered on counter. Logo lockup fades in. **→ Rule 2: ken-burns candidate** | — | "[Brand]. Ask your abuelo." | (continuous bed → fade) | — | — (still over pack_sheet) |
 
 **Architecture analysis (what the table makes obvious):**
 → 8 rows have 11L Kiora narrator → Strategy B spot. Generate Kiora track FIRST.

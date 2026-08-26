@@ -32,7 +32,7 @@ wrong` while the resize is in flight; both mean "not ready yet," not "wrong call
     (they resize in parallel), THEN fire the gens. Don't upload-then-immediately-generate per shot.
   ✓ Preflight `get_cost:true` does NOT validate media availability (it priced media that then failed
     submission) — it is NOT a readiness check. The only real check is a successful submit.
-  ✓ Prior flour-brand spots did NOT hit this because their start-frames were Higgsfield image-GEN jobs
+  ✓ Prior coffee-brand spots did NOT hit this because their start-frames were Higgsfield image-GEN jobs
     (`type:"image_job"`, instantly available). Our Gemini→`media_upload` frames (`type:"media_input"`)
     carry the resize lag. Same call shape, different ingestion path. (We still use Gemini for images per
     the cost HARD RULE — just budget for the lag.)
@@ -56,7 +56,7 @@ answer is almost always WAIT, not re-upload.
 
 ## HARD RULE: FCPXML clip offsets MUST accumulate in FRAMES, never seconds
 
-❌ **Wrong (Amber Origin Spot, 2026-06-03 — the operator caught a 1-frame black gap between shots 2 and 3 with a screenshot):**
+❌ **Wrong (Berto Origin Spot, 2026-06-03 — the operator caught a 1-frame black gap between shots 2 and 3 with a screenshot):**
 
 ```python
 offset_sec = 0.0
@@ -103,7 +103,7 @@ Encoded as a block comment at the clip-placement loop in `scripts/fcpxml_gen.py`
 
 ## HARD RULE: FCPXML asset uids MUST stay stable across regenerations of the same file
 
-❌ **Switched `stable_uid()` from path-hash to content-hash mid-project on Amber Origin Spot (2026-06-03).** The intent was to make uids survive folder renames. But FCP had already cached uids from the path-based scheme during the first import. On the next regeneration, the same files now had DIFFERENT (content-based) uids, and FCP rejected with: *"The media already exists in the library with a different unique identifier."* Even deleting the project + restarting FCP didn't evict the cached uid binding — FCP libraries persist their asset registry separately from project references. The operator couldn't import the regenerated FCPXML at all until the script reverted to path-based hashing to reproduce the cached uids.
+❌ **Switched `stable_uid()` from path-hash to content-hash mid-project on Berto Origin Spot (2026-06-03).** The intent was to make uids survive folder renames. But FCP had already cached uids from the path-based scheme during the first import. On the next regeneration, the same files now had DIFFERENT (content-based) uids, and FCP rejected with: *"The media already exists in the library with a different unique identifier."* Even deleting the project + restarting FCP didn't evict the cached uid binding — FCP libraries persist their asset registry separately from project references. The operator couldn't import the regenerated FCPXML at all until the script reverted to path-based hashing to reproduce the cached uids.
 
 ✓ **Pick ONE uid scheme and don't switch.** Path-based hashing is the current default in `stable_uid()` — fast, deterministic, no file read required, and once cached by FCP it stays consistent across re-imports as long as the file path doesn't change. The trade-off is that renaming the concept folder breaks re-imports for that project — recovery requires fully evicting FCP's cached assets (delete project, delete clips from events, restart FCP) before re-importing.
 
@@ -121,7 +121,7 @@ Encoded as a block comment at the clip-placement loop in `scripts/fcpxml_gen.py`
 
 ## HARD RULE: Every audio + video track MUST be on the FCPXML spine, never just imported as event assets
 
-❌ **Generated `final/project.fcpxml` for the acme-darrold spot with only video clips on the timeline (2026-06-03).** The 11L narrator track was a separate `audio/narrator_50s.mp3` file referenced nowhere in the FCPXML. The operator opened the project in FCP 12.2, heard silent video, called it out. Required a manual patch to add the narrator as a connected clip on lane -1. The point of the FCPXML deliverable is that opening it shows a complete, playable cut — not a video skeleton that requires manually dragging audio from the browser onto the timeline.
+❌ **Generated `final/project.fcpxml` for the acme-marv spot with only video clips on the timeline (2026-06-03).** The 11L narrator track was a separate `audio/narrator_50s.mp3` file referenced nowhere in the FCPXML. The operator opened the project in FCP 12.2, heard silent video, called it out. Required a manual patch to add the narrator as a connected clip on lane -1. The point of the FCPXML deliverable is that opening it shows a complete, playable cut — not a video skeleton that requires manually dragging audio from the browser onto the timeline.
 
 ✓ Every audio file in the project goes on the `<spine>` as a connected `<asset-clip lane="-N">`, not just declared as a resource. Use `scripts/fcpxml_gen.py` with the `--narrator`, `--music`, and `--stems` flags (they exist specifically to enforce this rule). Convention:
 - A1 (primary on the asset-clip) = per-clip native audio, role `dialogue`
@@ -166,7 +166,7 @@ off, RE-FIRE that seedance clip (with its locked audio segment), don't improvise
 ✓ The distinction in one sentence: 11L as the planned voice ARCHITECTURE at Phase 2 = the default and
 correct. Improvising a toolchain swap mid-Phase-5 to patch one clip = still wrong; re-fire instead.
 
-⚠ Past mistake (the flour brand "ask your grandma," May 2026): the operator referenced SNL Couplabeers at Phase 2 (a
+⚠ Past mistake (the coffee brand "ask your abuelo," May 2026): the operator referenced SNL Couplabeers at Phase 2 (a
 textbook locked-voice spot). Defaulted to Strategy A per-clip seedance audio because the old rigid
 rule said "never 11L." Took 3 stringouts (v1 / v2 / v3) and ~200 wasted credits before the operator overrode.
 With 11L-as-default architected at Phase 2, v1 would have shipped clean.
@@ -175,7 +175,7 @@ With 11L-as-default architected at Phase 2, v1 would have shipped clean.
 
 ## "Stringout" defaults to concat-existing-files, NEVER fire new gens
 
-❌ **Misread "stringout incl all generations" as "go generate the missing shots and then concat" on the "ask your grandma" spot (May 2026).** The operator meant "ffmpeg concat the clips we already have on disk so I can evaluate the raw material." I interpreted it as "fire the missing seedance gens then concat." Fired 10 batch seedance calls without per-clip review. Cost ~120 credits on stuff that didn't survive the next review pass.
+❌ **Misread "stringout incl all generations" as "go generate the missing shots and then concat" on the "ask your abuelo" spot (May 2026).** The operator meant "ffmpeg concat the clips we already have on disk so I can evaluate the raw material." I interpreted it as "fire the missing seedance gens then concat." Fired 10 batch seedance calls without per-clip review. Cost ~120 credits on stuff that didn't survive the next review pass.
 
 ✓ When the operator says "stringout the clips" / "stringout incl all generations" / "let me see the cut" → default interpretation = ffmpeg concat existing files in `clips/` folder, in script order. NO new gens.
 
@@ -192,8 +192,8 @@ With 11L-as-default architected at Phase 2, v1 would have shipped clean.
 ❌ **Wrote a ball-hammock underwear script (2026-05-21) where shot 1 dialogue was "the squishing? / the squishing." and shot 3 had a single VO line over the entire 8s product reveal.** The operator pushed back twice: first that dialogue needed to "agitate annoyances and pains and biological effects," then that the video needed to "highlight the benefits and features of the product as it progressed." Both corrections were the same underlying gap — the script wasn't doing PAS work (problem → agitate → solve), it was vibing.
 
 ✓ **Default every script to: pain-agitate → product-feature-drop → benefit-embody → CTA.**
-- Opening 40-50% of runtime: agitate the actual customer pain, using brand-native vocabulary from `brief.md`. Get biological, sensory, specific. Stack 1-2 pain notes per shot. NEVER abstract ("uncomfortable underwear") — concrete ("the sticking. the swamp's risin'. bat wing, righty — BAT WING!").
-- Middle product-reveal shot: each visual beat of the product (rotation, descent, macro-zoom) carries ONE named feature in the VO. 4 rotation beats = 4 feature lines. Pull exact feature phrasing from `brief.md` ("95% microModal", "softer than a baby chinchilla", "polyester-free") — never paraphrase.
+- Opening 40-50% of runtime: agitate the actual customer pain, using brand-native vocabulary from `brief.md`. Get biological, sensory, specific. Stack 1-2 pain notes per shot. NEVER abstract ("uncomfortable socks") — concrete ("the elastic digs in. by noon there's a trench around your calf.").
+- Middle product-reveal shot: each visual beat of the product (rotation, descent, macro-zoom) carries ONE named feature in the VO. 4 rotation beats = 4 feature lines. Pull exact feature phrasing from `brief.md` ("100% combed cotton", "double-reinforced heel", "seam-free toe") — never paraphrase.
 - Closing 15-25%: same characters from opening, but benefits are now physically embodied (wet→dry, stuck→lifted, brittle→whole). Dialogue names the reversal in plain brand voice ("lifted. separated. dry as a damn bone."). Final line is the spoken CTA.
 
 ⚠ **Root cause:** I treated "dialogue" as comedic ornament instead of as the load-bearing copywriting layer. In a 30s ad, every line has to either agitate pain, name a feature, or sell a benefit — there is no room for filler. Cute back-and-forth between characters that doesn't move the PAS arc is wasted time and credits. The pixar/CGI aesthetic seduces toward "charming character moments" — resist it. Charm is delivery, not substance.
@@ -216,7 +216,7 @@ With 11L-as-default architected at Phase 2, v1 would have shipped clean.
 
 ## Stage directions become spoken words
 
-❌ **Wrote "and it specifically — *sneeze* — removes POLLEN" in a seedance prompt for pet-wipes shot 3.** Seedance read the asterisks as just punctuation and had Pollen literally say "and it specifically sneeze removes pollen" — the word "sneeze" as a spoken syllable, not a sneeze sound effect. Wasted 1 re-fire.
+❌ **Wrote "and it specifically — *sneeze* — removes POLLEN" in a seedance prompt for pet brand's shot 3.** Seedance read the asterisks as just punctuation and had Pollen literally say "and it specifically sneeze removes pollen" — the word "sneeze" as a spoken syllable, not a sneeze sound effect. Wasted 1 re-fire.
 
 ✓ Use phonetic spellings for sound effects inside dialogue. Seedance treats anything in the dialogue string as words to speak.
 - sneeze → `achoo!` or `kchoo!`
@@ -257,7 +257,7 @@ Pre-flight check (in your head, before generating): count turns, count words, di
 
 ## Mid-scene object pop-ins on locked-camera shots
 
-❌ **pet-wipes shot 3 v8: at second 1, the encampment had no clothesline. At second 10, a tiny laundry line with hanging clothes had popped into frame on the left side.** Model added an object mid-shot with no instruction to do so. Jarring. Took 1 re-fire (~35 credits) to fix.
+❌ **pet brand's shot 3 v8: at second 1, the encampment had no clothesline. At second 10, a tiny laundry line with hanging clothes had popped into frame on the left side.** Model added an object mid-shot with no instruction to do so. Jarring. Took 1 re-fire (~35 credits) to fix.
 
 ✓ Every locked-camera shot prompt needs an explicit "scene stability clause" — see `prompts/scene-stability-clause.md`. Bake this into the seedance prompt template for any shot where the camera doesn't move.
 
@@ -281,7 +281,7 @@ Pre-flight check (in your head, before generating): count turns, count words, di
 
 ## Wrong start frame breaks shot-to-shot continuity
 
-❌ **For pet-wipes shot 3 v4, used `a54ec08f` (the shot_04 beach-environment frame) as the start frame.** Shot 3 was supposed to take place in the same fur-canopy encampment as shot 2, but the start frame put the scene in a totally different environment (sandy beach with thatched hut). Huge continuity break between shots 2 and 3. Caught it via frame extraction, re-fired with the correct encampment start frame (~35 credits wasted).
+❌ **For pet brand's shot 3 v4, used `a54ec08f` (the shot_04 beach-environment frame) as the start frame.** Shot 3 was supposed to take place in the same fur-canopy encampment as shot 2, but the start frame put the scene in a totally different environment (sandy beach with thatched hut). Huge continuity break between shots 2 and 3. Caught it via frame extraction, re-fired with the correct encampment start frame (~35 credits wasted).
 
 ✓ Build a per-shot start-frame map BEFORE firing any video gens. Verify each shot's start frame matches the environment of the preceding shot. Maintain this map in `final/manifest.yml` or a `refs/scenes/SHOTS.md` file.
 
@@ -310,7 +310,7 @@ ffmpeg -v error -sseof -0.1 -i clips/shot_0N.mp4 -frames:v 1 -update 1 refs/scen
 
 ## NSFW + ip_detected retry sequence (revised — same-prompt retry FIRST, full rewrite LAST)
 
-❌ **Two-failure pattern (pet-wipes shot 6 v4 + the "ask your grandma" spot shot 5b May 2026):** hit `ip_detected` or `nsfw`, jumped straight to a full prompt rewrite removing "trigger words" by gut feel. Wasted credits. Honest admission: in both cases I never actually root-caused what triggered the filter. I pattern-matched on words I thought might be problematic. That's guessing, not diagnosis.
+❌ **Two-failure pattern (pet brand's shot 6 v4 + the "ask your abuelo" spot shot 5b May 2026):** hit `ip_detected` or `nsfw`, jumped straight to a full prompt rewrite removing "trigger words" by gut feel. Wasted credits. Honest admission: in both cases I never actually root-caused what triggered the filter. I pattern-matched on words I thought might be problematic. That's guessing, not diagnosis.
 
 ✓ **Correct retry sequence (do in order, escalate only if prior step fails twice):**
 
@@ -336,7 +336,7 @@ When a prompt fires `nsfw` or `ip_detected`, log to the concept folder `$ADGEN_H
     [full prompt text that worked]
   changed: |
     Removed "intimate whisper" → "soft warm encouraging line"
-    Removed "private confidential register" → "wholesome home-bread-hobby vibe"
+    Removed "private confidential register" → "wholesome home-brew-hobby vibe"
     Changed "dim home garage at 11pm" → "suburban home garage in the evening"
   hypothesis: |
     Possibly the "intimate" + "11pm" + "cradling jar near face" combo read as
@@ -383,7 +383,7 @@ Both sheets get uploaded to Higgsfield as image refs and passed into every shot 
 
 ## Product/label HERO shots warp in seedance — use ken-burns over the locked composite instead
 
-❌ **On the couplaflours concept, generated dinner-table + counter shots through seedance with the flour bag as a hero element, WITH full-angle product contact sheets passed as refs.** The bag still flipped backwards mid-shot, the on-pack text came out wrong, and the side seam count was wrong (1 seam rendered where the real bag has 2) — despite 8 explicit lines of "BAG STABILITY RULES" in the prompt. operator: *"the bag inexplicably flips backwards"* and later *"no its worse now. the text on bag is wrong. and the bag side edges are not 2 seams!!! its 1 seam!!"*
+❌ **On the couplacups concept, generated dinner-table + counter shots through seedance with the coffee bag as a hero element, WITH full-angle product contact sheets passed as refs.** The bag still flipped backwards mid-shot, the on-pack text came out wrong, and the side seam count was wrong (1 seam rendered where the real bag has 2) — despite 8 explicit lines of "BAG STABILITY RULES" in the prompt. operator: *"the bag inexplicably flips backwards"* and later *"no its worse now. the text on bag is wrong. and the bag side edges are not 2 seams!!! its 1 seam!!"*
 
 ✓ **The contact sheet locks what the product looks like for the model, but seedance still RE-RENDERS (and mangles) fine typography + rigid geometry on every gen.** Refs aren't enough for a label-critical shot. So for any shot whose job is "show the product / label clearly":
 - Generate the locked 4K product hero composite via Gemini at Phase 4 (perfect text, real geometry).
@@ -396,7 +396,7 @@ Both sheets get uploaded to Higgsfield as image refs and passed into every shot 
 
 ## Silent ken-burns fallback when seedance blocks — SURFACE the block, don't substitute quietly
 
-❌ **On Amber origin, shots 5 and 6 quietly became static ffmpeg ken-burns pans after seedance blocked them (ip_detected).** No flag to the operator. They noticed on review: *"Shots five and six are just static Ken Burns that don't look good. Why did we do it that way?"* The static substitution was a creative downgrade made silently.
+❌ **On Berto origin, shots 5 and 6 quietly became static ffmpeg ken-burns pans after seedance blocked them (ip_detected).** No flag to the operator. They noticed on review: *"Shots five and six are just static Ken Burns that don't look good. Why did we do it that way?"* The static substitution was a creative downgrade made silently.
 
 ✓ When a shot can't pass seedance after the retry sequence, STOP and surface the choice: *"shot N is blocked after retries. options: (a) re-storyboard the composition and regenerate the start frame, (b) ken-burns over the start frame as a deliberate static shot, (c) drop it. which?"* A static substitute is a creative decision for the operator, not a silent fallback.
 
@@ -424,7 +424,7 @@ Both sheets get uploaded to Higgsfield as image refs and passed into every shot 
 
 ## Asset audit failures
 
-❌ **Generated a fake burlap bag with the brand logo printed on it for the CTA shot.** The actual product hero image was already in the brand kit at `brand/product-images/heritage_white_front.png`. The fake looked nothing like the real product. Wasted ~30 credits + a generation cycle.
+❌ **Generated a fake burlap bag with the brand logo printed on it for the CTA shot.** The actual product hero image was already in the brand kit at `brand/product-images/heirloom_roast_front.png`. The fake looked nothing like the real product. Wasted ~30 credits + a generation cycle.
 
 ✓ ALWAYS audit `$ADGEN_HOME/<brand>/brand/` (brand kit) and skim `$ADGEN_HOME/<brand>/concepts/*/` (prior concept refs) for existing assets BEFORE generating anything brand-related. Never invent a generic version of a thing that already exists.
 
@@ -442,7 +442,7 @@ Both sheets get uploaded to Higgsfield as image refs and passed into every shot 
 
 ---
 
-❌ **Used a "warm grandma female voice" for one shot in the middle of an ad whose protagonist was an old male Kansas farmer.** Broke voice continuity, felt disjointed. The operator caught it: "too many voices, getting jarring."
+❌ **Used a "warm grandma female voice" for one shot in the middle of an ad whose protagonist was an old male highland farmer.** Broke voice continuity, felt disjointed. The operator caught it: "too many voices, getting jarring."
 
 ✓ **Max 3-voice cast per ad: protagonist + antagonist + one special (rapper, narrator, etc.).** When the script has 4+ speakers, re-architect — most lines should go to the protagonist if they're present.
 
@@ -450,7 +450,7 @@ Both sheets get uploaded to Higgsfield as image refs and passed into every shot 
 
 ---
 
-❌ **Generated dialogue with "Acquisition complete. Higher yield." in a cold corporate narrator voice during an abduction scene.** The protagonist (Amber) was on screen being abducted. Felt narratively wrong. operator: "rewrite from Amber's perspective. Like 'Big-agriculture started experimenting with me — YARUGHHH!'"
+❌ **Generated dialogue with "Acquisition complete. Higher yield." in a cold corporate narrator voice during an abduction scene.** The protagonist (Berto) was on screen being abducted. Felt narratively wrong. operator: "rewrite from Berto's perspective. Like 'Big-agriculture started experimenting with me — YARUGHHH!'"
 
 ✓ When the protagonist is in a scene, default to THEIR voice narrating it. Cold third-person narration is rarely the right call when you have a strong character POV.
 
@@ -511,7 +511,7 @@ NEVER mix the two. Don't overlay continuous audio over per-clip-synced visuals.
 
 ## Static shot cost
 
-❌ **Used seedance for a static product/food shot** (three breads on a counter, slow push-in). Seedance generated minimal motion (some flour dust drift). Cost: ~30 credits for what was effectively a freeze frame with ken-burns.
+❌ **Used seedance for a static product/food shot** (three brews on a counter, slow push-in). Seedance generated minimal motion (some coffee dust drift). Cost: ~30 credits for what was effectively a freeze frame with ken-burns.
 
 ✓ Static product / food / logo / text shots → ALWAYS use ffmpeg ken-burns over the still image. Free. Fast. See `ffmpeg-cookbook.md` for the recipe.
 

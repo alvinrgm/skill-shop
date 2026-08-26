@@ -48,7 +48,7 @@ depth layering (FG / MID / BG) · leading lines · symmetry ↔ asymmetry · asp
 band for FCP captions/logo)
 
 ### 5. Environment
-setting / location · set dressing & props (art-directed details — a flour scatter, a wooden
+setting / location · set dressing & props (art-directed details — a coffee-bean scatter, a wooden
 scoop) · background treatment (clean ↔ creamy bokeh ↔ busy) · continuity locks (what stays
 fixed across shots)
 

@@ -35,10 +35,10 @@ These are codified in `SKILL.md` Phase 7 — repeated here as the canonical sche
 |---|---|---|
 | `<library>` | His active library (must be set in FCP before import) | `Client ads` |
 | `<event name="...">` | Client name (ONE event per client) | `Acme Coffee Co`, `Birchwood Pets` |
-| `<project name="...">` | Concept name (siblings within the client event) | `Amber Origin Spot`, `Grandma v4` |
-| project-name suffix | Timeline iteration | `Amber Origin Spot — v1`, `... — 9x16`, `... — 4x5` |
+| `<project name="...">` | Concept name (siblings within the client event) | `Berto Origin Spot`, `Abuelo v4` |
+| project-name suffix | Timeline iteration | `Berto Origin Spot — v1`, `... — 9x16`, `... — 4x5` |
 
-Re-imports with the same event name **merge in place** (no duplicate events spawn). If a stale event name lingers from a prior convention (e.g., the original 2026-06-02 `Amber Origin Spot` event before it was reorganized into `the flour brand`), the operator merges it by dragging contents inside the same library — same-library drag is a move, not a copy — then deletes the empty source event.
+Re-imports with the same event name **merge in place** (no duplicate events spawn). If a stale event name lingers from a prior convention (e.g., the original 2026-06-02 `Berto Origin Spot` event before it was reorganized into `the coffee brand`), the operator merges it by dragging contents inside the same library — same-library drag is a move, not a copy — then deletes the empty source event.
 
 **Canonical CLI for the generator:**
 ```
@@ -212,7 +212,7 @@ Each clip's `offset` = sum of all prior clip durations (since they're back-to-ba
 - `dialogue` for VO + character speech
 - `music` for music beds
 - `effects` for SFX
-- Or custom roles like `dialogue.amber` for sub-lanes
+- Or custom roles like `dialogue.berto` for sub-lanes
 
 ## Multiple audio tracks (lanes)
 
