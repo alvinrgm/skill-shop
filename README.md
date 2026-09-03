@@ -12,6 +12,7 @@ Free, working Claude Code skills from [Rise Growth Marketing](https://www.risegm
 | [multi-size-adapter](multi-size-adapter/) | One master creative → every ad size you need, layout-aware, not a dumb crop |
 | [gsuite-bridge](gsuite-bridge/) | Create fully formatted Google Docs, Sheets, and Slides from Claude Code: headings, tables, styled decks, via your own Apps Script bridge |
 | [dialectical-debate](dialectical-debate/) | Stress-test any claim or decision: opposing agents investigate independently, cross-examine, and return a confidence-rated verdict |
+| [strategy-crystallizer](strategy-crystallizer/) | Force any brand or business question through Rumelt's strategy kernel: falsifiable one-sentence thesis, coherent actions, explicit refusals, graded out of 70. Refuses fluff, demands diagnosis before action |
 
 ## Install
 
