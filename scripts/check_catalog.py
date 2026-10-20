@@ -34,6 +34,9 @@ for item in items:
     for field in ("published", "updated"):
         if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", item.get(field, "")):
             errors.append(f"{slug}: {field} must be YYYY-MM-DD")
+    image = item.get("image")  # optional: repo-relative card image, e.g. <slug>/explainer/1080x1350.png
+    if image and not (ROOT / image).is_file():
+        errors.append(f"{slug}: image {image} not found")
     if not (ROOT / slug / "SETUP.md").is_file():
         errors.append(f"{slug}: no {slug}/SETUP.md in the repo")
 

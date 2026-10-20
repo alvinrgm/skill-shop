@@ -1,5 +1,5 @@
 {
-  "_readme": "The one list of what this shop publishes. risegm.com/skills renders its cards from this file, so a new entry here is a new card on the site. Slugs are published anchors (risegm.com/skills#<slug>): never rename or remove one. Check with: python3 scripts/check_catalog.py",
+  "_readme": "The one list of what this shop publishes. risegm.com/skills renders its cards from this file, so a new entry here is a new card on the site. Slugs are published anchors (risegm.com/skills#<slug>): never rename or remove one. Optional field image: a repo-relative path to the card image. Check with: python3 scripts/check_catalog.py",
   "items": [
     {
       "slug": "adlib-creative-intel",
