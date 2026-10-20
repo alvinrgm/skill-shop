@@ -1,0 +1,28 @@
+name: catalog
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/check_catalog.py
+
+  # A push to main changes what risegm.com/skills lists, so rebuild the site.
+  # Set the repo secret RISEGM_SITE_DEPLOY_HOOK to a Vercel deploy hook URL for
+  # the risegm-site project. Without it this step is skipped.
+  redeploy-site:
+    needs: check
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger risegm.com rebuild
+        env:
+          HOOK: ${{ secrets.RISEGM_SITE_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "RISEGM_SITE_DEPLOY_HOOK not set, skipping"; exit 0; fi
+          curl -fsS -X POST "$HOOK" > /dev/null && echo "site rebuild triggered"

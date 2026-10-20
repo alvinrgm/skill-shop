@@ -14,6 +14,10 @@ Free, working Claude Code skills from [Rise Growth Marketing](https://www.risegm
 | [dialectical-debate](dialectical-debate/) | Stress-test any claim or decision: opposing agents investigate independently, cross-examine, and return a confidence-rated verdict |
 | [strategy-crystallizer](strategy-crystallizer/) | Force any brand or business question through Rumelt's strategy kernel: falsifiable one-sentence thesis, coherent actions, explicit refusals, graded out of 70. Refuses fluff, demands diagnosis before action |
 
+## Adding to the shop
+
+`catalog.json` is the one list of what's published here, and risegm.com/skills builds its cards from it. A new folder needs a catalog entry (and a `SETUP.md`) or the check fails. Run `python3 scripts/check_catalog.py` before pushing.
+
 ## Install
 
 Each skill folder has a `SETUP.md` with a one-paste install and a `doctor.sh` that verifies your environment. Start there. Every skill assumes only Claude Code and walks you through anything else it needs.
