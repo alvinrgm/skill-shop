@@ -10,7 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: python3 scripts/check_catalog.py
+        with:
+          fetch-depth: 0
+      - name: Check catalog (and that no published slug was removed)
+        run: |
+          base=${{ github.event.pull_request.base.sha || github.event.before }}
+          git show "$base:catalog.json" > /tmp/base-catalog.json 2>/dev/null || : > /tmp/base-catalog.json
+          python3 scripts/check_catalog.py --base /tmp/base-catalog.json
 
   # A push to main changes what risegm.com/skills lists, so rebuild the site.
   # Set the repo secret RISEGM_SITE_DEPLOY_HOOK to a Vercel deploy hook URL for

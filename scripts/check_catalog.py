@@ -2,8 +2,10 @@
 """Check catalog.json against the folders in this repo.
 
 Fails if a catalog entry has no folder or no SETUP.md, if a folder is missing
-from the catalog, if a field is missing, or if a slug repeats. Run it before
-every push; the site build trusts this file.
+from the catalog, if a field is missing, or if a slug repeats. With
+--base <old catalog.json> it also fails if a slug published there is gone,
+since every slug is a live risegm.com/skills#<slug> link. Run it before every
+push; the site build trusts this file.
 """
 import json
 import re
@@ -35,14 +37,23 @@ for item in items:
         if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", item.get(field, "")):
             errors.append(f"{slug}: {field} must be YYYY-MM-DD")
     image = item.get("image")  # optional: repo-relative card image, e.g. <slug>/explainer/1080x1350.png
-    if image and not (ROOT / image).is_file():
-        errors.append(f"{slug}: image {image} not found")
+    if image:
+        path = (ROOT / image).resolve()
+        if Path(image).is_absolute() or not path.is_relative_to(ROOT) or not path.is_file():
+            errors.append(f"{slug}: image {image} is not a file inside this repo")
     if not (ROOT / slug / "SETUP.md").is_file():
         errors.append(f"{slug}: no {slug}/SETUP.md in the repo")
 
 folders = {p.name for p in ROOT.iterdir() if p.is_dir() and not p.name.startswith(".") and p.name != "scripts"}
 for missing in sorted(folders - seen):
     errors.append(f"{missing}: folder exists but is not in catalog.json")
+
+if "--base" in sys.argv:
+    base_path = Path(sys.argv[sys.argv.index("--base") + 1])
+    if base_path.is_file() and base_path.stat().st_size:
+        base = {i["slug"] for i in json.loads(base_path.read_text())["items"]}
+        for gone in sorted(base - seen):
+            errors.append(f"{gone}: was published and is now gone; slugs are permanent links")
 
 if errors:
     print("\n".join(errors))
