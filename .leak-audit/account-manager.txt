@@ -1,0 +1,5 @@
+VERDICT: PASS
+PACKAGE_HASH: 85bd17f4fef2760a
+AUDITED: 2026-10-21
+METHOD: make-portable leak_gate.py (hard + review) and an independent source-aware audit agent
+NOTES: Audit rounds 1-4 (source-aware); round 4 PASS on these bytes.

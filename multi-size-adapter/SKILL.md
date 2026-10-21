@@ -244,7 +244,7 @@ Never make them type a path if you can find the file for them.
      ("keep the same text the ad already has: the headline about ..."). This rephrase
      reliably clears it.
    - `PROHIBITED_CONTENT`: shorten the prompt and strip claim-heavy phrasing (offers,
-     "no credit check"-style claims spelled out); reference the elements by position and
+     guarantees, regulated claims spelled out word for word); reference the elements by position and
      role instead of quoting every claim.
 
 4. **Run the engine:**

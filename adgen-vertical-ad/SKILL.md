@@ -53,8 +53,8 @@ End-to-end vertical ad production. Optimized for a claymation-mascot creative mo
   → **Decide it at Phase 2**, surfaced from the breakdown.md voice columns. Pick/clone ONE locked voice per character. Use the operator's house narrator voice from the `reference/voice-consistency.md` registry (it ships empty: on the first spot, ask them to pick one and log its voice_id there); ask before picking a new one. NEVER use stock library voices (Brian/Aria/Roger) — they sound generic.
   → **Strategy A (seedance native voice) is now the EXCEPTION** — use only when no character speaks (pure visual + music + SFX), or when the operator explicitly wants a fast/cheap throwaway test cut and accepts the voice drift. Don't reach for 11L as a Phase-5 RESCUE for one bad seedance clip mid-spot (re-fire seedance instead) — but DO architect 11L upfront at Phase 2 as the default voice path.
   → See `reference/audio-pipeline.md` (decision tree + contiguous-segment method) and `reference/voice-consistency.md`.
-  → **MANDATORY: `reference/elevenlabs-dialogue-emotion.md` — apply its pre-flight checklist to EVERY 11L generation.** For any shot with 2+ characters talking, use the **Text to Dialogue** endpoint (`lib/elevenlabs.py` → `dialogue()`), NOT concatenated single-voice clips — it models conversational flow (reactions, timing). Every line MUST carry ≥1 audio tag (`[nervous]`, `[deadpan]`, `[sighs]`, `[strong Brooklyn accent]`, etc.) matched to the character bible's `emotional_range`. Lock v3 expressive settings (stability 0.35-0.45, style 0.1-0.15, NEVER Robust), lock voice+seed per character (+ `previous_request_ids`), generate 2-3 takes and pick best. Enforced at generation time, not optional.
-→ **SEEDANCE IP-FILTER STACKING — never name studios, films, archetypes, or iconic-imagery vocabulary in video prompts.** Higgsfield's `ip_detected` moderation runs a CLIP-style image+text matcher against an IP database. **Signals STACK** — one IP-coded word usually doesn't trip, but multiple stacking signals (studio + character + iconic setting + iconic palette) cross the threshold and block the job (and credits are charged on the failed attempt with no auto-refund). Discovered across two parallel sessions; ~225 credits burned diagnosing it. **NEVER include in seedance prompts:**
+  → **MANDATORY: `reference/elevenlabs-dialogue-emotion.md` — apply its pre-flight checklist to EVERY 11L generation.** For any shot with 2+ characters talking, use the **Text to Dialogue** endpoint (`lib/elevenlabs.py` → `dialogue()`), NOT concatenated single-voice clips — it models conversational flow (reactions, timing). Every line MUST carry ≥1 audio tag (`[calm]`, `[mischievously]`, `[sighs]`, `[Southern US accent]`, etc.) matched to the character bible's `emotional_range`. Lock v3 expressive settings (stability 0.35-0.45, style 0.1-0.15, NEVER Robust), lock voice+seed per character (+ `previous_request_ids`), generate 2-3 takes and pick best. Enforced at generation time, not optional.
+→ **SEEDANCE IP-FILTER STACKING — never name studios, films, archetypes, or iconic-imagery vocabulary in video prompts.** Higgsfield's `ip_detected` moderation runs a CLIP-style image+text matcher against an IP database. **Signals STACK** — one IP-coded word usually doesn't trip, but multiple stacking signals (studio + character + iconic setting + iconic palette) cross the threshold and block the job (and credits are charged on the failed attempt with no auto-refund). Learned the hard way; a lot of credits were burned diagnosing it. **NEVER include in seedance prompts:**
   → **Studios** — Aardman, Pixar, Disney, DreamWorks, Studio Ghibli, Laika, Sony Pictures Animation, Illumination
   → **Films / shows** — Wallace and Gromit, Toy Story, Yellowstone, Grapes of Wrath, Of Mice and Men, etc.
   → **Real people / actor archetypes** — Sam Elliott, John Dutton, "Most Interesting Man," Sheriff Woody, etc.
@@ -71,7 +71,7 @@ End-to-end vertical ad production. Optimized for a claymation-mascot creative mo
   → "prairie" → "open field"
   **Decision rule for prompts:** describe ACTION (what the character does) + ENVIRONMENT (where), NOT IDENTITY (who) or STYLE-BY-NAME. The start_image carries identity; the contact-sheet ref carries on-model lock; the text should be neutral physical description only.
   **PROACTIVE, not reactive — construct clean, don't write-then-scrub.** The seedance prompt is BUILT physical-description-only from the start, using the translation table in `prompts/seedance-shot.md`. Do not write a studio-named prompt and then try to fix it. **Gemini image prompts are EXEMPT** — naming "Aardman/Laika stop-motion style" in a Gemini Nano Banana image prompt is FINE and often useful (Gemini has no ip_detected filter). The ban applies ONLY to the seedance VIDEO prompt. When you adapt a Gemini start-frame prompt into a seedance prompt, TRANSLATE the studio/style language into physical description as a deliberate construction step. As a final tripwire before EVERY `generate_video` call, pipe the prompt through `scripts/lint_seedance_prompt.sh` — it blocks on banned vocab, music language, or a missing NO-MUSIC clause. The lint is insurance against a slip, not the mechanism; the mechanism is constructing it clean.
-  **If a clip flags `ip_detected`:** don't wait (no cancel tool — the job sits forever). Audit the prompt for studio names, film names, iconic-coded vocabulary; resubmit immediately with neutral language. Credits on the flagged job are abandoned (no auto-refund observed). Brand-name lines in 11L audio are SAFE to attach — the brand name alone tested clean (a brand-name 1.6s clip passed seedance with a known-good start image). The trigger is text-prompt vocabulary stacking, NOT audio content.
+  **If a clip flags `ip_detected`:** don't wait (no cancel tool — the job sits forever). Audit the prompt for studio names, film names, iconic-coded vocabulary; resubmit immediately with neutral language. Credits on the flagged job are abandoned (no auto-refund observed). Brand-name lines in 11L audio are SAFE to attach — the brand name alone tested clean (a short brand-name audio clip passed seedance with a known-good start image). The trigger is text-prompt vocabulary stacking, NOT audio content.
 → **"Stringout" defaults to CONCAT EXISTING FILES, never fire new gens.** When the operator asks for a stringout or to see the cut → ffmpeg concat what's already on disk in the project's `clips/` folder, in script order. Do NOT interpret as "go generate the missing shots and then concat." If shots are missing from the cut, surface that as "we have N of M clips done, here's the partial stringout" and ask whether to fire the missing gens. Batch-firing gens without per-clip review burns credits on clips that won't survive the next review pass.
 → **FCPXML DELIVERABLE MUST HAVE EVERY AUDIO + VIDEO TRACK ON THE TIMELINE — never just imported as event assets.** The operator's hard rule: when they open `final/project.fcpxml` in FCP 12.2, **every clip and every audio file must already be placed on the timeline spine at the correct offset.** Narrator VO on lane -1, music bed on lane -2, per-clip audio stems on lane -3, etc. The whole point of the FCPXML workflow is that they don't manually drag anything from the event browser to the timeline — opening the project should show a complete, playable cut with all tracks audible.
   ❌ Wrong: import audio as an `<asset>` but only add video to the `<spine>`. Audio sits in the event browser, FCP plays silent video.
@@ -138,10 +138,10 @@ $ADGEN_HOME/<brand>/
 
 **Character promotion rule:** characters default to concept-level (`concepts/<slug>/refs/characters/`). The moment a character recurs in a 2nd concept as a brand mascot, promote its contact sheet + bible to `brand/characters/<name>/` and have both concepts reference it there. Don't duplicate a mascot's refs across concept folders — lock once, reference everywhere (same principle as the asset-lock spec).
 
-**Concept slug convention:** `<YYYY-MM-DD>-<angle>-<protagonist>`, all lowercase kebab, NO spaces. e.g. `2025-03-14-sink-showdown-suds`, `2025-02-27-office-safari-otto`, `2025-03-14-city-launch-mom`.
+**Concept slug convention:** `<YYYY-MM-DD>-<angle>-<protagonist>`, all lowercase kebab, NO spaces. e.g. `2025-03-14-sink-showdown-suds`, `2025-02-27-office-safari-otto`, `2025-03-14-picnic-prank-friends`.
 - **`<YYYY-MM-DD>`** = the day the concept was first started (its origin date) — full date, so threads sort chronologically AND you can see when each began.
-- **`<angle>`** = the creative archetype / hook (`origin-story`, `manifesto`, `sink-showdown`, `office-safari`, `city-launch`).
-- **`<protagonist>`** = the character / POV carrying the spot (`suds`, `otto`, `mom`).
+- **`<angle>`** = the creative archetype / hook (`origin-story`, `manifesto`, `sink-showdown`, `office-safari`, `picnic-prank`).
+- **`<protagonist>`** = the character / POV carrying the spot (`suds`, `otto`, `friends`).
 `init_concept.sh` enforces this (date + ≥2 descriptor tokens). Pick angle + protagonist from the concept, not the brand (the brand is already the parent folder). **Don't rename pre-convention concepts in place** — renaming breaks FCP's path-based asset uids and manifest refs (track grandfathered slugs in CLIENTS.md).
 
 **Path convention for the rest of this skill:** unless a path is explicitly prefixed `brand/` (brand-global) or written as an absolute `$ADGEN_HOME/<brand>/...`, every relative path in the phases below (`refs/`, `clips/`, `audio/`, `final/`, `handoff/`, `breakdown.md`, etc.) is relative to the **current concept folder** `$ADGEN_HOME/<brand>/concepts/<slug>/`. That is the working root from Phase 1 onward.
@@ -360,7 +360,7 @@ Steps:
 
 **Goal:** build a complete identity map for each character AND each recurring on-screen product so seedance never has to guess. **The bible is the single source of truth — visual AND voice locked together.** Past mistake: visual ref and voice description lived in different files, and every shot's prompt drifted because nobody enforced the link. Fix: per-character bibles + per-product lock sheets.
 
-**Product contact sheets are now REQUIRED at Phase 3** (added after a product drifted across shots, ~100 credits in re-fires). For every product or recurring physical asset that appears in 2+ shots, generate:
+**Product contact sheets are now REQUIRED at Phase 3** (added after a product drifted across shots and cost a pile of re-fires). For every product or recurring physical asset that appears in 2+ shots, generate:
 1. Packaging contact sheet (front / back / 3/4 / hero pull) — see `prompts/product-contact-sheet.md`
 2. Bare product contact sheet (flat / in-hand / in-use / texture macro) — same template
 
@@ -375,7 +375,7 @@ The environment contact sheet locks the room's geometry, materials, fixtures, an
 
 Without environment contact sheets, master sets drift across shots → cabinets reposition, counter materials change, lamps shift, wall colors vary. Same drift problem character and product contact sheets solve. Catching this at Phase 3 saves an estimated 100+ credits in Phase 5 re-fires per master set.
 
-**ALSO REQUIRED for any master set reused across 2+ cuts: a single LOCKED PLATE.** The multi-angle contact sheet TEACHES the model the space — it does NOT lock cut-to-cut continuity. Generating each start-frame independently against the sheet's many angles makes the model re-invent the room every gen (geometry shifts, on-screen text/digits render differently shot-to-shot). The fix: generate ONE canonical EMPTY plate at the hero camera + one lighting state (`refs/environments/<setting>_plate.png`, 4K, shot aspect), then composite EVERY start-frame into it by passing the plate as the **primary `--ref`** ("use this EXACT room, place characters inside"). Pin any on-screen text/digit/label in WORDS per shot. Record as `canonical_plate:` in `asset-lock.yml`. Full method + the division of labor (plate=geometry, word-spec=text, character sheets=faces) → `prompts/environment-contact-sheet.md`. (Without it, on-screen text such as a sign or clock tends to render differently in every frame.)
+**ALSO REQUIRED for any master set reused across 2+ cuts: a single LOCKED PLATE.** The multi-angle contact sheet TEACHES the model the space — it does NOT lock cut-to-cut continuity. Generating each start-frame independently against the sheet's many angles makes the model re-invent the room every gen (geometry shifts, on-screen text such as a sign or clock renders differently shot-to-shot). The fix: generate ONE canonical EMPTY plate at the hero camera + one lighting state (`refs/environments/<setting>_plate.png`, 4K, shot aspect), then composite EVERY start-frame into it by passing the plate as the **primary `--ref`** ("use this EXACT room, place characters inside"). Pin any on-screen text/digit/label in WORDS per shot. Record as `canonical_plate:` in `asset-lock.yml`. Full method + the division of labor (plate=geometry, word-spec=text, character sheets=faces) → `prompts/environment-contact-sheet.md`. (Without it, on-screen text such as a sign or clock tends to render differently in every frame.)
 
 **Where character artifacts live:** concept-level by default → `concepts/<slug>/refs/characters/`. If this character already exists as a locked brand mascot in `brand/characters/<name>/` (from a prior concept), DON'T regenerate it — reference the brand-level bible + sheet directly. If a character you generate here later recurs in a 2nd concept, apply the character-promotion rule: move its bible + contact sheet up to `brand/characters/<name>/` and reference from both concepts.
 
@@ -408,8 +408,7 @@ For each named character, produce **THREE artifacts**:
      voice:
        prompt_language: |
          <THE EXACT STRING used in every seedance shot prompt that features
-         this character, verbatim. e.g., "gravelly Brooklyn dirt-creature voice,
-         like a tired old building super, slightly drunk on his own importance".
+         this character, verbatim. e.g., "dry, steady, small-town sheriff voice with a slow drawl".
          Never paraphrase across shots.>
        seedance_audio_anchor: |
          <Path to an mp3 extracted from the best seedance clip of this character's voice.
@@ -417,19 +416,19 @@ For each named character, produce **THREE artifacts**:
          featuring this character so the voice timbre stays stable. Empty until first
          shot is generated and the operator approves the voice — then extract audio from that
          shot and lock it here.>
-       accent: <e.g., "Brooklyn / outer-borough NYC", "small-town Western", "British academic">
+       accent: <e.g., "small-town Western", "Scottish Highlands", "British academic">
        pitch: <deep / medium / high>
        pace: <slow / measured / fast / variable>
      emotional_range:
-       default: <e.g., "gruff, self-important">
+       default: <e.g., "steady, squinting, unhurried">
        angry: <e.g., "yelling, mouth wide, eyes narrowed">
        scared: <e.g., "trembling, voice cracks">
        defeated: <e.g., "slumped, weary">
-       happy: <e.g., "beaming, tail wags">
+       happy: <e.g., "slow grin, tips his hat">
      verbal_tics:
-       - <e.g., "drops 'g' on -ing words: 'experimentin', talkin'">
-       - <e.g., "starts complaints with 'oh you have GOT to'">
-       - <e.g., "interrupts Fern with 'nobody asked, Fern'">
+       - <e.g., "drops 'g' on -ing words: scrubbin', reckonin'">
+       - <e.g., "calls every utensil 'partner'">
+       - <e.g., "answers threats with a single 'Hm.' before speaking">
      ```
 
 **Generation flow within Phase 3:**
@@ -494,7 +493,7 @@ For each shot in the script:
      - `audio`: only if music/lip-sync sync is needed (rap, jingle). Otherwise omit.
    - `prompt`: visual + AUDIO description with EXACT character voice prompt language (consistent across all shots for that character)
 
-   **CONTINUITY CHAINING (do this for any two consecutive shots in ONE continuous scene — prevents the "characters teleported" hard cut).** The locked plate keeps the ROOM identical across shots but does NOT keep the PEOPLE in continuous poses — independently-generated start-frames re-pose everyone, so the cut jumps. Fix: after shot N renders and is approved, extract its final frame (`ffmpeg -sseof -0.1 -i clips/shot_0N.mp4 -frames:v 1 -update 1 refs/scenes/shot_0M_start_chained.png`), upload it, and use it as shot N+1's `start_image`. Open shot N+1's prompt with "DIRECT CONTINUATION — the start frame IS the previous clip's final frame; continue their motion, do NOT re-arrange anyone," and write the action as forward motion (confetti settles, eyebrows rise, counter ticks down). Only generate an INDEPENDENT start-frame when the boundary is a deliberate hard cut to a new time/angle/location (e.g. cutting to the product void). Decide per shot-boundary which are "continuous" (chain) vs "hard cut" (independent). See `reference/PITFALLS.md` → "Consecutive shots ... chain the previous clip's LAST FRAME."
+   **CONTINUITY CHAINING (do this for any two consecutive shots in ONE continuous scene — prevents the "characters teleported" hard cut).** The locked plate keeps the ROOM identical across shots but does NOT keep the PEOPLE in continuous poses — independently-generated start-frames re-pose everyone, so the cut jumps. Fix: after shot N renders and is approved, extract its final frame (`ffmpeg -sseof -0.1 -i clips/shot_0N.mp4 -frames:v 1 -update 1 refs/scenes/shot_0M_start_chained.png`), upload it, and use it as shot N+1's `start_image`. Open shot N+1's prompt with "DIRECT CONTINUATION — the start frame IS the previous clip's final frame; continue their motion, do NOT re-arrange anyone," and write the action as forward motion (confetti settles, eyebrows rise, clock hands advance). Only generate an INDEPENDENT start-frame when the boundary is a deliberate hard cut to a new time/angle/location (e.g. cutting to the product void). Decide per shot-boundary which are "continuous" (chain) vs "hard cut" (independent). See `reference/PITFALLS.md` → "Consecutive shots ... chain the previous clip's LAST FRAME."
 
 2. **Static product/food shots AND any product/label hero shot: SKIP seedance entirely.** Use ffmpeg ken-burns over the locked 4K product composite. Per the HARD RULE: seedance warps on-pack text + packaging geometry even with contact-sheet refs, so any shot whose job is "show the product/label clearly" goes ken-burns (centered, near-imperceptible slow push-in) over the Gemini composite that has perfect text. See `reference/ffmpeg-cookbook.md` for the recipe (it pans IN toward a centered product; product never leaves frame).
 
@@ -556,7 +555,7 @@ For each approved clip:
      → Hierarchy on the operator's FCP side is FLAT: library → event → project. FCPXML's DTD does NOT permit project-grouping folders at either level — past sessions burned import attempts with DTD errors trying `<folder>` inside `<library>` AND inside `<event>`. The script's `--folder` flag is deprecated/warn-and-ignore.
      → **Library = your master ads library** (e.g. `Client ads`). Have it active in FCP before importing.
      → **Event = client name** — `Acme Co`, `Example Brand`, etc. ONE event per client. Re-imports with the same event name merge in place instead of spawning duplicates.
-     → **Project = concept name** — `Sink Showdown`, `Office Safari v4`, etc. Multiple concepts per client = multiple sibling projects within the same client event.
+     → **Project = concept name** — `Sink Showdown`, `Office Safari`, etc. Multiple concepts per client = multiple sibling projects within the same client event.
      → **Timeline iterations** of one concept (cut variants, aspect-ratio reframes) use project-name suffixes: `Sink Showdown — v1`, `Sink Showdown — 9x16`, `Sink Showdown — 4x5`.
      → **Canonical CLI:** `python3 scripts/fcpxml_gen.py --output final/project.fcpxml --project-name "<Concept>" --event "<Client>" clips/shot_*.mp4`
      → **Manifest field for posterity:** `event: "<Client>"` and `project_name: "<Concept>"` in the concept's `manifest.yml`.
@@ -685,7 +684,7 @@ See `scripts/`:
 
 Most ads should follow the pipeline as written. Don't reinvent the structure per project. The script changes, the characters change, the product changes — the pipeline doesn't.
 
-If you're tempted to skip a phase or merge two ("we don't need separate character ref + contact sheet for this simple ad"), DON'T. Skipping the contact sheet is exactly what made shot 3 of a past spot drift. The pipeline phases exist because each one prevented a specific past failure.
+If you're tempted to skip a phase or merge two ("we don't need separate character ref + contact sheet for this simple ad"), DON'T. Skipping the contact sheet is exactly what made a past spot's character drift. The pipeline phases exist because each one prevented a specific past failure.
 
 If you genuinely need to deviate, surface to the operator first with the reason. They'll either approve the shortcut or remind you why we have the rule.
 

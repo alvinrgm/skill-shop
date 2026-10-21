@@ -121,11 +121,11 @@ External audio (Suno music, ElevenLabs VO, full continuous track) is the master.
 
 ## The drift problem (the mistake we made)
 
-If you generate 5 video clips each lip-synced to its own audio segment, then OVERLAY a continuous audio track over the concatenated visuals:
+If you generate several video clips each lip-synced to its own audio segment, then OVERLAY a continuous audio track over the concatenated visuals:
 
 - Each clip's lip sync was timed for its specific audio segment
 - The overlaid continuous track has slightly different timing
-- By clip 3 or 4, lips are visibly off the words
+- A few clips in, lips are visibly off the words
 
 **This is irreversible once the clips are generated.** Trimming visuals doesn't fix it (lip movements are locked in the clip).
 
@@ -294,7 +294,7 @@ ffmpeg -y -i input.mov -codec:a libmp3lame -b:a 192k output.mp3
 
 ## Common audio mistakes (don't repeat)
 
-- ❌ Generating 5 clips with audio refs, then overlaying full track on top → DRIFT
+- ❌ Generating several clips with audio refs, then overlaying full track on top → DRIFT
 - ❌ Trimming a clip to "fix" sync → makes it worse, lip movements lock to original timing
 - ❌ Speeding audio past 1.5x → sounds rushed even with pitch preservation
 - ❌ Not pre-cutting audio at silent gaps → cut clicks audible at boundaries

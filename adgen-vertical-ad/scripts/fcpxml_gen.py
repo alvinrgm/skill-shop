@@ -376,10 +376,10 @@ def build_fcpxml(clips, project_name, event_name=None, folder_name=None,
     #
     # CRITICAL: accumulate offset in FRAMES, never seconds. Past mistake:
     # used `offset_sec += p["duration"]` and re-rounded to
-    # frames per clip. The seconds-based accumulator drifts because
-    # `round(5.06*24) + round(10.05*24) = 121 + 241 = 362 frames` but
-    # `round((5.06+10.05)*24) = round(362.64) = 363 frames` — the operator saw
-    # the resulting 1-frame black gap between shots 2 and 3 on the timeline.
+    # frames per clip. The seconds-based accumulator drifts, e.g. (invented
+    # durations) `round(4.02*24) + round(10.02*24) = 96 + 240 = 336 frames` but
+    # `round((4.02+10.02)*24) = round(336.96) = 337 frames` — a 1-frame black
+    # gap between two clips on the timeline.
     # Accumulating in frames eliminates the drift entirely; each clip starts
     # EXACTLY where the previous one ends.
     offset_frames = 0

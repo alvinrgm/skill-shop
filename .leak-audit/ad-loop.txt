@@ -1,0 +1,5 @@
+VERDICT: PASS
+PACKAGE_HASH: db2a0311cd16d17e
+AUDITED: 2026-10-21
+METHOD: make-portable leak_gate.py (hard + review) and an independent source-aware audit agent
+NOTES: Audit rounds 1-3 at publish, plus a source-aware REVIEW pass on 2026-10-21 (PASS) and a confirmation of its recommended comment edit (PASS).

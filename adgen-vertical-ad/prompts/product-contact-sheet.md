@@ -4,7 +4,7 @@ Generate locked reference sheets for every recurring on-screen product. Two shee
 
 ## Why
 
-Generative video models invent a new version of any product every shot unless given a strong visual reference. In one past spot, a small dropper bottle drifted across 5+ generations (spray bottle, pump bottle, unlabeled vial, glass jar) because there was no locked product reference. ~100 credits in re-fires could have been avoided.
+Generative video models invent a new version of any product every shot unless given a strong visual reference. In one past spot, a small dropper bottle drifted across generation after generation (spray bottle, pump bottle, unlabeled vial, glass jar) because there was no locked product reference. Most of the re-fire credits could have been avoided.
 
 This works the same way character contact sheets do — generate the grid once, lock the appearance, reuse the media_id everywhere.
 
@@ -145,4 +145,4 @@ Then every Phase 5 shot prompt that featured the bottle would have used `bare_pr
 
 ## Cost
 
-Generated on your **Gemini key** via `gen_image.py` — **not** Higgsfield credits. The cost that matters is downstream: a locked product sheet prevents the ~100 Higgsfield credits in Phase 5 re-fires that drift otherwise causes (e.g. the bottle drifting across 5+ gens).
+Generated on your **Gemini key** via `gen_image.py` — **not** Higgsfield credits. The cost that matters is downstream: a locked product sheet prevents the Higgsfield credits burned on Phase 5 re-fires that drift otherwise causes (e.g. a bottle drifting gen after gen).

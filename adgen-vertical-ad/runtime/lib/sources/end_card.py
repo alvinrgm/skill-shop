@@ -12,7 +12,7 @@ by the pipeline):
   logo_url:   URL to brand logo (optional)
   caption:    URL or tagline under logo (applied by assembler)
   script:     optional VO line (used by pipeline for whole-VO script; not read here)
-  bg_color:   background color (default "#FFF5E6")
+  bg_color:   background color (default "#FFFFFF")
   duration:   fallback only; pipeline normally injects _target_duration
   _target_duration: float, injected by pipeline
 """
@@ -44,7 +44,7 @@ class EndCardSource(Source):
                 for chunk in r.iter_content(8192):
                     f.write(chunk)
 
-        bg = scene.get("bg_color", "#FFF5E6")
+        bg = scene.get("bg_color", "#FFFFFF")
 
         # Still frame: solid bg + centered logo (caption burned in by assembler).
         frame = ec_dir / "frame.png"

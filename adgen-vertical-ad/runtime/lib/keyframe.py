@@ -66,7 +66,7 @@ load_dotenv(_ADGEN_DIR / ".env")
 # barrel distortion, 3° handheld tilt, natural ambient 3000-5500K.
 #
 # Without these, Gemini defaults to clean raytraced-looking output — which
-# is the "plasticky AI sheen" we saw in v4. Explicit phone-physics tokens
+# is the "plasticky AI sheen" that it otherwise produces. Explicit phone-physics tokens
 # dramatically improve perceived realism.
 # ---------------------------------------------------------------------------
 UGC_STYLE_PREFIX = (

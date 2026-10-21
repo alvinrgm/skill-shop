@@ -69,11 +69,11 @@ For reference only (the brand, characters and lines are invented). This is the s
 **Architecture analysis (what the table makes obvious):**
 → 7 rows have the 11L narrator → Strategy B spot. Generate the narrator track FIRST.
 → 1 row has in-scene seedance dialogue → only shot 6 needs a lip-synced line; shots 1, 2, 3, 5 are dialogue-free motion shots.
-→ 2 rows (shot 4 + shot 7) are silent + VO only → ken-burns candidates, skip seedance, save ~34 credits.
+→ 2 rows (shot 4 + shot 7) are silent + VO only → ken-burns candidates, skip seedance, save the gen credits.
 → No continuous music bed → every seedance prompt carries the NO MUSIC clause; one Suno orchestral swell is placed in FCP under shots 4-5 and resolves under shot 7.
 → Shot 6 is hybrid → plan overlay timing now (Otto's line at ~0.5-1.5s, narrator's "Remarkable." at 2.5s).
 
-Locking this at Phase 2 is what lets a spot like this ship in v1 instead of v3.
+Locking this at Phase 2 is what lets a spot like this ship clean on the first cut.
 
 ## When to deviate
 

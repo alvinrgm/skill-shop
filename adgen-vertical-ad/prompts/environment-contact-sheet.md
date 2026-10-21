@@ -23,7 +23,7 @@ This template solves the same drift problem character contact sheets and product
 **The fix — lock a single PLATE for any master set reused across 2+ cuts:**
 1. After (or instead of) the multi-angle sheet, generate ONE canonical EMPTY plate: a single frame of the set at the ONE hero camera + ONE lighting state, no characters. 4K, the shot aspect (9:16). Save as `refs/environments/<setting>_plate.png`.
 2. Generate EVERY start-frame in that set by passing the plate as the **PRIMARY `--ref`** (first ref, before the character sheets) with explicit prompt language: "use this EXACT room — identical geometry, identical camera, identical fixtures — place the characters INSIDE it." The plate dominates; the model adds people instead of re-inventing the room.
-3. **Pin every text / digit / label element in WORDS, per shot.** Models reinvent on-screen text every generation. Spec it rigidly: "ONE amber floor indicator above the doors, ALWAYS exactly 2 digits, reads 04" — and give the per-shot value (04 → 02 → 01). For the PRODUCT label specifically, don't even use video — ken-burns over the 4K still (seedance warps text regardless).
+3. **Pin every text / digit / label element in WORDS, per shot.** Models reinvent on-screen text every generation. Spec it rigidly: "ONE round wall clock above the whiteboard, plain white face, black hands, hands at 9:10" — and give the per-shot value (9:10 → 9:25 → 9:40). For the PRODUCT label specifically, don't even use video — ken-burns over the 4K still (seedance warps text regardless).
 
 **Division of labor, so it's unambiguous:**
 → room geometry / lighting / fixtures → the **plate** (the lock)
@@ -126,7 +126,7 @@ PANEL LAYOUT:
 
 Top row:
   1. WIDE DAWN — long-lens wide from the back-left corner looking across all
-     four desk rows, lights half-off, cool blue pre-sunrise window light,
+     four desk rows, lights half-off, cool blue pre-dawn window light,
      low saturation slate / charcoal / pale sage palette
   2. MEDIUM MORNING — eye-level medium on the third-row desk cluster at
      mid-morning, overhead LEDs fully on, flat even white light

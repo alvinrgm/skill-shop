@@ -35,7 +35,7 @@ $ADGEN_HOME/<client>/
 - **`<YYYY-MM-DD>`** = the date the concept was first started (its origin date), so concepts sort
   chronologically and you can always tell when a thread began.
 - **`<angle>`** = the creative archetype / hook (`origin-story`, `manifesto`, `office-safari`).
-- **`<protagonist>`** = the character or POV carrying the spot (`suds`, `otto`, `mom`).
+- **`<protagonist>`** = the character or POV carrying the spot (`suds`, `otto`, `friends`).
 
 Examples: `2025-03-14-sink-showdown-suds`, `2025-02-27-office-safari-otto`.
 

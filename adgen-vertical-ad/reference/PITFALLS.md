@@ -38,9 +38,9 @@ wrong` while the resize is in flight; both mean "not ready yet," not "wrong call
     the cost HARD RULE — just budget for the lag.)
 
 ❌ **Higgsfield image moderation flags fleshy/anatomical stylized imagery as NSFW at `media_confirm`**
-(returns `status:"nsfw"` on confirm, and the media is unusable). A dim, fleshy-pink "stretchy skin"
+(returns `status:"nsfw"` on confirm, and the media is unusable). A dim, realistic skin-textured
 frame tripped it; a bright, clean, clearly-cartoon toy-world version of the same composition passed.
-✓ For anatomically-adjacent concepts (body-care or anatomy-themed mascots), render the start
+✓ For anatomically-adjacent concepts (body-care or body-adjacent products), render the start
 frames BRIGHT, smooth, toy-like, explicitly non-fleshy. Check the `media_confirm` status field for
 `"nsfw"` and regenerate tamer before wasting a generation attempt.
 
@@ -56,7 +56,7 @@ answer is almost always WAIT, not re-upload.
 
 ## HARD RULE: FCPXML clip offsets MUST accumulate in FRAMES, never seconds
 
-❌ **Wrong (a mascot origin spot — the operator caught a 1-frame black gap between shots 2 and 3 with a screenshot):**
+❌ **Wrong (the operator caught a 1-frame black gap between two clips on the timeline):**
 
 ```python
 offset_sec = 0.0
@@ -66,13 +66,13 @@ for p in probed:
     offset_sec += p["duration"]   # ← accumulates UNROUNDED float seconds
 ```
 
-`seconds_to_rational()` rounds each clip's duration independently to frames at write time. But the accumulator stayed in unrounded seconds, so the NEXT clip's offset got rounded AGAIN — and the two roundings disagreed. Concrete drift at 24fps:
+`seconds_to_rational()` rounds each clip's duration independently to frames at write time. But the accumulator stayed in unrounded seconds, so the NEXT clip's offset got rounded AGAIN — and the two roundings disagreed. Illustrative drift at 24fps (invented durations):
 
-- Shot 1 dur=5.06s → `round(5.06*24)=121` frames written as `121/24s`
-- Shot 2 dur=10.05s → `round(10.05*24)=241` frames written as `241/24s`
-- Shot 2 ends at frame **121+241=362**
-- BUT shot 3 offset = `round((5.06+10.05)*24) = round(362.64)` = **363**
-- → 1-frame black flash between shots 2 and 3 on the FCP timeline
+- Clip A dur=4.02s → `round(4.02*24)=round(96.48)=96` frames written as `96/24s`
+- Clip B dur=10.02s → `round(10.02*24)=round(240.48)=240` frames written as `240/24s`
+- Clip B ends at frame **96+240=336**
+- BUT clip C offset = `round((4.02+10.02)*24) = round(336.96)` = **337**
+- → 1-frame black flash between clips B and C on the FCP timeline
 
 ✓ **Right — accumulate timeline position in INTEGER frames:**
 
@@ -188,12 +188,12 @@ at stringout and forces a rebuild. Architect 11L at Phase 2 so v1 ships clean.
 
 ## Script with no pain agitation or unnamed features
 
-❌ **Wrote a comfort-apparel script where shot 1 dialogue was a cute two-line back-and-forth with no pain in it, and shot 3 had a single VO line over the entire 8s product reveal.** It was rejected twice: once because the dialogue didn't agitate the customer's actual pains and physical annoyances, and again because the video didn't name the product's benefits and features as it progressed. Both corrections were the same underlying gap — the script wasn't doing PAS work (problem → agitate → solve), it was vibing.
+❌ **Wrote a consumer-product script where the opening dialogue was a cute back-and-forth with no pain in it, and the product reveal ran under a single VO line for its whole length.** It was rejected twice: once because the dialogue didn't agitate the customer's actual pains and physical annoyances, and again because the video didn't name the product's benefits and features as it progressed. Both corrections were the same underlying gap — the script wasn't doing PAS work (problem → agitate → solve), it was vibing.
 
 ✓ **Default every script to: pain-agitate → product-feature-drop → benefit-embody → CTA.**
 - Opening 40-50% of runtime: agitate the actual customer pain, using brand-native vocabulary from `brief.md`. Get biological, sensory, specific. Stack 1-2 pain notes per shot. NEVER abstract ("uncomfortable socks") — concrete ("the elastic digs in. by noon there's a trench around your calf.").
 - Middle product-reveal shot: each visual beat of the product (rotation, descent, macro-zoom) carries ONE named feature in the VO. 4 rotation beats = 4 feature lines. Pull exact feature phrasing from `brief.md` ("100% combed cotton", "double-reinforced heel", "seam-free toe") — never paraphrase.
-- Closing 15-25%: same characters from opening, but benefits are now physically embodied (pinched→loose, itchy→calm, brittle→whole). Dialogue names the reversal in plain brand voice ("no trench. no itch. forgot I had them on."). Final line is the spoken CTA.
+- Closing 15-25%: same characters from opening, but benefits are now physically embodied (pinched→loose, itchy→calm, cramped→roomy). Dialogue names the reversal in plain brand voice ("Huh. Walked all day and never thought about my feet once."). Final line is the spoken CTA.
 
 ⚠ **Root cause:** I treated "dialogue" as comedic ornament instead of as the load-bearing copywriting layer. In a 30s ad, every line has to either agitate pain, name a feature, or sell a benefit — there is no room for filler. Cute back-and-forth between characters that doesn't move the PAS arc is wasted time and credits. The pixar/CGI aesthetic seduces toward "charming character moments" — resist it. Charm is delivery, not substance.
 
@@ -203,7 +203,7 @@ at stringout and forces a rebuild. Architect 11L at Phase 2 so v1 ships clean.
 
 ## Voice anchor collapse — using anchors from prior seedance gens
 
-❌ **On a two-character houseplant-food spot, extracted Fern + Spike voice anchors from earlier seedance generations then used both as audio refs in later shots.** The anchors were already collapsed voices from the same generation chain, so when passed as TWO audio refs, seedance averaged them. Pitch analysis showed both characters at nearly the same pitch (essentially the same voice). No amount of prompt-only differentiation language unstuck this. Prompt-only re-fires wasted credits.
+❌ **Extracting two characters' voice anchors from earlier seedance generations of the same spot, then passing both as audio refs.** The anchors were already collapsed voices from the same generation chain, so when passed as TWO audio refs, seedance averaged them. Pitch analysis showed both characters at nearly the same pitch (essentially the same voice). No amount of prompt-only differentiation language unstuck this. Prompt-only re-fires wasted credits.
 
 ✓ When voice anchors come from seedance generations, they will drift toward a common timbre. Two characters need anchors from genuinely distinct source generations (separate prompt seeds, separate prior characters, separate clip provenance).
 
@@ -215,7 +215,7 @@ at stringout and forces a rebuild. Architect 11L at Phase 2 so v1 ships clean.
 
 ## Stage directions become spoken words
 
-❌ **Wrote "and it specifically — *sneeze* — clears the dust" in a seedance prompt for a shot.** Seedance read the asterisks as just punctuation and had Fern literally say "and it specifically sneeze clears the dust" — the word "sneeze" as a spoken syllable, not a sneeze sound effect. Wasted 1 re-fire.
+❌ **Wrote "Bless me, this attic — *sneeze* — is a disgrace" in a seedance prompt.** Seedance read the asterisks as just punctuation and had the character literally say "bless me this attic sneeze is a disgrace" — the word "sneeze" as a spoken syllable, not a sneeze sound effect. Wasted a re-fire.
 
 ✓ Use phonetic spellings for sound effects inside dialogue. Seedance treats anything in the dialogue string as words to speak.
 - sneeze → `achoo!` or `kchoo!`
@@ -231,7 +231,7 @@ Verified: "ACHOO!" produced an actual phonetic sneeze sound (whisper transcribed
 
 ## Dialogue density compression at 15s
 
-❌ **Packing a long dialogue exchange into one 15s shot.** Model compressed the credentials list ("organic, slow-release, pet-safe, peat-free, no synthetic dyes, no fillers, small-batch") into "no fillers no silly bandits Spike Fern" — garbled. Also dropped the root-rescue beat entirely. It took several re-fires and a much shorter script to land a clean version.
+❌ **Packing a long dialogue exchange into one 15s shot.** Model rushed a long run of product claims, smeared half of them into sound-alike nonsense, and skipped a whole story beat. It took several re-fires and a much shorter script to land a clean version.
 
 ✓ **Hard budget per 15s clip: ≤9 dialogue turns and ≤60 spoken words.** Count both before firing. If the script wants more, either:
 - Split across two shots (15s + 15s adjacent), or
@@ -354,7 +354,7 @@ Over time across many projects, this log becomes a corpus of REAL data on what a
 
 ## CTA must be delivered as SPOKEN VO, not just text overlay
 
-❌ **On the houseplant spot, the CTA tagline "happy roots, greener leaves" was treated as text-overlay-only for several iterations.** Closing VO was "look at you, all green again" (warm reaction line, not the CTA). Repeatedly landing on a reaction line instead of the CTA got rejected. Took an additional re-fire to bake the CTA into the Owner VO.
+❌ **Treating the CTA tagline as a text overlay only, and closing the VO on a warm reaction line instead.** A closing reaction line is not a CTA; that ending gets rejected. Bake the CTA tagline into the closing VO itself.
 
 ✓ **If the brief specifies a CTA tagline, it MUST be delivered as a spoken VO line.** Owner voice, Narrator voice, or character voice (whichever fits). Text overlay is REINFORCEMENT only, never the sole delivery.
 
@@ -395,7 +395,7 @@ Both sheets get uploaded to Higgsfield as image refs and passed into every shot 
 
 ## Silent ken-burns fallback when seedance blocks — SURFACE the block, don't substitute quietly
 
-❌ **On a mascot origin spot, shots 5 and 6 quietly became static ffmpeg ken-burns pans after seedance blocked them (ip_detected).** No flag to the operator; it was only noticed on review, as weak static shots with no explanation. The static substitution was a creative downgrade made silently.
+❌ **On a mascot spot, a couple of blocked shots quietly became static ffmpeg ken-burns pans after seedance rejected them (ip_detected).** No flag to the operator; it was only noticed on review, as weak static shots with no explanation. The static substitution was a creative downgrade made silently.
 
 ✓ When a shot can't pass seedance after the retry sequence, STOP and surface the choice: *"shot N is blocked after retries. options: (a) re-storyboard the composition and regenerate the start frame, (b) ken-burns over the start frame as a deliberate static shot, (c) drop it. which?"* A static substitute is a creative decision for the operator, not a silent fallback.
 
@@ -423,7 +423,7 @@ Both sheets get uploaded to Higgsfield as image refs and passed into every shot 
 
 ## Asset audit failures
 
-❌ **Generated a fake package with the brand logo printed on it for the CTA shot.** The actual product hero image was already in the brand kit at `brand/product-images/hero_product_front.png`. The fake looked nothing like the real product. Wasted ~30 credits + a generation cycle.
+❌ **Generated a fake package with the brand logo printed on it for the CTA shot.** The actual product hero image was already in the brand kit at `brand/product-images/hero_product_front.png`. The fake looked nothing like the real product. Wasted credits + a generation cycle.
 
 ✓ ALWAYS audit `$ADGEN_HOME/<brand>/brand/` (brand kit) and skim `$ADGEN_HOME/<brand>/concepts/*/` (prior concept refs) for existing assets BEFORE generating anything brand-related. Never invent a generic version of a thing that already exists.
 
@@ -475,7 +475,7 @@ Rewrite pattern: swap the loaded word for a neutral one with the same energy ("a
 
 ## Audio handling — the biggest source of waste
 
-❌ **Generated 5 video clips each with their own per-clip audio sync, then overlaid the original continuous audio track on top of the concatenated video.** Created accumulating drift across cuts (each clip's lip sync was for its specific audio segment, but the overlaid continuous track played slightly different timing). Spent 4 stitch iterations trying to fix.
+❌ **Generated several video clips each with their own per-clip audio sync, then overlaid the original continuous audio track on top of the concatenated video.** Created accumulating drift across cuts (each clip's lip sync was for its specific audio segment, but the overlaid continuous track played slightly different timing). Spent several stitch iterations trying to fix.
 
 ✓ Pick ONE strategy and stick with it:
 - **Per-clip audio (organic, slight discontinuities at cuts):** keep each clip's native seedance audio in the final concat. Audio "feels alive" because seedance generates ambient + voice fresh per clip. Tradeoff: tiny audio jumps at cut points.
@@ -483,7 +483,7 @@ Rewrite pattern: swap the loaded word for a neutral one with the same energy ("a
 
 NEVER mix the two. Don't overlay continuous audio over per-clip-synced visuals.
 
-⚠ Audio drift is invisible until you concatenate. Test the assembly approach with 2 clips before committing 5+.
+⚠ Audio drift is invisible until you concatenate. Test the assembly approach with a couple of clips before committing the rest.
 
 ---
 
@@ -497,7 +497,7 @@ NEVER mix the two. Don't overlay continuous audio over per-clip-synced visuals.
 
 ## Audio speed limits
 
-❌ **Sped up Suno rap track to 2.05x to fit in 15 sec.** Rejected as way too fast. Audio sounded chipmunked even though `atempo` should preserve pitch.
+❌ **Sped up a Suno rap track by a large overspeed (roughly double) to fit a single clip.** Rejected as way too fast. Audio sounded chipmunked even though `atempo` should preserve pitch.
 
 ✓ Cap audio speedup at **1.5x for music/dialogue**. If the audio doesn't fit, prefer:
 1. Trim content (cut bars, cut a verse)
@@ -510,7 +510,7 @@ NEVER mix the two. Don't overlay continuous audio over per-clip-synced visuals.
 
 ## Static shot cost
 
-❌ **Used seedance for a static product/food shot** (three jars on a counter, slow push-in). Seedance generated minimal motion (some dust drift). Cost: ~30 credits for what was effectively a freeze frame with ken-burns.
+❌ **Used seedance for a static product/food shot** (three jars on a counter, slow push-in). Seedance generated minimal motion (some dust drift). Cost: a full video gen's credits for what was effectively a freeze frame with ken-burns.
 
 ✓ Static product / food / logo / text shots → ALWAYS use ffmpeg ken-burns over the still image. Free. Fast. See `ffmpeg-cookbook.md` for the recipe.
 
@@ -543,7 +543,7 @@ NEVER mix the two. Don't overlay continuous audio over per-clip-synced visuals.
 
 ## Iteration discipline
 
-❌ **Generated all 5 rap clips, stitched, then surfaced for review.** The operator found audio drift. Spent multiple re-stitch iterations trying to fix without re-generating.
+❌ **Generated every rap clip, stitched, then surfaced for review.** The operator found audio drift. Spent multiple re-stitch iterations trying to fix without re-generating.
 
 ✓ Surface each clip individually before assembly. Approve clip-by-clip. Only assemble after all clips are approved.
 
@@ -553,7 +553,7 @@ NEVER mix the two. Don't overlay continuous audio over per-clip-synced visuals.
 
 ## Final cut overreach
 
-❌ **Added 0.25s audio crossfades at every cut point in the assembled v2 to "smooth disjointed transitions."** The operator wanted a linear stringout instead — they were going to mix in FCP. The crossfades made it harder for them to cut cleanly.
+❌ **Added short audio crossfades at every cut point in an assembled cut to "smooth disjointed transitions."** The operator wanted a linear stringout instead — they were going to mix in FCP. The crossfades made it harder for them to cut cleanly.
 
 ✓ Default deliverable is a linear stringout: hard cuts, no crossfade, no smoothing, no color grade, no captions, no music bed. The operator's job is to mix in FCP. Don't pre-finish the cut.
 
@@ -619,7 +619,7 @@ The `kind="original-media"` attribute on media-rep is required for source files.
 
 ## ffmpeg framerate mismatch in concat = runaway encode
 
-❌ **Mixed 24fps seedance clips with a 30fps ffmpeg ken-burns clip in the same concat.** ffmpeg silently conformed everything which made a 42-second concat take 17+ minutes and 190MB. The encode was technically working but at unusable speed.
+❌ **Mixed 24fps seedance clips with a 30fps ffmpeg ken-burns clip in the same concat.** ffmpeg silently conformed everything, so a long concat ran far slower than expected and produced a bloated file. The encode was technically working but at unusable speed.
 
 ✓ **Always match the framerate of the dominant source.** Seedance outputs 24fps. If you build any clip via ffmpeg ken-burns to mix into a seedance concat, set `-framerate 24` on the input AND `fps=24` in the zoompan filter:
 ```bash

@@ -11,7 +11,7 @@ The hard rule that prevented us from re-burning credits on an invented-packaging
 
 Both sheet types get uploaded to Higgsfield and passed into every shot prompt where that asset appears. Without locked sheets, the asset's appearance drifts across shots (dropper becomes spray bottle, bottle changes label, character changes face).
 
-**Product-drift learning:** a small dropper bottle appeared in 3 shots and drifted every gen (spray bottle, pump bottle, clear vial, glass jar). A product contact sheet at Phase 3 would have locked it once. ~100 credits in re-fires could have been avoided.
+**Product-drift learning:** a small dropper bottle appeared in several shots and drifted every gen (spray bottle, pump bottle, clear vial, glass jar). A product contact sheet at Phase 3 would have locked it once. Most of the re-fire credits could have been avoided.
 
 ## The Phase 1 audit rule
 

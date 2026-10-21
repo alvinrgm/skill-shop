@@ -18,6 +18,8 @@ Free, working Claude Code skills from [Rise Growth Marketing](https://www.risegm
 
 `catalog.json` is the one list of what's published here, and risegm.com/skills builds its cards from it. A new folder needs a catalog entry (and a `SETUP.md`) or the check fails. Run `python3 scripts/check_catalog.py` before pushing.
 
+Every package must also be labeled `trust_level: public` and carry a leak-audit receipt in `.leak-audit/<package>.txt` that matches its current contents. `scripts/check_public.py` checks both in CI, and a Claude Code hook in `.claude/settings.json` (`scripts/publish_guard.py`) refuses commits, pushes and merges that would fail it. Any edit to a package needs a fresh audit and receipt before it can ship.
+
 ## Install
 
 Each skill folder has a `SETUP.md` with a one-paste install and a `doctor.sh` that verifies your environment. Start there. Every skill assumes only Claude Code and walks you through anything else it needs.

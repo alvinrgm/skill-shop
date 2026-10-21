@@ -87,7 +87,7 @@ def assemble(
             return (
                 f"drawtext=fontfile='{FONT}'"
                 f":text='{text}'"
-                f":fontsize={fontsize}:fontcolor=#8B4513"
+                f":fontsize={fontsize}:fontcolor=#111111"
                 f":x=(w-text_w)/2:y={y_px}"
                 f":enable='between(t,{start:.3f},{end:.3f})'"
             )

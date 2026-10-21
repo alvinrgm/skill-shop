@@ -8,8 +8,10 @@ mechanical leaks: personal paths, stray emails, secret-shaped strings, a real .e
 and photo or editor metadata inside images.
 
 It cannot recognize client material that has been renamed (copy, figures, layouts).
-That needs the private, source-aware audit in make-portable, which runs before a
-package is published here.
+That needs the private, source-aware audit in make-portable. Its result is recorded
+here as a receipt, .leak-audit/<package>.txt, with `VERDICT: PASS` and
+`PACKAGE_HASH: <hash>`. This gate recomputes the hash, so any edit to a package after
+its audit fails CI until the package is audited again.
 
 Usage: python3 scripts/check_public.py [repo-root]
 """
@@ -29,6 +31,32 @@ EMAIL_OK = re.compile(r"@([a-z]{1,4}\.com|example\.(com|org|net)|risegm\.com|mai
 SECRET = re.compile(r"(^|[^A-Za-z0-9_-])(sk-[A-Za-z0-9]{12}|sk_live_[A-Za-z0-9]{8}|ghp_[A-Za-z0-9]{12}|github_pat_[A-Za-z0-9_]{12}|xox[bp]-[A-Za-z0-9-]{10}|AIza[0-9A-Za-z_-]{20}|AKIA[0-9A-Z]{16}|EAA[A-Za-z0-9]{30}|hooks\.slack\.com/services/[A-Za-z0-9/]+)")
 
 errors = []
+HASH_SKIP = {".git", "node_modules", ".venv", "venv", "__pycache__", "dist", ".next"}
+
+
+def tree_hash(pkg):
+    """Same hash as make-portable's leak_gate.py --hash: sha256 over each file's path and bytes."""
+    import hashlib
+    h = hashlib.sha256()
+    for p in sorted(pkg.rglob("*")):
+        rel = p.relative_to(pkg)
+        if p.is_file() and not any(part in HASH_SKIP or part == ".onboarded" for part in rel.parts):
+            h.update(str(rel).encode() + b"\0" + p.read_bytes() + b"\0")
+    return h.hexdigest()[:16]
+
+
+def check_receipt(pkg):
+    r = ROOT / ".leak-audit" / f"{pkg.name}.txt"
+    if not r.exists():
+        err(pkg, f"no leak-audit receipt at .leak-audit/{pkg.name}.txt; run make-portable's leak gate and source-aware audit first")
+        return
+    text = r.read_text(errors="replace")
+    if not re.search(r"^VERDICT: PASS\s*$", text, re.M):
+        err(r, "receipt does not say `VERDICT: PASS`")
+    want = tree_hash(pkg)
+    m = re.search(r"^PACKAGE_HASH: (\w+)", text, re.M)
+    if not m or m.group(1) != want:
+        err(r, f"receipt is stale: package changed since its audit (current hash {want}); re-audit before publishing")
 
 
 def err(path, msg):
@@ -104,6 +132,7 @@ def check_files(pkg):
 
 for pkg in packages():
     check_trust_level(pkg)
+    check_receipt(pkg)
     check_files(pkg)
 
 if errors:

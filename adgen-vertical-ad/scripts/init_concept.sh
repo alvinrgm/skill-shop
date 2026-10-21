@@ -14,8 +14,8 @@
 #
 # Naming law: <YYYY-MM-DD>-<angle>-<protagonist>, all lowercase kebab, NO spaces.
 #   - date  = the day the concept was first started (origin date, for chronological sort)
-#   - angle = creative archetype / hook (origin-story, manifesto, office-safari, city-launch)
-#   - protagonist = the character / POV (suds, otto, mom)
+#   - angle = creative archetype / hook (origin-story, manifesto, office-safari, picnic-prank)
+#   - protagonist = the character / POV (suds, otto, friends)
 # At minimum: a valid date + two descriptor tokens.
 
 set -euo pipefail

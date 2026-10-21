@@ -25,9 +25,9 @@ POST https://api.elevenlabs.io/v1/text-to-dialogue
 ?output_format=mp3_44100_128
 {
   "inputs": [
-    { "voice_id": "<fern_id>",  "text": "[nervous] aw c'mon... Spike, my leaves are DROOPING again." },
-    { "voice_id": "<spike_id>", "text": "[deadpan][tired] The drooping?" },
-    { "voice_id": "<fern_id>",  "text": "[exasperated] The soil. It's bone dry again." }
+    { "voice_id": "<grease_baron_id>", "text": "[mischievously] Well, well. Look who crawled out of the soap dish." },
+    { "voice_id": "<suds_id>",         "text": "[calm] Evenin'. You're standin' on my clean plates." },
+    { "voice_id": "<grease_baron_id>", "text": "[laughs softly][dismissive] Clean plates never last, lawman. Ask the frying pan." }
   ],
   "model_id": "eleven_v3",
   "settings": { "stability": 0.4, "similarity_boost": 0.75, "style": 0.12, "use_speaker_boost": true },
@@ -47,8 +47,8 @@ POST https://api.elevenlabs.io/v1/text-to-dialogue
 - Turns are SEQUENTIAL, not overlapping. `[interrupting]` / `[overlapping]` change delivery feel; they do
   not produce true simultaneous audio.
 
-This composes with the contiguous-per-shot-segment method: generate ONE dialogue call PER SHOT (Fern +
-Spike trading lines within that shot) → that per-shot audio is the `role: audio` ref for that shot's
+This composes with the contiguous-per-shot-segment method: generate ONE dialogue call PER SHOT (Suds +
+the Grease Baron trading lines within that shot) → that per-shot audio is the `role: audio` ref for that shot's
 seedance clip → concat. Voice stays locked; each clip lip-syncs to exactly its own audio.
 
 ---
@@ -57,7 +57,7 @@ seedance clip → concat. Voice stays locked; each clip lip-syncs to exactly its
 
 **Never submit a flat, untagged line.** v3 reads untagged text like a bored narrator. Each line carries
 at least one tag matched to that character's emotional beat in that shot — pull the beat straight from
-the character bible's `emotional_range` (e.g. Fern `panicked`, Spike `deadpan`).
+the character bible's `emotional_range` (e.g. Suds `calm`, the Grease Baron `mischievous`).
 
 Tags are inline `[tag]` in the `text` field (v3 only). Categorized, exact syntax:
 
@@ -137,12 +137,12 @@ levers above minimize it; regenerate-and-select closes the rest.
 
 ## RULE 6 — Pacing: do NOT over-pause, and budget the duration
 
-Audio tags and punctuation that add *weight* compound badly with slow/deadpan/authoritative voices and make narration DRAG. This bit a past comedy spot: a British-deadpan narrator with `[pause]` tags + `...` ellipses between every sentence read at ~40s total against a 30s target; one 4-sentence product-feature line ran 19s alone.
+Audio tags and punctuation that add *weight* compound badly with slow/deadpan/authoritative voices and make narration DRAG. This bit a past comedy spot: a deadpan narrator with `[pause]` tags + `...` ellipses between every sentence read well over its target length; one feature line alone overran badly.
 
 - **Default to NO `[pause]` between sentences, and no `...` ellipses, in narrator/VO lines.** A plain period is already a beat. Reserve `[pause]` / `...` for a single deliberate comedic hold, not as connective tissue between every sentence.
 - **Slower voices need FEWER pause cues, not more.** Deadpan / authoritative / older-male voices already read slow; pause tags stack on top. Cast-appropriate tags only.
 - **Budget duration up front and MEASURE it.** Know each line's target seconds from the breakdown. After generating, `ffprobe -show_entries format=duration` every clip and compare to target. Sum the narrator track against the spot's total target.
-- **If a line runs long, the fix order is: (1) remove pause/ellipsis cues, (2) tighten punctuation, (3) TRIM WORDS.** De-gapping alone won't save a genuinely word-heavy line — a 4-feature product drop has to lose features or words to hit ~10s. Measure after each fix.
+- **If a line runs long, the fix order is: (1) remove pause/ellipsis cues, (2) tighten punctuation, (3) TRIM WORDS.** De-gapping alone won't save a genuinely word-heavy line — a feature-heavy product line has to lose features or words to hit its target. Measure after each fix.
 - **Word-count rule of thumb:** a deadpan English VO lands ~2–2.3 words/sec *with* tight punctuation. So a 10s feature line ≈ 22 words MAX. Count before you generate.
 
 ## PRE-FLIGHT CHECKLIST — must pass before EVERY ElevenLabs generation

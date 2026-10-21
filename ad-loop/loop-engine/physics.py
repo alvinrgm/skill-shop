@@ -144,9 +144,9 @@ def locate_bag(rgb, name, boxes):
     """Localisation is a PERCEPTION problem and is done by a vision model
     (vision.py localise), not by colour heuristics. Two colour heuristics were
     tried and both mis-locked: a saturation mask cannot separate the brand band
-    from warm-brown surfaces at equal saturation, and an R-G mask locks onto the
-    ingredient panel on tilted or backlit bags. The vision pass returns the pouch
-    box, the red band box and the CONTACT LINE; every physics number below is
+    from similar-coloured surfaces, and a channel-difference mask locks onto other
+    label panels when the package is tilted or backlit. The vision pass returns the
+    package box, the label band box and the CONTACT LINE; every physics number below is
     still computed on pixels by this script.
 
     `boxes` is the parsed vision boxes.json (SAMPLING CHANGE: it is an argument, not a
@@ -174,10 +174,9 @@ def locate_bag(rgb, name, boxes):
     cx0, cx1 = fx0 + int((fx1 - fx0) * 0.25), fx0 + int((fx1 - fx0) * 0.75)
     if cx1 - cx0 < 20:
         cx0, cx1 = bx0 + int(bw * 0.25), bx0 + int(bw * 0.75)
-    # The vision pass reports where the pouch visually STOPS, which on these plates
-    # sits ~0.1*bw BELOW the contact shadow because loose product banks against the base
-    # (on one calibration plate, vision sat about 4% of plate height below the darkest
-    # row). Vision therefore supplies
+    # The vision pass reports where the package visually STOPS, which can sit a little
+    # BELOW the contact shadow (anything piled against the base reads as package).
+    # Vision therefore supplies
     # the search REGION and the pixels supply the seam: the darkest row of the
     # smoothed footprint-column profile within [-0.12, +0.06] * bag width of it.
     lumc = rgb[:, cx0:cx1].mean(2).mean(1)
