@@ -53,4 +53,4 @@ Add a similar enumeration to the clause when re-firing a shot that had a known p
 
 Seedance interprets short prompts loosely and fills in gaps. If you say "windowsill with laundry strung between the stems" once and then describe action, the model may decide to add more laundry over time. The stability clause is a hard guard: anything not in second 0 is FORBIDDEN at second N.
 
-Tested in production (shot 3, v8 → v9): the explicit clothesline-prohibition fixed the mid-scene pop-in that appeared in v8.
+In practice, an explicit prohibition of the specific object that popped in fixes the drift on the next generation.

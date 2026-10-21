@@ -18,7 +18,7 @@ This template solves the same drift problem character contact sheets and product
 
 ## CRITICAL: the contact sheet is NOT the cut-to-cut continuity lock — the LOCKED PLATE is
 
-**The single biggest misuse of this template:** generating each shot's start-frame independently against the multi-angle contact sheet, expecting the room to stay identical across cuts. It won't. The contact sheet's whole job is to show the room from MANY angles + lighting states so the model UNDERSTANDS the space — which is exactly why it's ambiguous as a continuity lock. Six different views in → the model picks/blends a different room each generation → cabinets shift, the floor-number panel renders 1-digit in one shot and 2-digit in the next, lighting wanders. (This cost a re-roll on a past elevator spot: floor display read "03" / "2" / "05" across three start-frames, plus a doubled display in one.)
+**The single biggest misuse of this template:** generating each shot's start-frame independently against the multi-angle contact sheet, expecting the room to stay identical across cuts. It won't. The contact sheet's whole job is to show the room from MANY angles + lighting states so the model UNDERSTANDS the space — which is exactly why it's ambiguous as a continuity lock. Six different views in → the model picks/blends a different room each generation → cabinets shift, a wall sign renders one word in one shot and a different word in the next, lighting wanders.
 
 **The fix — lock a single PLATE for any master set reused across 2+ cuts:**
 1. After (or instead of) the multi-angle sheet, generate ONE canonical EMPTY plate: a single frame of the set at the ONE hero camera + ONE lighting state, no characters. 4K, the shot aspect (9:16). Save as `refs/environments/<setting>_plate.png`.
@@ -71,17 +71,15 @@ PANEL LAYOUT:
 
 Top row (3 panels, left to right):
   1. WIDE — wide-angle view of the full room showing the master spatial layout
-     at [time of day 1, e.g., overcast pre-noon / muted gray]
+     at [time of day 1]
   2. MEDIUM — eye-level medium showing the hero area of the room (where most
-     action happens — e.g., kitchen island) at the SAME time of day as panel 1
+     action happens — e.g., a desk cluster) at the SAME time of day as panel 1
   3. ALT ANGLE — opposite-side view of the same room at the same time of day,
      showing the geometry from a different perspective
 
 Bottom row (3 panels, left to right):
-  4. WIDE WARM — same wide angle as panel 1 but lit at [time of day 2, e.g.,
-     warm late-morning golden window light]
-  5. NIGHT — same medium angle as panel 2 but lit at [time of day 3, e.g.,
-     single warm pendant lamp + cool moonlight from window]
+  4. WIDE WARM — same wide angle as panel 1 but lit at [time of day 2]
+  5. NIGHT — same medium angle as panel 2 but lit at [time of day 3]
   6. DETAIL STUDY — close-up of a signature element of the room (a key wall,
      the counter material, a key fixture) showing the texture and material
      fidelity at neutral lighting
@@ -220,7 +218,7 @@ Don't regenerate "for fun" — once approved, the sheet is the authoritative spa
 
 **Setting is an exterior** (street, field, beach): adapt the panel layout. Replace "WIDE / MEDIUM / ALT ANGLE / WIDE WARM / NIGHT / DETAIL" with appropriate panels for the exterior. The continuity-lock principle is the same: same physical location across all panels, only lighting + angle varies.
 
-**Setting changes structurally between shots** (e.g., "the kitchen, but in shot 5 the family-photo wall now has a hole punched in it"): treat as TWO settings. Contact sheet each separately. Then in the prompt for the changed shot, reference both sheets and describe the change.
+**Setting changes structurally between shots** (e.g., "the office, but in a later shot the whiteboard has been knocked over"): treat as TWO settings. Contact sheet each separately. Then in the prompt for the changed shot, reference both sheets and describe the change.
 
 ## Cost
 

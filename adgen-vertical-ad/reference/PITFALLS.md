@@ -203,7 +203,7 @@ at stringout and forces a rebuild. Architect 11L at Phase 2 so v1 ships clean.
 
 ## Voice anchor collapse — using anchors from prior seedance gens
 
-❌ **On a two-character houseplant-food spot, extracted Fern + Spike voice anchors from earlier seedance generations (shot 02 og, shot 03 anchor test), then used both as audio refs in shots 02-06.** The anchors were already collapsed voices from the same generation chain, so when passed as TWO audio refs, seedance averaged them. Pitch analysis showed both characters at ~175-185 Hz (12 Hz delta = essentially same voice). No amount of prompt-only differentiation language unstuck this. Wasted ~120 credits on prompt-only re-fires.
+❌ **On a two-character houseplant-food spot, extracted Fern + Spike voice anchors from earlier seedance generations then used both as audio refs in later shots.** The anchors were already collapsed voices from the same generation chain, so when passed as TWO audio refs, seedance averaged them. Pitch analysis showed both characters at nearly the same pitch (essentially the same voice). No amount of prompt-only differentiation language unstuck this. Prompt-only re-fires wasted credits.
 
 ✓ When voice anchors come from seedance generations, they will drift toward a common timbre. Two characters need anchors from genuinely distinct source generations (separate prompt seeds, separate prior characters, separate clip provenance).
 
@@ -215,7 +215,7 @@ at stringout and forces a rebuild. Architect 11L at Phase 2 so v1 ships clean.
 
 ## Stage directions become spoken words
 
-❌ **Wrote "and it specifically — *sneeze* — clears the dust" in a seedance prompt for the houseplant spot's shot 3.** Seedance read the asterisks as just punctuation and had Fern literally say "and it specifically sneeze clears the dust" — the word "sneeze" as a spoken syllable, not a sneeze sound effect. Wasted 1 re-fire.
+❌ **Wrote "and it specifically — *sneeze* — clears the dust" in a seedance prompt for a shot.** Seedance read the asterisks as just punctuation and had Fern literally say "and it specifically sneeze clears the dust" — the word "sneeze" as a spoken syllable, not a sneeze sound effect. Wasted 1 re-fire.
 
 ✓ Use phonetic spellings for sound effects inside dialogue. Seedance treats anything in the dialogue string as words to speak.
 - sneeze → `achoo!` or `kchoo!`
@@ -223,7 +223,7 @@ at stringout and forces a rebuild. Architect 11L at Phase 2 so v1 ships clean.
 - gasp → `huh!`
 - thud / whoosh / etc. → describe in the SFX paragraph, not in the dialogue line
 
-Verified: "ACHOO!" produced an actual phonetic sneeze sound on shot 3 v8 (whisper transcribed it as "a chew" — meaning seedance generated the sneeze, not the word).
+Verified: "ACHOO!" produced an actual phonetic sneeze sound (whisper transcribed it as "a chew" — meaning seedance generated the sneeze, not the word).
 
 ⚠ Seedance has no notion of stage directions vs spoken text. Everything inside quotes is dialogue. Write only what you want spoken; describe sound effects separately in the SFX paragraph.
 
@@ -231,7 +231,7 @@ Verified: "ACHOO!" produced an actual phonetic sneeze sound on shot 3 v8 (whispe
 
 ## Dialogue density compression at 15s
 
-❌ **Tried to pack 13 dialogue turns / ~100 words into a 15s shot 3 on the houseplant spot.** Model compressed the credentials list ("organic, slow-release, pet-safe, peat-free, no synthetic dyes, no fillers, small-batch") into "no fillers no silly bandits Spike Fern" — garbled. Also dropped the root-rescue beat entirely. Took 3 re-fires (~210 credits) to land a clean version with 9 turns / ~50 words.
+❌ **Packing a long dialogue exchange into one 15s shot.** Model compressed the credentials list ("organic, slow-release, pet-safe, peat-free, no synthetic dyes, no fillers, small-batch") into "no fillers no silly bandits Spike Fern" — garbled. Also dropped the root-rescue beat entirely. It took several re-fires and a much shorter script to land a clean version.
 
 ✓ **Hard budget per 15s clip: ≤9 dialogue turns and ≤60 spoken words.** Count both before firing. If the script wants more, either:
 - Split across two shots (15s + 15s adjacent), or
@@ -246,7 +246,7 @@ Pre-flight check (in your head, before generating): count turns, count words, di
 
 ## seedance_2_0 fast mode duration cap (15s, not 18s, not 20s)
 
-❌ **Requested `duration: 18` for shot 3 on the houseplant spot.** Server silently clamped to 15s. Dialogue planned for 18s got compressed into 15s and lost beats.
+❌ **Requesting `duration: 18` for a shot.** Server silently clamped to 15s. Dialogue planned for 18s got compressed into 15s and lost beats.
 
 ✓ **seedance_2_0 fast mode duration range is [4, 15].** Anything outside gets clamped. Plan clip lengths within 15s. To get more screen time for a beat, split into two adjacent 15s shots.
 
@@ -256,7 +256,7 @@ Pre-flight check (in your head, before generating): count turns, count words, di
 
 ## Mid-scene object pop-ins on locked-camera shots
 
-❌ **Houseplant spot shot 3 v8: at second 1, the windowsill had no clothesline. At second 10, a tiny laundry line with hanging clothes had popped into frame on the left side.** Model added an object mid-shot with no instruction to do so. Jarring. Took 1 re-fire (~35 credits) to fix.
+❌ **A locked-camera shot: at second 1, the windowsill had no clothesline. A few seconds later, a tiny laundry line had popped into frame.** Model added an object mid-shot with no instruction to do so. Jarring, and it cost a re-fire.
 
 ✓ Every locked-camera shot prompt needs an explicit "scene stability clause" — see `prompts/scene-stability-clause.md`. Bake this into the seedance prompt template for any shot where the camera doesn't move.
 
@@ -266,13 +266,13 @@ Pre-flight check (in your head, before generating): count turns, count words, di
 
 ---
 
-## Seedance ignores physics/spatial logic AND freezes secondary characters unless you spell both out (an elevator-gag spot, shot 1)
+## Seedance ignores physics/spatial logic AND freezes secondary characters unless you spell both out (a picnic-table gag spot)
 
-❌ **Two failures in one clip, both from under-describing.** (1) The prompt said "a burst of confetti fills the air" with no ORIGIN — seedance rendered the confetti pouring out of the man's chest instead of the party popper in his hand, which made no physical sense. (2) The prompt said the four other riders "turn their heads toward him in unison," but ALSO said "the cabin geometry stays fixed and does not change" — seedance over-applied the stillness to the PEOPLE too, so only the protagonist moved and every bystander stood frozen. The operator caught both immediately.
+❌ **Two failures in one clip, both from under-describing.** (1) The prompt said "a burst of confetti fills the air" with no ORIGIN — seedance rendered the confetti pouring out of the woman's shoulder instead of the popper in her hand, which made no physical sense. (2) The prompt said the two friends across the table "look up at her," but ALSO said "the park scenery stays fixed and does not change" — seedance over-applied the stillness to the PEOPLE too, so only the protagonist moved and every bystander stood frozen. The operator caught both immediately.
 
-✓ **Ground the PHYSICS and the SPATIAL RELATIONSHIPS explicitly.** For any effect (gas, liquid, smoke, debris, light), state WHERE it originates and WHERE it travels, in body/world terms: "the confetti shoots out of the popper in his RIGHT hand, angled UP and FORWARD, arcs over the riders' heads, then drifts DOWN to the floor — NOT from his body, NOT from the ceiling." Name the left/right/behind position of every character. The model fills any spatial blank with its generic default, and the default is often nonsense.
+✓ **Ground the PHYSICS and the SPATIAL RELATIONSHIPS explicitly.** For any effect (gas, liquid, smoke, debris, light), state WHERE it originates and WHERE it travels, in body/world terms: "the confetti shoots out of the popper in her LEFT hand, angled UP and to the side, arcs over the table, then drifts DOWN onto the plates — NOT from her body, NOT from the sky." Name the left/right/behind position of every character. The model fills any spatial blank with its generic default, and the default is often nonsense.
 
-✓ **Direct secondary-character MOTION explicitly, and separate "static" instructions for the SET from the PEOPLE.** Seedance animates the obvious subject and leaves everyone else frozen unless told otherwise. Say "the CABIN/SET is static — walls, fixtures, panel never move" AND, as a distinct instruction, "THE FOUR RIDERS ARE THE KEY MOTION — they turn their heads, flinch, brush confetti off their shoulders; they are NOT frozen." Call the bystander reaction the "key motion" so the model prioritizes it.
+✓ **Direct secondary-character MOTION explicitly, and separate "static" instructions for the SET from the PEOPLE.** Seedance animates the obvious subject and leaves everyone else frozen unless told otherwise. Say "the SET is static — trees, table, benches never move" AND, as a distinct instruction, "THE TWO FRIENDS ARE THE KEY MOTION — they lean back, laugh, pick confetti out of their food; they are NOT frozen." Call the bystander reaction the "key motion" so the model prioritizes it.
 
 ⚠ Root cause: seedance defaults to (a) placing un-located effects wherever is visually convenient, and (b) minimal motion on anything not named as moving. Both are blanks the model fills badly. Descriptive physics + per-character spatial position + explicit motion assignment is not optional padding — it's how you steer the model. When a clip looks wrong, first ask "did I leave the physics or the secondary motion unspecified?" before re-rolling blind.
 
@@ -280,17 +280,17 @@ Pre-flight check (in your head, before generating): count turns, count words, di
 
 ## Wrong start frame breaks shot-to-shot continuity
 
-❌ **For the houseplant spot's shot 3 v4, used the shot_04 greenhouse frame as the start frame.** Shot 3 was supposed to take place on the same windowsill as shot 2, but the start frame put the scene in a totally different environment (a glass greenhouse). Huge continuity break between shots 2 and 3. Caught it via frame extraction, re-fired with the correct windowsill start frame (~35 credits wasted).
+❌ **Using another shot's start frame by mistake.** A shot meant to continue on the same windowsill as the shot before it was started from a greenhouse frame, but the start frame put the scene in a totally different environment (a glass greenhouse). Huge continuity break between the two shots. Caught via frame extraction and re-fired with the correct start frame.
 
 ✓ Build a per-shot start-frame map BEFORE firing any video gens. Verify each shot's start frame matches the environment of the preceding shot. Maintain this map in `final/manifest.yml` or a `refs/scenes/SHOTS.md` file.
 
 ✓ When re-firing a shot, double-check the start-frame media ID is the correct one for THIS shot, not pasted from another shot's prompt.
 
-⚠ Continuity is harder to fix than to plan. A 30-second pre-flight check (does this start frame match the prior shot's environment?) saves 35+ credits and a re-fire.
+⚠ Continuity is harder to fix than to plan. A 30-second pre-flight check (does this start frame match the prior shot's environment?) saves a re-fire.
 
 ---
 
-## Consecutive shots in one continuous scene JUMP unless you chain the previous clip's LAST FRAME as the next clip's start_image (the elevator-gag spot, shots 1→2)
+## Consecutive shots in one continuous scene JUMP unless you chain the previous clip's LAST FRAME as the next clip's start_image (a picnic-table gag spot)
 
 ❌ **Each shot's start-frame was generated INDEPENDENTLY from the locked plate + character sheets. Result: the room was identical (plate did its job) but the PEOPLE were re-posed from scratch every shot — different stances, different gaze, different arrangement. Cutting shot 1 → shot 2 looked like everyone teleported.** The cut read as a hard transition because the characters didn't continue from where they were — and this recurs on every independently-framed continuous scene.
 
@@ -300,7 +300,7 @@ Pre-flight check (in your head, before generating): count turns, count words, di
 ffmpeg -v error -sseof -0.1 -i clips/shot_0N.mp4 -frames:v 1 -update 1 refs/scenes/shot_0M_start_chained.png
 # upload it, then use it as start_image for shot N+1; prompt it as "DIRECT CONTINUATION ... continue their motion from this pose, do not re-arrange anyone"
 ```
-✓ The next clip's prompt opens with "DIRECT CONTINUATION of the previous shot — the start frame IS the final frame of the previous clip; continue their motion smoothly, do NOT re-arrange anyone." Keep the action a forward continuation (the confetti SETTLES, the eyebrows RISE, the floor counter ticks DOWN) rather than restating a fresh tableau.
+✓ The next clip's prompt opens with "DIRECT CONTINUATION of the previous shot — the start frame IS the final frame of the previous clip; continue their motion smoothly, do NOT re-arrange anyone." Keep the action a forward continuation (the confetti SETTLES, the friends LAUGH, a napkin blows OFF the table) rather than restating a fresh tableau.
 ✓ Still pass the speakers' character contact sheets as identity `image` refs alongside the chained start_image — the chained frame is 720p and slightly soft, the sheets hold facial identity through the motion.
 
 ⚠ The plate fixes the ROOM across shots. It does NOT fix CHARACTER POSE/POSITION continuity between consecutive clips — that requires last-frame chaining. Two different problems, two different tools: **plate = same room; last-frame chain = same people, same poses, continuing.** Use chaining whenever the edit is a continuous beat; only generate an independent start-frame when the cut is a deliberate jump to a new time/angle/location (e.g. cutting to the product void). Build the shot order knowing which boundaries are "continuous" (chain) vs "hard cut" (independent frame).
@@ -354,7 +354,7 @@ Over time across many projects, this log becomes a corpus of REAL data on what a
 
 ## CTA must be delivered as SPOKEN VO, not just text overlay
 
-❌ **On the houseplant spot, the CTA tagline "happy roots, greener leaves" was treated as text-overlay-only for several iterations.** Closing VO was "look at you, all green again" (warm reaction line, not the CTA). Repeatedly landing on a reaction line instead of the CTA got rejected. Took an additional re-fire on shot 5 to bake the CTA into the Owner VO.
+❌ **On the houseplant spot, the CTA tagline "happy roots, greener leaves" was treated as text-overlay-only for several iterations.** Closing VO was "look at you, all green again" (warm reaction line, not the CTA). Repeatedly landing on a reaction line instead of the CTA got rejected. Took an additional re-fire to bake the CTA into the Owner VO.
 
 ✓ **If the brief specifies a CTA tagline, it MUST be delivered as a spoken VO line.** Owner voice, Narrator voice, or character voice (whichever fits). Text overlay is REINFORCEMENT only, never the sole delivery.
 
@@ -366,7 +366,7 @@ Over time across many projects, this log becomes a corpus of REAL data on what a
 
 ## Product appearance drift — generate a product contact sheet at Phase 3
 
-❌ **On the houseplant spot, the dropper bottle appeared in 3 shots (4, 5, 6+). Across shots and versions it was variously: a spray bottle, a pump bottle, an unlabeled clear vial, a glass jar, an amber dropper.** Each shot, seedance had to guess what "a small amber dropper bottle" looked like. ~100 credits across 3 bottle re-fires.
+❌ **A recurring product across several shots. Across shots and versions it was variously: a spray bottle, a pump bottle, an unlabeled clear vial, a glass jar, an amber dropper.** Each shot, seedance had to guess what the product looked like, and every guess cost a re-fire.
 
 ✓ **For any product or recurring physical asset that appears on-screen across shots, generate a product contact sheet at Phase 3 (before Phase 4 scene start-frames).** Two sheets per product:
 - **Packaging contact sheet** — front / back / 3/4 left / 3/4 right / top / hero pull-shot. Locks the package's appearance.
@@ -608,7 +608,7 @@ The `kind="original-media"` attribute on media-rep is required for source files.
 
 ## seedance NSFW — object-descending-on-raised-hands triggers the filter
 
-❌ **Generated shot 5 (low-angle POV: the product descending from above onto tiny characters' raised hands) twice. Seedance NSFW-flagged both attempts** even after sanitizing religious-coded language ("celestial", "angelic", "sacred" → "soft", "dramatic", "weighty"). The composition itself appears to trigger the filter — likely reading "object descending on raised hands from above" as problematic imagery (worship, persecution, suffocation, etc.).
+❌ **A low-angle POV of a product descending from above onto raised hands. Seedance NSFW-flagged repeated attempts** even after sanitizing religious-coded language ("celestial", "angelic", "sacred" → "soft", "dramatic", "weighty"). The composition itself appears to trigger the filter — likely reading "object descending on raised hands from above" as problematic imagery (worship, persecution, suffocation, etc.).
 
 ✓ When seedance rejects a composition twice with sanitized prompts, **stop trying to re-roll**. Pivot to:
 - ffmpeg ken-burns over the (approved) start frame, OR

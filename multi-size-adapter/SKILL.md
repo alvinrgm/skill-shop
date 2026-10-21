@@ -162,8 +162,8 @@ Never make them type a path if you can find the file for them.
 
    Add per-format blocks:
    - **9:16 story/reel safe zones.** Use the same absolute framing as the legal block; the
-     polite version ("keep text clear of the top 14%") was measured failing twice, putting
-     the wordmark at 11.9% from the top:
+     polite version ("keep text clear of the top 14%") can still fail, putting
+     the wordmark inside the unsafe band:
      ```
      THE TOP 15% OF THIS IMAGE MUST CONTAIN NO TEXT AT ALL.
      The wordmark, the headline, the subline and the button ALL sit below the top 15% of
@@ -179,8 +179,8 @@ Never make them type a path if you can find the file for them.
    - **LEGAL FINE PRINT: instruct the model to leave it blank on every size, AND verify it
      actually did.** The instruction below suppresses the legal block most of the time, but
      it is a request to a model, not a guarantee — on photo-dense creatives the model
-     sometimes regenerates the legal paragraph anyway, subtly garbled (verified live: a 9:16
-     photo ad reproduced a garbled version of its disclosure line, despite the block). So two
+     sometimes regenerates the legal paragraph anyway, subtly garbled (a story-size output can
+     reproduce a garbled version of the disclosure line despite the block). So two
      things are load-bearing, not one: (a) the instruction, and (b) the measured check in
      step 5 that the legal band is genuinely empty. Never ask the model to reproduce legal
      text. Put this block in every gen_prompt for a creative that has legal text:
@@ -203,7 +203,7 @@ Never make them type a path if you can find the file for them.
 
      **Use this absolute phrasing.** Where it comes from, honestly: on a handful of outputs
      (fewer than ten, one model version) a polite negative instruction
-     ("do not reproduce the legal text") was ignored twice — the model redrew it anyway,
+     ("do not reproduce the legal text") can be ignored — the model redrew it anyway,
      as a misspelled version of the legal block — while the blunt version held. That is a
      small sample, and the two wordings differ in more than politeness (the blunt one is also
      longer, repeated, capitalised, and adds a positive redirect), so the mechanism is not
@@ -274,8 +274,8 @@ Never make them type a path if you can find the file for them.
      It reports where content actually starts and ends, how much dead canvas sits above the
      legal band, whether that band is genuinely empty, and the worst tonal step. It exits
      non-zero on a real failure. **Paste its numbers into the review sheet rather than your
-     impression.** A shipped sample once carried "safe zones OK" while the wordmark sat at
-     5.5% from the top: the eye reads a top-anchored logo as normal, because that is where
+     impression.** A shipped sample once carried "safe zones OK" while the wordmark sat
+     inside the top unsafe band: the eye reads a top-anchored logo as normal, because that is where
      logos live. If Pillow is missing the tool says "NOT MEASURED" — record that honestly,
      never substitute an estimate. (It needs Pillow; generation does not. Install it for the
      user: `python3 -m pip install --user Pillow`.)

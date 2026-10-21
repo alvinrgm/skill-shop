@@ -205,7 +205,7 @@ Institutional knowledge must accumulate, or next week starts blind again.
 
 ## House style (match the existing decks)
 - **BLUF first.** Every observation slide title is the verdict with the number up
-  front: "Xx ROAS and Yx NC ROAS" / "Non-Brand: Revenue -15%; ROAS -40%".
+  front: "Xx ROAS and Yx NC ROAS" / "<Segment>: Revenue -X%; ROAS -Y%".
 - **Two-part body:** an `Observation` block (the diagnosis, telegraphic bullets
   with the numbers) then a `Next steps` block (imperative actions). The script
   bolds those labels.

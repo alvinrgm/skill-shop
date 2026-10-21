@@ -40,7 +40,7 @@ Below the breakdown table, list each voice with its source-of-truth lock:
 ```
 ## Voice cast (lock verbatim per source)
 
-→ NARRATOR (11L) → voice_id `<your locked narrator voice_id>`, model `eleven_v3`, settings (stability 0.35, similarity_boost 0.75, style 0.7, use_speaker_boost true)
+→ NARRATOR (11L) → voice_id `<your locked narrator voice_id>`, model `eleven_v3`, settings `<your tuned stability / similarity_boost / style>`
    Used in shots: 1, 2, 3, 4, 5, 6 (one word, after Otto's line), 7
    Hushed, reverent wildlife-documentary narrator carrying the through-line.
 
