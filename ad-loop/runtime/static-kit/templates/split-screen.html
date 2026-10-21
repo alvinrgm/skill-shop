@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  /* Split-screen us-vs-them (elite-corpus pattern). The ONE licensed exception to
+     "one world per ad" — two worlds are allowed only when the comparison IS the
+     message. Field colours are sampled from each plate's own background so the
+     photo has no visible seam; each plate is bottom-anchored at 78% height so the
+     product never crops. */
+  .canvas { background:var(--ground); }
+  .half { position:absolute; top:0; bottom:0; width:540px; overflow:hidden; }
+  .half.l { left:0; background:{{field_l}}; }
+  .half.r { left:540px; background:{{field_r}}; }
+  .half img { position:absolute; left:50%; bottom:0; height:74%; width:auto; transform:translateX(-50%); }
+  /* Feather the field into the plate so the split has no visible horizontal seam
+     (a hard band there reads as stitched surfaces, the #1 template tell). */
+  .half::after { content:''; position:absolute; left:0; right:0; top:0; height:552px; }
+  .half.l::after { background:linear-gradient(180deg, {{field_l}} 0%, {{field_l}} 62%, transparent 100%); }
+  .half.r::after { background:linear-gradient(180deg, {{field_r}} 0%, {{field_r}} 62%, transparent 100%); }
+
+  .card {
+    position:absolute; left:62px; right:62px; top:70px;
+    background:var(--ground); border-radius:22px; padding:26px 34px 24px;
+    box-shadow:0 18px 40px color-mix(in srgb, var(--ink) 28%, transparent);
+    display:flex; align-items:baseline; justify-content:space-between; gap:24px;
+  }
+  .card .q {
+    font-family:var(--font-serif); font-weight:600; font-size:38px; line-height:1.16;
+    color:var(--ink);
+  }
+  .card .mark {
+    font-family:var(--font-shout); font-size:14px; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--support); white-space:nowrap; flex:none;
+  }
+
+  .col { position:absolute; top:252px; width:440px; text-align:center; }
+  .col.l { left:50px; }
+  .col.r { left:590px; }
+  .pill {
+    display:inline-block; font-family:var(--font-shout); font-size:16px;
+    letter-spacing:.11em; text-transform:uppercase; padding:12px 22px; border-radius:999px;
+  }
+  .col.l .pill { background:color-mix(in srgb, var(--ground) 72%, transparent); color:var(--support); }
+  .col.r .pill { background:var(--support); color:var(--ground); }
+  .line {
+    font-family:var(--font-serif); font-weight:500; font-size:42px; line-height:1.14;
+    margin-top:22px;
+  }
+  .col.l .line { color:var(--ink); }
+  .col.r .line { color:var(--ground); text-shadow:0 2px 12px color-mix(in srgb, var(--ink) 35%, transparent); }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="half l"><img src="{{img_l}}"></div>
+    <div class="half r"><img src="{{img_r}}"></div>
+
+    <div class="card">
+      <div class="q">{{question}}</div>
+      <div class="mark">{{url}}</div>
+    </div>
+
+    <div class="col l">
+      <span class="pill">{{pill_l}}</span>
+      <div class="line">{{line_l}}</div>
+    </div>
+    <div class="col r">
+      <span class="pill">{{pill_r}}</span>
+      <div class="line">{{line_r}}</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .canvas { background:var(--ground); color:var(--support); }
+  .headline { font-family:var(--font-slab); font-size:96px; line-height:1.0; text-align:center; padding:104px 90px 0; }
+  .sub { font-family:var(--font-serif); font-size:29px; font-style:italic; text-align:center; max-width:740px; margin:20px auto 0; }
+  .week { position:absolute; left:72px; right:72px; top:478px; display:flex; gap:12px; }
+  .day { flex:1; background:color-mix(in srgb, var(--paper) 85%, transparent); border:1.5px solid color-mix(in srgb, var(--accent) 35%, transparent); border-radius:14px; padding:16px 0 14px; text-align:center; box-shadow:0 8px 18px color-mix(in srgb, var(--ink) 7%, transparent); }
+  .day .d { font-family:var(--font-serif); font-weight:700; font-size:22px; letter-spacing:.04em; }
+  .day svg { display:block; margin:12px auto 0; }
+  .day svg .tile { fill:var(--support-2); }
+  .day svg .tick { fill:none; stroke:var(--ground); stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; }
+  .product { position:absolute; left:50%; transform:translateX(-50%); bottom:112px; height:570px; }
+  .product img { height:570px; filter:drop-shadow(0 26px 48px color-mix(in srgb, var(--ink) 22%, transparent)); }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="headline">{{headline}}</div>
+    <div class="sub">{{sub}}</div>
+
+    <div class="week">
+      <!--DAY--><div class="day"><div class="d">S</div><svg width="54" height="34" viewBox="0 0 54 34"><rect class="tile" x="9" y="3" width="36" height="28" rx="7"/><path class="tick" d="M19 17 L25 23 L36 11"/></svg></div>
+      <div class="day"><div class="d">M</div><svg width="54" height="34" viewBox="0 0 54 34"><rect class="tile" x="9" y="3" width="36" height="28" rx="7"/><path class="tick" d="M19 17 L25 23 L36 11"/></svg></div>
+      <div class="day"><div class="d">T</div><svg width="54" height="34" viewBox="0 0 54 34"><rect class="tile" x="9" y="3" width="36" height="28" rx="7"/><path class="tick" d="M19 17 L25 23 L36 11"/></svg></div>
+      <div class="day"><div class="d">W</div><svg width="54" height="34" viewBox="0 0 54 34"><rect class="tile" x="9" y="3" width="36" height="28" rx="7"/><path class="tick" d="M19 17 L25 23 L36 11"/></svg></div>
+      <div class="day"><div class="d">T</div><svg width="54" height="34" viewBox="0 0 54 34"><rect class="tile" x="9" y="3" width="36" height="28" rx="7"/><path class="tick" d="M19 17 L25 23 L36 11"/></svg></div>
+      <div class="day"><div class="d">F</div><svg width="54" height="34" viewBox="0 0 54 34"><rect class="tile" x="9" y="3" width="36" height="28" rx="7"/><path class="tick" d="M19 17 L25 23 L36 11"/></svg></div>
+      <div class="day"><div class="d">S</div><svg width="54" height="34" viewBox="0 0 54 34"><rect class="tile" x="9" y="3" width="36" height="28" rx="7"/><path class="tick" d="M19 17 L25 23 L36 11"/></svg></div>
+    </div>
+
+    <div class="product"><img src="{{img}}"></div>
+    <div class="url-line">{{url}}</div>
+  </div>
+</body>
+</html>

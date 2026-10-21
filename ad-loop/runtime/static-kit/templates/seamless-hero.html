@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  /* SEAMLESS HERO — one real product standing on a plain, flat-lit seamless; the type is
+     flat ink because the LIGHT is flat; one designed proof object carries the concept.
+
+     A sibling in the kit, not a fork:
+       · product-rail.html  stands a cut-out pack on a drawn gradient sweep
+       · scene-hero.html    puts the product in a real set and lets the set's physics carry it
+       · seamless-hero.html THIS — deletes the set. Plain sweep, flat key, real pack, one card.
+
+     WHY IT EXISTS: a real pack in a generated room can clear every gate except law 21, and
+     that failure is MEASURED, not felt: byte-identical flat glyphs over a wall whose
+     luminance runs across a ~100-level range. Flat vector ink over real photographic
+     luminance variance is a fatal you cannot art-direct away. There are exactly two honest
+     fixes — relight the type per the plate's luminance profile, or give the type a field
+     with no light story of its own. This template is the second one: delete the
+     environment; product on a plain seamless, flat even light.
+
+     HARD RULES BAKED IN
+     1. {{scene}} is a SEAMLESS: one flat-lit sweep, no horizon, no second surface, no scene.
+        The only photographic object on it is the real pack shot, and the pack's shadow is
+        built into the plate by your plate-build step against a measured real photograph.
+     2. Type gets no scrim, no plate, no bar. The ONE box in the ad is the review card, and
+        that card is an OBJECT (it carries the same three-radius warm shadow as the plate's
+        own built shadow), not a scrim invented to rescue an illegible line.
+     3. Two type families, hard cap: --font-serif is the VOICE (eyebrow, headline, reply,
+        the customer's own words); --font-data is the DATA (numeral, labels, attribution,
+        microtype, URL).
+     4. One accent, used once (law 14): the review stars, in --accent.
+     5. No second logo. The pack in the frame is the brand mark; the URL is the second
+        mention and the last thing read.
+
+     Focal hierarchy (law 25): pack dominant > headline > card > numeral > labels > chrome.
+
+     Canvas-parameterized: every geometry number below is a token, and the SAME numbers are
+     must be used by your plate-build step's layout, so the plate and the type layer cannot
+     drift apart. Re-cutting to 1:1 or 9:16 means moving tokens in both places, never re-deciding
+     the design. */
+
+  :root {
+    --margin:100px;              /* 9.3% outer margin, law 4 */
+
+    /* the voice, top-left, in the sweep's empty upper half */
+    --eyebrow:13px;
+    --eyebrow-top:100px;
+    --head:70px;                 /* 2 lines = 161px = 11.9% of canvas height, law 4 */
+    --head-top:126px;
+    --reply:26px;
+    --reply-top:304px;
+
+    /* The data column is RIGHT-ALIGNED to the outer margin rather than left-aligned to a
+       column start. Two reasons, both structural: if the pack's widest point is near its
+       top, then a left-aligned column collides with the product exactly where the numeral
+       wants to sit; and a shared right edge at 980 is what binds the numeral to the card
+       below it into one column instead of two floating blocks. */
+    --col-right:100px;
+    --col-w:300px;
+    --col-top:384px;
+    --n1:96px;                   /* the star numeral: the biggest number in the ad */
+    --label:22px;
+    --sub:16px;
+
+    /* the device: a designed review card, standing on the same floor as the pack and
+       overlapping it, so its depth is stated by OCCLUSION (the honest cue) and not only
+       by a shadow. Its base sits 8px BELOW the pack's, because it is nearer the camera. */
+    --card-left:640px;
+    --card-w:340px;
+    --card-top:748px;
+    --card-bottom:1135px;
+
+    --fine:15px;                 /* compliance microtype, full ink, never dimmed */
+    --url:24px;                  /* >=24px = WCAG 'large text' */
+    /* Chrome sits bottom-LEFT, stacked, and deliberately outside the shadow pool (which is
+       thrown right). Reading order still ends on the destination: warning, then URL. */
+    --chrome-top:1174px;         /* bottom safe zone is 120px on 4:5 -> nothing below 1230 */
+
+    /* NOTE: this template deliberately carries NO card-background / card-border /
+       card-shadow tokens, deliberately: the card's paper, edge and shadow are
+       photographic-physics objects built into the plate by your plate-build step under the
+       same key as the pack. A leftover token here is how the
+       CSS version silently comes back. */
+    --font-data:'Helvetica Neue','Helvetica','Arial',sans-serif;
+  }
+
+  .canvas { position:relative; width:1080px; height:1350px; overflow:hidden; }
+  .scene  { position:absolute; inset:0; width:1080px; height:1350px; display:block; }
+
+  /* ---- the voice: eyebrow, body sentence, answer ---------------------------
+     The eyebrow is load-bearing, not decoration. The headline is a customer's first-person
+     sentence and the reply is the brand answering with "we"; without the eyebrow the reader
+     meets an unattributed "i" and a brand "we" in the same breath and the voice whiplashes.
+     Three words fix it before the headline is even read, and they
+     point forward at the card, where one of those reviewers is named. */
+  .eyebrow {
+    position:absolute; left:var(--margin); top:var(--eyebrow-top);
+    font-family:var(--font-data); font-size:var(--eyebrow); font-weight:500;
+    letter-spacing:.22em; color:var(--ink);
+  }
+  .head {
+    position:absolute; left:var(--margin); top:var(--head-top); right:var(--margin);
+    font-family:var(--font-serif); font-weight:500;
+    font-size:var(--head); line-height:1.15; letter-spacing:-.015em; color:var(--ink);
+  }
+  /* the vertical rule is structure, not ornament: it is what makes the second line read as
+     an ANSWER rather than as a second headline. Delete it and the two voices collapse. */
+  .reply {
+    position:absolute; left:var(--margin); top:var(--reply-top);
+    font-family:var(--font-serif); font-weight:400;
+    font-size:var(--reply); line-height:1.35; color:var(--ink);
+    padding-left:24px; border-left:4px solid var(--ink);
+  }
+
+  /* ---- the data column ----------------------------------------------------- */
+  .proof {
+    position:absolute; right:var(--col-right); top:var(--col-top); width:var(--col-w);
+    text-align:right; font-family:var(--font-data); color:var(--ink);
+  }
+  .proof .n {
+    display:block; font-size:var(--n1); font-weight:500; line-height:.95;
+    letter-spacing:-.04em; font-variant-numeric:lining-nums tabular-nums;
+  }
+  .proof .l { display:block; font-size:var(--label); line-height:1.2; margin-top:10px; }
+  /* NO opacity anywhere in this template. Dimming small type is how a legible line becomes
+     an illegible one (measured in a prior run: 0.72 opacity took a 5.19:1 line to 2.97:1).
+     Hierarchy is carried by SIZE alone. */
+  .proof .s { display:block; font-size:var(--sub);  line-height:1.35; margin-top:6px; }
+
+  /* ---- the device: one named human, designed as an object ------------------ */
+  .card {
+    position:absolute; left:var(--card-left); top:var(--card-top);
+    width:var(--card-w); height:calc(var(--card-bottom) - var(--card-top));
+    /* NO background, NO border, NO box-shadow here. The card's paper, its edge and its
+       three-layer shadow are photographic-physics objects built into the plate by your
+       plate-build step, using the same key and the same shadow functions as the pack.
+       This element is only the type that sits on that paper. Keep the geometry tokens in
+       sync with the card geometry that step uses. */
+    background:transparent; border:0; box-shadow:none;
+    padding:36px 30px; display:flex; flex-direction:column; justify-content:center;
+  }
+  .card .stars {
+    font-size:19px; line-height:1; letter-spacing:.10em; color:var(--accent);
+    margin-bottom:22px;
+  }
+  .card .quote {
+    font-family:var(--font-serif); font-size:20px; line-height:1.48;
+    letter-spacing:-.004em; color:var(--ink);
+  }
+  .card .who {
+    font-family:var(--font-data); font-size:14px; font-weight:500; letter-spacing:.05em;
+    color:var(--ink); margin-top:22px;
+  }
+
+  /* ---- chrome: one baseline row. Microtype first, destination LAST ---------
+     (an ad whose final read is its own warning is a defect.) */
+  .fine {
+    position:absolute; left:var(--margin); top:var(--chrome-top);
+    font-family:var(--font-data); font-size:var(--fine); font-weight:500;
+    line-height:1.35; color:var(--ink); max-width:470px;
+  }
+  .url {
+    position:absolute; left:var(--margin); top:calc(var(--chrome-top) + 30px);
+    font-family:var(--font-data); font-size:var(--url); font-weight:500;
+    letter-spacing:.002em; color:var(--ink);
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <img class="scene" src="{{scene}}" alt="">
+
+  <div class="eyebrow">{{eyebrow}}</div>
+  <div class="head">{{headline}}</div>
+  <div class="reply">{{reply}}</div>
+
+  <div class="proof">
+    <span class="n">{{n1}}</span>
+    <span class="l">{{l1}}</span>
+    <span class="s">{{s1}}</span>
+  </div>
+
+  <div class="card">
+    <div class="stars">{{stars}}</div>
+    <div class="quote">{{quote}}</div>
+    <div class="who">{{who}}</div>
+  </div>
+
+  <div class="fine">{{microtype}}</div>
+  <div class="url">{{url}}</div>
+</div>
+</body>
+</html>

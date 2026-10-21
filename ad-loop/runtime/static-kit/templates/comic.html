@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .canvas { background:var(--paper); color:var(--ink); }
+  .panels { display:flex; gap:24px; padding:88px 72px 0; }
+  .panel { flex:1; text-align:center; }
+  .panel .say { font-family:var(--font-serif); font-weight:800; font-size:33px; line-height:1.25; min-height:130px; display:flex; align-items:flex-end; justify-content:center; padding-bottom:18px; }
+  .panel .art { background:var(--paper); border:2px solid color-mix(in srgb, var(--ink) 14%, transparent); border-radius:12px; overflow:hidden; }
+  .panel .art img { display:block; width:116%; margin-left:-8%; height:380px; object-fit:cover; }
+  .intro { font-family:var(--font-serif); font-weight:800; font-size:42px; text-align:center; color:var(--support); margin-top:56px; padding:0 110px; line-height:1.2; }
+  .prod-row { position:absolute; left:72px; right:72px; bottom:190px; display:flex; align-items:center; gap:44px; }
+  .prod-row img { height:300px; filter:drop-shadow(0 18px 36px color-mix(in srgb, var(--ink) 18%, transparent)); }
+  .stats { display:flex; flex-direction:column; gap:20px; }
+  .stat { display:flex; align-items:center; gap:14px; font-family:var(--font-serif); font-weight:700; font-size:26px; }
+  .stat::before { content:''; width:12px; height:12px; border-radius:50%; background:var(--accent); flex-shrink:0; }
+  .fine { position:absolute; left:0; right:0; bottom:96px; text-align:center; font-family:var(--font-serif); font-size:17px; color:color-mix(in srgb, var(--ink) 55%, transparent); }
+  .url-line { bottom:44px; color:var(--support); }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="panels">
+      <div class="panel"><div class="say">{{say_a}}</div><div class="art"><img src="{{panel_a}}"></div></div>
+      <div class="panel"><div class="say">{{say_b}}</div><div class="art"><img src="{{panel_b}}"></div></div>
+    </div>
+    <div class="intro">{{intro}}</div>
+    <div class="prod-row">
+      <img src="{{img}}">
+      <div class="stats">{{stats}}</div>
+    </div>
+    <div class="fine">{{fine}}</div>
+    <div class="url-line">{{url}}</div>
+  </div>
+</body>
+</html>

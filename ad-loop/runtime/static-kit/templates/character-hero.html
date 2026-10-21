@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .plate { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .headline { position:relative; font-family:var(--font-slab); font-size:76px; line-height:1.02; color:var(--ink); text-align:center; padding:92px 110px 0; }
+  .sub { position:relative; font-family:var(--font-serif); font-style:italic; font-size:29px; color:var(--support); text-align:center; margin-top:18px; padding:0 130px; }
+  .stamp { width:180px; height:180px; left:76px; right:auto; bottom:120px; color:var(--accent); font-size:20px; padding:26px; }
+  .url-line { bottom:48px; color:var(--support); }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <img class="plate" src="{{img}}">
+    <div class="headline">{{headline}}</div>
+    <div class="sub">{{sub}}</div>
+    <div class="stamp">{{badge}}</div>
+    <div class="url-line">{{url}}</div>
+  </div>
+</body>
+</html>

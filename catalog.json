@@ -14,6 +14,17 @@
       "image": "ad-library/explainer/explainer-4x5.png"
     },
     {
+      "slug": "ad-loop",
+      "kind": "plugin",
+      "tag": "Static ad production",
+      "name": "Static ad loop",
+      "summary": "Brief in, finished static ads out. Give it a brand URL and a short interview, and Claude runs each ad through scored rounds (copy, layout, product physics, a mock feed test) until it's genuinely good, or tells you where the ceiling is.",
+      "needs": "Python, Node 20+, Playwright Chromium, a Gemini API key",
+      "version": "1.0.0",
+      "published": "2026-10-21",
+      "updated": "2026-10-21"
+    },
+    {
       "slug": "account-connectors",
       "kind": "plugin",
       "tag": "Connectors",
