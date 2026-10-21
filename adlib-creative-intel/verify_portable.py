@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""verify_portable.py -- structural portability audit gate for make-portable packages.
+"""verify_portable.py -- structural portability audit gate for portable packages.
 
 Refuses to bless a packaged skill that ships with incomplete install coverage. It is the
-make-portable analog of an audit-gate-that-refuses-to-publish: packaging is NOT complete until
+the analog of an audit-gate-that-refuses-to-publish: packaging is NOT complete until
 this exits 0. Ships INSIDE each package (copied in like doctor.sh) so package updates re-run it.
 
 Five checks (mirrors doctor.sh's PASS/FAIL-per-line style):
 
   1. COVERAGE PARITY        every third-party import, external binary, env var, and MCP tool the
                             CODE actually uses must appear in dependencies.yml. Used-but-undeclared
-                            = the exact "shipped with ffmpeg + video-acquisition undeclared" failure.
+                            = a package that cannot run on a clean machine.
   2. MANIFEST<->INSTALLER   every dependencies.yml dep must have (a) a probe in doctor.sh,
      PARITY                 (b) a mention in SETUP.md, (c) coverage by the SKILL.md onboarding gate.
   3. ACQUISITION            every dep that is a user-produced INPUT (a file/asset the recipient must
@@ -28,10 +28,6 @@ Five checks (mirrors doctor.sh's PASS/FAIL-per-line style):
                             meant to exist. Doctrine: connectors are set up ONCE, then the skill does
                             everything; there is no manual path.
 
-Why reimplement scan.sh's categories in Python instead of parsing its output: this checker must
-cross-reference each finding against the PARSED manifest (per-dep, by type/id/key). scan.sh emits
-free text; parsing that back into structure is fragile, so the categories are reimplemented here
-against the same grep patterns. scan.sh stays the human-facing Phase-0 report; this is the gate.
 
 Usage:
   python3 verify_portable.py <package-dir> [--json]
@@ -49,7 +45,7 @@ import sys
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
-# Minimal YAML-subset parser for the make-portable manifest shape.
+# Minimal YAML-subset parser for the portable-package manifest shape.
 # Handles: top-level `key: value`, `path_vars:` / `deps:` lists of dicts
 # (`- name: X` starts a new dict; deeper-indented `key: value` are its fields).
 # Strips full-line and inline comments while preserving `#` inside quotes.
@@ -144,7 +140,7 @@ def manifest_blob(manifest):
 
 
 # ---------------------------------------------------------------------------
-# Code scanning -- reuses scan.sh's grep categories, reimplemented in Python.
+# Code scanning -- grep categories reimplemented in Python.
 # ---------------------------------------------------------------------------
 
 PY_STDLIB = {
@@ -448,14 +444,14 @@ def check_installer_parity(manifest, pkg_dir):
 
     if doctor is None:
         violations.append(("installer", "doctor.sh is missing from the package",
-                           "generate doctor.sh from dependencies.yml (templates/doctor.sh)"))
+                           "generate doctor.sh from dependencies.yml (see SETUP.md)"))
     if setup is None:
         violations.append(("installer", "SETUP.md is missing from the package",
                            "generate SETUP.md from dependencies.yml (Phase 4)"))
     if not gate_present:
         violations.append(("installer",
                            "SKILL.md has no onboarding gate (no doctor.sh/.onboarded reference)",
-                           "prepend the onboarding gate (templates/onboarding-gate.md) to SKILL.md"))
+                           "prepend the onboarding gate (see SETUP.md) to SKILL.md"))
 
     for dep in manifest.get("deps", []):
         # author-only deps are intentionally NOT installed by the recipient
@@ -552,7 +548,7 @@ def check_trust_level(manifest):
     `trust_level:` at manifest top level: internal (author-convention paths allowed,
     private internal repos ONLY) | team | client | public. Unlabeled packages are how
     internal-only builds drift into public repos -- the label makes the classification
-    explicit and lets publish.sh enforce destination coherence (2026-08-04 directive).
+    explicit so a publish step can check the destination matches.
     """
     tl = manifest.get("trust_level")
     if not tl:
@@ -579,9 +575,8 @@ def check_oauth_scaffolding(manifest, pkg_dir):
     Any dep whose keys include an OAuth client credential (CLIENT_ID / CLIENT_SECRET /
     REFRESH_TOKEN) means the recipient must create their OWN cloud project + OAuth client.
     A bare docs URL is not enough: the acquisition text must reference a shipped script
-    (.py/.sh) or a package .md walkthrough that actually exists. This is the gap that let
-    account-manager-portable ship "use any standard OAuth flow" -- the recipient ended up
-    asking the author to whitelist them on the AUTHOR'S cloud project (2026-08-03).
+    (.py/.sh) or a package .md walkthrough that actually exists. Without it, recipients end up
+    depending on the author's cloud project.
     """
     violations = []
     for dep in manifest.get("deps", []):
@@ -1270,7 +1265,7 @@ def print_report(result):
 
 
 def main(argv=None):
-    ap = argparse.ArgumentParser(description="Structural portability audit for a make-portable package.")
+    ap = argparse.ArgumentParser(description="Structural portability audit for a portable package.")
     ap.add_argument("package_dir", help="path to the packaged skill directory")
     ap.add_argument("--json", action="store_true", help="machine-readable JSON output")
     args = ap.parse_args(argv)

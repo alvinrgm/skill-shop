@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""certify_cleanroom.py -- clean-room certifier (make-portable Phase 6.6 ship gate).
+"""certify_cleanroom.py -- clean-room certifier (package ship gate).
 
 THE DOCTRINE. The empty-room test proves automation is real only if the skill, fresh-unzipped into
 a directory with ZERO input files and ONLY the operator's connectors/keys, runs its ONE entry
@@ -7,16 +7,13 @@ command and produces every input it needs, writes its deliverable, passes its ow
 exits 0. A workspace that already contains an input file is NOT evidence the skill can make it,
 because during dev the operator usually placed it by hand. This certifier turns that test from an
 ad-hoc manual walk (which regresses) into a scripted, re-runnable machine gate (which holds). It is
-the make-portable analog of an audit gate that refuses to publish: packaging is NOT complete until
+the analog of an audit gate that refuses to publish: packaging is NOT complete until
 this exits PASS, or prints an explicitly declared WAIVED for a non-cold-runnable package.
 
-Origin (2026-07-25): the clean-room run caught 4 shipped bugs (arg wiring, tag-new no-op, a silent
-exit-0, a never-working video path) that 30+ output checks, the portability gate, and every agent
-handback missed. Highest-value single check of the night. Encoded here so it never stays ad-hoc.
 
 WHAT IT READS. Two NEW top-level fields in the package's dependencies.yml:
 
-  entry_run: "python3 scripts/full_run.py --slug cleanroom --no-publish"
+  entry_run: "python3 scripts/<entry>.py ..."
       The ONE command that cold-runs the full pipeline end to end. Run in the package root, with
       the operator's secrets installed and the input dirs empty.
 
@@ -28,7 +25,7 @@ WHAT IT READS. Two NEW top-level fields in the package's dependencies.yml:
       - creatives               #    0-byte files, README) are allowed.
     artifacts:                   #   globs that must exist and be non-trivial AFTER the run
       - "outputs/*.md"
-    audit: "python3 scripts/audit_report.py --report \"$(ls -t outputs/*.md | head -1)\" ..."
+    audit: "python3 scripts/<check>.py ..."
                                  #   optional: the package's OWN audit gate, run through the shell in
                                  #   the package root. Must exit 0.
 
@@ -379,7 +376,7 @@ def die(code, msg):
 def banner(kind, n_fail=0):
     print()
     if kind == "pass":
-        print(green("CLEAN-ROOM CERTIFICATION PASSED") + "  -- packaging may proceed (Phase 6.6 gate met)")
+        print(green("CLEAN-ROOM CERTIFICATION PASSED") + "  -- packaging may proceed")
     elif kind == "waived":
         print(yellow("CLEAN-ROOM CERTIFICATION WAIVED") + "  -- declared non-cold-runnable (not a pass)")
     else:
@@ -466,7 +463,7 @@ def run_assertions(room, spec, entry_rc=None):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(
-        description="Clean-room certifier for make-portable packages (Phase 6.6 ship gate).")
+        description="Clean-room certifier for portable packages.")
     src = ap.add_mutually_exclusive_group()
     src.add_argument("--zip", dest="zip_path", help="packaged .zip to fresh-extract and certify")
     src.add_argument("--room", help="an already-populated package dir (assert-only, no re-run)")
