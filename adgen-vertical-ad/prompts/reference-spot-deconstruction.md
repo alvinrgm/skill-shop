@@ -4,7 +4,7 @@ When the operator shares a real ad, sketch, music video, or short film as a tona
 
 ## Why this exists
 
-Past mistake (a pharma-ad-parody spot): the operator referenced the SNL Couplabeers skit at Phase 2 as the tonal/structural inspiration. Used it for surface cues (script lines, the "ask your doctor"-style punchline, suburban-mockumentary register) but never deconstructed its STRUCTURAL architecture. Couplabeers has a specific audio pattern (husband narrates over flashbacks while characters speak in-scene around him + fake pharma announcer interrupts) that defines the entire downstream pipeline. Missed it. Defaulted to per-clip seedance audio (Strategy A) when the reference required continuous-narrator (Strategy B). Cost ~200 credits in re-fires.
+A reference gets borrowed for its surface cues (lines, punchline style, register) while its STRUCTURAL architecture goes unexamined. But a reference's audio pattern — who narrates, when characters speak in-scene, whether an announcer interrupts — defines the entire downstream pipeline. Miss it and the spot defaults to per-clip seedance audio (Strategy A) when the reference actually needs a continuous narrator (Strategy B), which is only discovered at stringout and costs a rebuild.
 
 A reference-spot deconstruction at Phase 1.5 catches this. The 5-axis analysis is fast (~10 minutes) and feeds directly into the Phase 2 breakdown's audio architecture column.
 
@@ -28,7 +28,7 @@ Skip when:
 Who carries the through-line of the reference spot?
 
 Possible patterns:
-- **First-person testimonial:** main character narrates their own experience retrospectively (Couplabeers, most pharma ads, lots of B2B founder videos)
+- **First-person testimonial:** main character narrates their own experience retrospectively (most testimonial ads, lots of B2B founder videos)
 - **Omniscient third-person:** detached narrator describes what's happening (Apple "Think Different" voice-over, Nike "find your greatness")
 - **In-scene only:** no narrator, all audio is from characters speaking in real time (most commercial dialogue spots, indie shorts)
 - **Multiple narrators interleaved:** documentary-style with several voices (vox-pop ads, ensemble pieces)
@@ -53,9 +53,9 @@ This axis matters because in-scene moments need lip-synced seedance video, while
 What does music do in the reference?
 
 Possible patterns:
-- **Continuous bed, low volume:** music ties cuts together but stays under dialogue (most pharma ads, prestige tech ads)
+- **Continuous bed, low volume:** music ties cuts together but stays under dialogue (most testimonial ads, prestige tech ads)
 - **Dramatic score with peaks:** music swells at emotional beats, ducks during dialogue (movie trailers, prestige TV)
-- **Genre-mimicry track:** the music itself IS the format reference (e.g., "couple of beers" uses sad-piano-pharma-ad music as the joke)
+- **Genre-mimicry track:** the music itself IS the format reference (e.g., a parody that uses the target genre's signature score as the joke)
 - **Silent:** no music, ambient only (vérité-style, sketch comedy)
 - **Source music only:** music plays from a visible in-scene source (radio, TV in the background)
 
@@ -65,14 +65,14 @@ Write 1-2 sentences. The music role affects Phase 6+ planning (Suno bed in FCP? 
 
 What genre conventions does the reference borrow, and which BEATS of that genre does it hit?
 
-For example, Couplabeers borrows from the standard pharma-ad format:
-→ Beat 1: somber piano + testimonial open ("a few months ago anxiety was ruining my life")
-→ Beat 2: doctor consultation (or product introduction)
-→ Beat 3: transformation montage with bright music
-→ Beat 4: calm announcer reading clinical claims over product b-roll
-→ Beat 5: "side effects may include" with absurd visuals
-→ Beat 6: "ask your doctor" CTA
-→ Beat 7: family confrontation / emotional close
+For example, a late-night infomercial parody borrows from the standard infomercial format:
+→ Beat 1: black-and-white "there has to be a better way" struggle open
+→ Beat 2: host bursts in with the product
+→ Beat 3: side-by-side demo against the "old way"
+→ Beat 4: rapid-fire feature list with on-screen callouts
+→ Beat 5: studio-audience / testimonial reaction
+→ Beat 6: "but wait, there's more" escalation
+→ Beat 7: urgent call-to-action with a countdown
 
 List the beats that the reference hits. This becomes the SHOT STRUCTURE for our spot — each beat is a potential shot or cluster of shots.
 
@@ -104,8 +104,8 @@ For: [our spot project name]
 ## Axis 2 — In-scene moments
 | Timecode | Speaker | Line (summary) | Narrator status during | Role in spot |
 |---|---|---|---|---|
-| 0:05 | wife | "have a great day" | silent (no narrator yet) | setup |
-| 0:18 | son | "gah, come on!" | husband narrates over | supports "struggling as father" |
+| 0:04 | host | "there has to be a better way" | silent (no narrator yet) | setup |
+| 0:12 | customer | "it actually worked?" | announcer talks over | supports the demo beat |
 | ... | ... | ... | ... | ... |
 
 ## Axis 3 — Music role
@@ -135,56 +135,48 @@ The breakdown's `Music + SFX` column should reflect Axis 3.
 The number of shots should align with Axis 4 beats.
 ```
 
-## Worked example — SNL Couplabeers as the reference for an invented hot-sauce pharma parody
+## Worked example — a wildlife-documentary register as the reference for an invented insulated-bottle spot
 
-If this had been run at Phase 1.5 (instead of skipped), the output would have been:
+For reference only (the brand, character and lines are invented). The operator asks for "an office spot narrated like a hushed nature documentary" for a steel water bottle. The deconstruction:
 
 ```markdown
-# Reference spot deconstruction — SNL Couplabeers
+# Reference spot deconstruction — wildlife-documentary register (genre reference)
 
 ## Axis 1 — Narrator architecture
-First-person testimonial. The husband (the patient in the parody) narrates retrospectively about his transformation, with his voice playing OVER flashbacks of his life falling apart and recovering. He never delivers narration lines to camera in-scene; the in-scene moments are him interacting with family while his voiceover plays.
+Omniscient third-person. One hushed, reverent narrator observes the subject from a distance and explains its behavior as if it were an animal in the wild. The subject never addresses the narrator; the narrator never appears on screen.
 
 ## Axis 2 — In-scene moments
-| Timecode | Speaker | Line | Narrator status | Role |
+| Timecode | Speaker | Line (summary) | Narrator status | Role |
 |---|---|---|---|---|
-| 0:00 | wife | "have a great day, gang" | silent | setup |
-| 0:13 | son | "gah! come on!" | husband VO over | supports "struggling as father" |
-| 0:31 | husband | "andrew, I love you, buddy" | in-scene break from VO | shows transformation effect |
-| 0:38 | colleagues | (laughter) | "what are you guys laughing at" → "how stupid you are" | the dark turn |
-| 1:09 | husband | "she's just jealous cause you're so beautiful" | breaks VO with unhinged in-scene | shows side effect |
-| 2:14 | son | "honey, can you come sit down" | wife in-scene | confrontation setup |
+| — | (subjects) | none — observational footage only | narrator carries everything | establishes the register |
 
-→ Ratio: ~70% narrator VO over silent / 30% in-scene dialogue. Strategy B with hybrid moments.
+→ The genre has NO in-scene dialogue. Our comedic break: the subject speaks exactly ONCE, at the payoff, and the narrator reacts.
+→ Ratio: ~90% narrator VO over observational visuals / ~10% in-scene. Strategy B.
 
 ## Axis 3 — Music role
-Continuous sad-piano pharma-ad bed throughout. The MUSIC ITSELF is the format reference — the somber piano is what tells the viewer "this is a pharma ad" before any clinical claims appear. Music ducks under the fake-clinical-claims voiceover. Goes slightly warmer in transformation moments. Returns to sad piano in confrontation.
+Mostly ambient (room tone, natural sound) with the score held back; a single orchestral swell lands at the "discovery" moment and resolves on the closing line. The restraint IS the format cue — the hush tells the viewer what genre this is.
 
-→ Implication: Suno continuous bed across the whole spot, low volume, slight warming in shots 3-5.
+→ Implication: no continuous bed. Office room tone across the spot + one Suno orchestral swell (strings + horn) placed in FCP under the reveal and end card.
 
 ## Axis 4 — Format-mimicry beats
-1. Somber testimonial open ("a few months ago anxiety was ruining my life")
-2. Doctor consultation ("that's when I talked to my doctor about a couple of beers")
-3. Product introduction ("a couple of beers is a revolutionary medicine...")
-4. Transformation montage ("within minutes of taking it, I'm back to my old self")
-5. Calm clinical-claims announcer voiceover ("a couple of beers is clinically proven to treat conditions like boredom, depression...")
-6. "Side effects may include" with absurd visuals
-7. "Ask your doctor" CTA
-8. Family confrontation close
+1. Dawn establishing shot of the habitat
+2. Observation of the subject's daily struggle
+3. The arduous journey to the watering hole
+4. The discovery (the score finally swells)
+5. Payoff — the subject thrives; the rest of the herd takes notice
+6. Closing reflection line
 
-For the spot: hit beats 1, 2 (neighbor = doctor analog), 3, 4, 5, 6 ("you may notice..."), 7 ("talk to your taste buds"), 8 (fridge-door stockpile).
+For the spot: beat 1 = open-plan office at 8am; 2 = lukewarm desk water; 3 = trek to an empty water cooler; 4 = product reveal; 5 = ice still rattling at 5pm, coworkers' heads pop up over the partitions; 6 = CTA.
 
 ## Axis 5 — Punchline structure
-Main punchline = format mismatch (a normal thing reframed as medicine). Recurring micro-punchlines = the husband's increasingly inappropriate behavior delivered with deadpan-positive narrator framing. Final punchline = family confrontation interrupted by his calm "no" while wife is mid-question.
-
-For the spot: equivalent = a "talk to your taste buds" tagline punchlines the entire pharma format. Fridge-door stockpile + dead-serious "I can quit anytime" closes the bit.
+Main punchline = format mismatch (a mundane office treated with nature-doc gravity). Recurring micro-punchlines = the narrator's solemn framing of trivial behavior. Final punchline = the subject breaks the genre by speaking to camera ("Still cold."), and the narrator, unbothered, delivers the CTA.
 
 ## Implications for our spot
-→ Narrator architecture: Strategy B with hybrid. One 11L narrator carries 7-8 narrator beats, seedance handles 5 in-scene moments.
-→ Voice cast: 1 11L voice (pharma-ad announcer) + 4 seedance voices (Hank in-scene, wife, neighbor, kid — kid is visual only).
-→ Music plan: Suno continuous pharma-ad piano bed across spot, ducked under dialogue.
-→ Shot count: 7 main shots + 4 vignettes inside shot 5 = 11-12 clips.
-→ Critical setup: shots 1-3 must establish the testimonial register; shot 6 is the "more is too much" beat; shot 7 is the punchline.
+→ Narrator architecture: Strategy B. One 11L narrator carries 6 of 7 beats; seedance handles a single in-scene line.
+→ Voice cast: 1 11L voice (hushed documentary narrator) + 1 seedance-lip-synced voice (Otto, one line). Coworkers are silent extras.
+→ Music plan: no bed. Room tone throughout; one orchestral swell at the reveal, resolving under the end card.
+→ Shot count: 7 clips, no vignette clusters.
+→ Critical setup: shots 1-3 must establish the hush and the deadpan narrator before the reveal; the only in-scene line is saved for shot 6 so the genre break lands.
 ```
 
-Had this artifact existed at Phase 1.5, the Phase 2 breakdown would have nailed the narrator architecture from row 1, the Phase 5 seedance gens would have been the right per-shot decisions, and we would have shipped v1 cleanly.
+Run at Phase 1.5, this locks the narrator architecture before the breakdown is written, so the Phase 5 gens are the right per-shot decisions and v1 ships cleanly.

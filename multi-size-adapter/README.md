@@ -8,7 +8,7 @@ word for word.
 
 ## How you give it an ad
 Claude asks once, on first run, where your ad files usually live — then you can just say
-"adapt the newest Northridge ad" and it finds the file. **One thing worth knowing: dragging an
+"adapt the newest coffee ad" and it finds the file. **One thing worth knowing: dragging an
 image into the chat window is not enough.** Claude can see a pasted image but cannot work from
 it; the tool needs the actual file. Point it at a file or a folder (dragging a file onto the
 Terminal window pastes its path), or just name the file and let Claude find it in your

@@ -10,12 +10,12 @@
 #
 # Examples:
 #   init_concept.sh acme 2025-03-14-sink-showdown-suds
-#   init_concept.sh acme 2025-02-27-pharma-parody-hank
+#   init_concept.sh acme 2025-02-27-office-safari-otto
 #
 # Naming law: <YYYY-MM-DD>-<angle>-<protagonist>, all lowercase kebab, NO spaces.
 #   - date  = the day the concept was first started (origin date, for chronological sort)
-#   - angle = creative archetype / hook (origin-story, manifesto, pharma-parody, city-launch)
-#   - protagonist = the character / POV (suds, hank, mom)
+#   - angle = creative archetype / hook (origin-story, manifesto, office-safari, city-launch)
+#   - protagonist = the character / POV (suds, otto, mom)
 # At minimum: a valid date + two descriptor tokens.
 
 set -euo pipefail

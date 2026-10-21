@@ -1,6 +1,6 @@
 # Asset audit reference
 
-The hard rule that prevented us from re-burning credits on the burlap-bag mistake.
+The hard rule that prevented us from re-burning credits on an invented-packaging mistake (a product drawn from a text description instead of a real photo).
 
 ## Two phases of asset work
 

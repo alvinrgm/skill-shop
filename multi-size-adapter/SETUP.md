@@ -135,7 +135,7 @@ it'll explain the tradeoff before doing it.
 
 ## Run it (each time)
 1. Open **Claude Code** in this folder.
-2. Point Claude at the ad — by name ("the newest Northridge ad"), by folder, or by dragging the
+2. Point Claude at the ad — by name ("the newest coffee ad"), by folder, or by dragging the
    file onto the Terminal window to paste its path. **Dragging an image into the chat itself
    is not enough**: Claude can see it but the tool needs the real file. On first run Claude
    asks where your ads live, so after that you can usually just name one.
@@ -164,7 +164,7 @@ flagged.
   company. If your compliance team asks whether AI use stays detectable in the shipped asset:
   yes, via SynthID, even after a designer finishes the file.
 - **Legal fine print is deliberately left blank.** AI cannot render small legal text reliably
-  — it comes out subtly garbled, and wrong legal copy on a financial ad is a compliance
+  — it comes out subtly garbled, and wrong legal copy on a regulated ad is a compliance
   problem. So the tool never generates it: it leaves clean empty space where your legal block
   sits, and **a person pastes the correct legal text back in during finishing.** This is by
   design and the review sheet reminds you every time. Headlines, sublines, and CTAs are kept

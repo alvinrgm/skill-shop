@@ -8,7 +8,7 @@ afterwards and roll back (delete only the slides WE created) on any mismatch.
 Payload schema (dict):
 {
   "period_label": "6/25",                 # divider headline (date or range)
-  "divider_label": "Data dash",           # divider sub-line
+  "divider_label": "Weekly dashboard",           # divider sub-line
   "dashboard": {"title": "...", "metrics": ["Spend $X", "ROAS 2.1x", ...]},
   "observations": [{"title","observation":[...],"next_steps":[...]}, ...],
   "deep_dives":   [{"title","observation":[...],"next_steps":[...]}, ...],
@@ -371,7 +371,7 @@ def build_requests(payload, insert_index, run):
 
     # 2) dashboard slide: metrics text + native-table area (screenshots deprecated — REPORTING-SPEC.md)
     dash = payload.get("dashboard") or {}
-    dash_title = dash.get("title") or "Data dash"
+    dash_title = dash.get("title") or "Weekly dashboard"
     dash_sid = _content_slide(reqs, run, ctr, idx, dash_title, dash.get("metrics") or [])
     # screenshot placeholder — sits BELOW the metrics so they never overlap
     pid = _oid(run, next(ctr))

@@ -31,9 +31,9 @@ Plan JSON shape (one file covers the whole run):
       "extend_fill": "blur",               # "blur" or "solid" (only used when strategy == "extend")
       "solid_color": [20, 24, 40],         # only used when extend_fill == "solid"
       "copy": {
-        "headline": "Get paid up to 2 days early",
-        "body": "No fees. No minimum balance.",
-        "cta": "Get started"
+        "headline": "Your first bag is on us",
+        "body": "Fresh-roasted. Shipped the same week.",
+        "cta": "Claim your bag"
       }
     }
   ]

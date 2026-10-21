@@ -46,7 +46,6 @@ the style language as a deliberate step:
 | bandana | neckerchief |
 | prairie | open field |
 | Sam Elliott / John Dutton / "Most Interesting Man" / Sheriff Woody | (drop — describe the person physically) |
-| Roundup / "Roundup ready" | "chemical-ready" / "pale chemical mist" |
 
 **Decision rule:** describe ACTION + ENVIRONMENT physically. Identity is carried by the start_image
 and the contact-sheet ref, NOT by naming a studio or character. The brand NAME spoken in audio is
@@ -151,8 +150,7 @@ Before sending the prompt, scan for and replace:
 
 - "bombs", "weapons", "war", "kill" → reword
 - "cut down", "stab", "wound" → reword
-- "pumped me full of", "drugged", "needle" (drug context) → reword
-- "Roundup", "glyphosate" (sometimes) → "chemical-ready", "no chemicals"
+- "pumped full of", "drugged", "needle" (drug context) → reword
 - Brand names that may trigger trademark issues → use generic alternatives or remove
 
 See `reference/PITFALLS.md` for the full trigger word list and proven replacements.

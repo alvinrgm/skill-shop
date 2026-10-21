@@ -152,7 +152,7 @@ ffmpeg -y -i voice.mp3 -i music.mp3 \
 ## Ken-burns over a still image (for static + product / food / logo shots)
 
 This is the alternative to seedance for static shots, AND the PREFERRED path for label-heavy
-product hero shots (seedance warps typography and bag geometry — see PITFALLS "product/label
+product hero shots (seedance warps typography and packaging geometry — see PITFALLS "product/label
 shots warp in seedance"). Free, fast, controllable, and the locked 4K product composite keeps
 perfect text.
 
