@@ -33,7 +33,7 @@ See **[SETUP.md](SETUP.md)** — there's a one-paste install block at the top th
 setup to Claude Code, plus a manual fallback. TL;DR:
 
 ```bash
-git clone --depth 1 <REPO-URL> account-manager-portable && cd account-manager-portable
+git clone --depth 1 <REPO-URL> skill-shop && cd skill-shop/account-manager
 pip install -r requirements.txt
 cp -R skills/* ~/.claude/skills/
 cp runtime/.env.example runtime/.env     # fill it in

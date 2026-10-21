@@ -14,7 +14,6 @@ the operator approves the consequential moves.
 
 ## Components
 1. **Client comms (Module A)** — tend client Slack in the operator's voice, draft replies. You send.
-   (A two-way Slack bot was explored and shelved: needs paid API / always-on host, not worth it.)
 2. **Weekly reporting decks (Module B)** — see the deck spec below.
 3. **Account analysis + EXECUTION (Modules C Google / E Meta)** — analyze both channels, write
    recommendations, AND **execute the approved changes** via the ad APIs. GATED: you approve

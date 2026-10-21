@@ -11,8 +11,8 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 BRAND_FONT = os.path.normpath(os.path.join(_HERE, "..", "assets", "fonts", "BitterBold.ttf"))
 MAC_FONT = "/System/Library/Fonts/Supplemental/Arial Bold.ttf"
 LINUX_FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
-# Brand font (BitterBold serif) — used for endcard URL/logo region where the
-# heritage vibe belongs. Scene captions need a HEAVY sans-serif for IG-Story
+# Optional display font (Bitter Bold serif, free on Google Fonts) — used for the
+# end-card URL/logo region if you drop the .ttf at runtime/assets/fonts/. Scene captions need a HEAVY sans-serif for IG-Story
 # legibility; BitterBold's serif reads as delicate against busy backgrounds.
 FONT = BRAND_FONT if os.path.exists(BRAND_FONT) else (MAC_FONT if os.path.exists(MAC_FONT) else LINUX_FONT)
 

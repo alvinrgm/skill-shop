@@ -3,7 +3,7 @@
 # Run anytime:  bash doctor.sh        Exits non-zero if a REQUIRED dep is missing.
 set -u
 HERE="$(cd "$(dirname "$0")" && pwd)"
-ADGEN="${ADGEN_HOME:-$HOME/Claude/adgen}"
+ADGEN="${ADGEN_HOME:-$HOME/adgen}"
 FAIL=0
 
 # Load keys from .env (adgen runtime) without printing them.
@@ -37,7 +37,7 @@ manual "Suno" "music bed — generate the track at suno.com, drop into FCP (opti
 echo ""
 
 echo "Python packages:"
-python3 -c 'import requests, dotenv' 2>/dev/null && ok "python deps" "requests, python-dotenv" || fail "python deps" "pip install -r \"\${ADGEN_HOME:-\$HOME/Claude/adgen}/requirements.txt\""
+python3 -c 'import requests, dotenv' 2>/dev/null && ok "python deps" "requests, python-dotenv" || fail "python deps" "pip install -r \"\${ADGEN_HOME:-\$HOME/adgen}/requirements.txt\""
 echo ""
 
 echo "MCP connection (Claude verifies — shell can't see MCP tools):"

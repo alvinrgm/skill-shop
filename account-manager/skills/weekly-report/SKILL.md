@@ -13,10 +13,10 @@ description: >-
   never changes ad accounts.
 ---
 
-<!-- ═══════════ FIRST-RUN ONBOARDING GATE (make-portable) ═══════════ -->
+<!-- ═══════════ FIRST-RUN ONBOARDING GATE ═══════════ -->
 ## ⚙️ First run? Onboard before doing anything else
 
-**Gate:** locate the `account-manager-portable` package dir (where `SETUP.md`, `doctor.sh`, and
+**Gate:** locate the `account-manager` package dir (where `SETUP.md`, `doctor.sh`, and
 `dependencies.yml` live — the repo these skills were copied from). If a `.onboarded` file does NOT
 exist there, do NOT start this skill's workflow — onboard first:
 1. `cd` to the package dir, run `bash doctor.sh`, read the ✅/❌ list.
@@ -84,7 +84,8 @@ Load it first so your analysis operates against the strategy, not floating free:
 This renders the **living strategy** (`strategy.md` — diagnosis, positioning,
 current bets, refusals), the **account config**, the **memory** (standing notes +
 tactical history — what's been tried, what we learned), and the **latest diagnose
-snapshot**. Read it. Your BLUF, observations, and recommendations must reflect it
+snapshot** if you supply one (optional; `clients/<slug>/snapshots/<week>/SUMMARY.md` —
+this package does not ship a diagnose tool). Read it. Your BLUF, observations, and recommendations must reflect it
 (e.g. don't recommend cutting brand if a standing note says brand is incremental;
 frame WoW moves against the current bets). If it warns "no strategy.md yet", note
 that and lean on memory + account until the strategy backfill runs (see the
@@ -105,11 +106,11 @@ Compute the window from `comparison_window` (see Date math below).
     (a BigQuery/Looker data source), e.g. an "Original Conversion Values" tab.
     Those return EMPTY via the Sheets values API. For a tab that reads back 0 rows
     but the deck/dashboard clearly has data, pull Google numbers from the
-    `runtime/../google-ads/` scripts (Ads API directly) instead, not the sheet.
+    Google Ads API (your own client / MCP) directly instead, not the sheet.
     Freshness still works on these (Drive modifiedTime), only value extraction
     doesn't.
-- **Google Ads** detail if needed: the scripts in the `google-ads/` tooling (OAuth
-  set up).
+- **Google Ads** detail if needed: the Google Ads API via your own client or an MCP
+  (bring your own; this package does not ship Google Ads query scripts).
 - **Attribution truth-check**: if `attribution_source: shopify`, call the
   Shopify MCP for the period's revenue/orders to sanity-check platform ROAS. If
   it references Triple Whale / Northbeam (not connected), use the fallback and
@@ -120,7 +121,7 @@ Compute the window from `comparison_window` (see Date math below).
   targets come from `ad-spend-monitor/history/budgets/<slug>-<YYYY-MM>.json`
   (extracted from the client's budget sheet); MTD spend from
   `ad-spend-monitor/history/spend/<slug>-<YYYY-MM>.jsonl` (latest line) or a fresh
-  Meta-MCP / google-ads pull. Pacing math is the monitor's
+  Meta-MCP / Google Ads API pull. Pacing math is the monitor's
   (`lib/layers/pacing.py`): `projected_EOM = MTD * days_in_month / days_elapsed`;
   guardrails >102% red over, >101% yellow, <90% yellow under, <85% red under;
   grace days 1-3. Report per-platform + combined, with as-of dates (flag if a
@@ -204,7 +205,7 @@ Institutional knowledge must accumulate, or next week starts blind again.
 
 ## House style (match the existing decks)
 - **BLUF first.** Every observation slide title is the verdict with the number up
-  front: "6.3x ROAS and 2.25x NC ROAS" / "Non-Brand: Revenue -15%; ROAS -40%".
+  front: "Xx ROAS and Yx NC ROAS" / "Non-Brand: Revenue -15%; ROAS -40%".
 - **Two-part body:** an `Observation` block (the diagnosis, telegraphic bullets
   with the numbers) then a `Next steps` block (imperative actions). The script
   bolds those labels.

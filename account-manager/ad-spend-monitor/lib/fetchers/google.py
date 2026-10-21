@@ -7,11 +7,11 @@ variable. The same credentials can also be supplied directly in os.environ.
 
 Output shape (per ad account):
 {
-    "yesterday": 1847.32,
-    "mtd": 42300.00,
+    "yesterday": 1500.00,
+    "mtd": 42000.00,
     "trailing_30d_daily_avg": 1500.00,
     "history_days": 31,
-    "by_day": {"2026-05-29": 1847.32, "2026-05-28": 1612.10, ...},   # for debugging
+    "by_day": {"2025-01-29": 1500.00, "2025-01-28": 1400.00, ...},   # for debugging
 }
 """
 from __future__ import annotations
@@ -126,7 +126,7 @@ def fetch_budget_changes(
     [{
         "campaign_id": "123",
         "campaign_name": "Example Campaign",
-        "change_ts": "2026-06-01T14:23:00Z",
+        "change_ts": "2025-01-01T14:00:00Z",
         "user_email": "buyer@example.com",
         "changed_fields": ["amount_micros"],
         "old_amount": 250.0,

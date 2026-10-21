@@ -19,14 +19,14 @@ call that uses extraction_hint to navigate any layout.
 
 Output:
 {
-    "month": "2026-06",
-    "meta_budget": 60000.0,
-    "google_budget": 14000.0,
-    "combined_budget": 74000.0,
+    "month": "2025-01",
+    "meta_budget": 50000.0,
+    "google_budget": 10000.0,
+    "combined_budget": 60000.0,
     "confidence": 0.95,
     "source": "public_csv" | "manual" | "stale_cache",
     "notes": "...",
-    "extracted_at": "2026-06-01T13:00:00Z",
+    "extracted_at": "2025-01-01T13:00:00Z",
 }
 """
 from __future__ import annotations

@@ -22,8 +22,8 @@ Pull: `ads_get_ad_entities` level=campaign (objective, buying_type, daily/lifeti
   budget fragmentation, slower learning). Target: consolidate to a small set.
 - **CBO vs ABO:** Advantage campaign budget (CBO) lets Meta allocate; ABO fixes it
   per ad set. Best practice trends CBO for prospecting unless there's a reason to
-  fix budgets. Red flag: 100% ABO with a dead CBO test. (Honor strategy: a
-  deliberate ABO choice for control is valid.)
+  fix budgets. Red flag: ABO everywhere with no CBO comparison ever run. (Honor
+  strategy: a deliberate ABO choice for control is valid.)
 - **Objective consistency:** all conversion/sales campaigns on OUTCOME_SALES.
   Red flag: mixed objectives, traffic/engagement objectives masquerading as DR.
 - **ASC adoption:** Advantage+ Shopping is the modern prospecting workhorse — good
@@ -33,9 +33,10 @@ Pull: `ads_get_ad_entities` level=campaign (objective, buying_type, daily/lifeti
 Pull: `ads_get_ad_account_custom_audiences`; ad-set targeting; auction overlap.
 - **Broad vs fragmented:** modern Meta rewards broad + strong signal + ASC over
   many narrow interest/LAL ad sets. Red flag: lots of small interest ad sets.
-- **Audience hygiene:** Red flags — stale audiences (named "[Not maintained...]")
-  left ACTIVE; many overlapping lookalikes of one seed (1/2/4/5%); empty/broken
-  custom audiences (count ≈ 20 = not populating); no/!maintained exclusions.
+- **Audience hygiene:** Red flags — stale or unmaintained audiences left ACTIVE;
+  many overlapping lookalikes of the same seed at different percentages;
+  empty/broken custom audiences (tiny or zero size = not populating);
+  missing or unmaintained exclusions.
 - **Retargeting + exclusions:** healthy RT coverage; **new-customer exclusion**
   applied where prospecting (so spend isn't recycling existing customers — ties to
   NC-ROAS steering). Red flag: prospecting without an existing-customer exclusion.
@@ -66,7 +67,7 @@ Pull: adset `attribution_setting`; experiments (`ads_experiment_list_tests`).
   distorts comparison). 
 - **Incrementality / lift:** elite accounts run lift/geo tests, not just
   last-click. Good: an incrementality-attributed test exists. Tie to the strategy's
-  NC-ROAS steering + any synthetic-control brand test.
+  NC-ROAS steering + any brand incrementality test the strategy calls for.
 - **NC steering:** is new-customer ROAS the optimization target (value rules,
   exclusions, TW/Northbeam sync)? 
 

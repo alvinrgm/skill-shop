@@ -31,8 +31,8 @@ and then cropped down, which means:
 - **You pay the same per image** as a full-size format, for a fraction of the usable pixels.
 - **They are the most likely to need rework** — extreme shapes leave the AI very little room,
   so a designer often ends up repositioning things by hand anyway.
-- **They need one extra piece of software** (the Pillow image library), which Claude will
-  install for you if you decide to go ahead.
+- **They need the crop step** from the Pillow image library (the same library the quality
+  check uses, which Claude installs during setup).
 
 Ask for one and Claude will explain the tradeoff before doing it. Often the faster path is to
 let it build the square version well, then have a designer lay out the banner properly in

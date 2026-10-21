@@ -13,7 +13,7 @@ from . import bridge
 
 
 def _parse_rfc3339(s):
-    # e.g. 2026-06-25T07:12:31.279Z
+    # e.g. 2025-01-15T07:00:00.000Z
     s = s.replace("Z", "+00:00")
     try:
         return datetime.datetime.fromisoformat(s)

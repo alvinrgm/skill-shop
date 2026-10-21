@@ -4,7 +4,7 @@ Template for locking the visual appearance of recurring on-screen assets across 
 
 ## Why
 
-Generative video models invent new versions of objects every shot unless given a strong reference. The pet wipe drifted across 5+ versions in one session (cotton cloth, lavender pattern, off-white, paper towel) because there was no locked visual spec.
+Generative video models invent new versions of objects every shot unless given a strong reference. A small dropper bottle drifted across 5+ versions in one session (spray bottle, pump bottle, clear vial, glass jar) because there was no locked visual spec.
 
 A per-project asset lock pins each recurring asset to a single visual spec, with a contact sheet media ID that gets referenced in every shot's prompt.
 
@@ -19,19 +19,19 @@ Built at Phase 3 alongside character bibles. One entry per recurring asset.
 ```yaml
 brand: <brand-name>
 assets:
-  - name: <short-key, e.g., "wipe", "bottle", "pack">
+  - name: <short-key, e.g., "dropper", "bottle", "pack">
     role: <one-line, e.g., "the hero product that resolves the spot">
     appears_in_shots: [4, 5, 6]   # which shot numbers feature it
 
     visual_lock:
       type: <packaging | bare-product | both>
-      material: <e.g., "thin non-woven disposable wipe — like a baby-wipe pull">
-      color: <e.g., "pure uniform white. No patterns, no logos, no tints">
-      surface: <e.g., "smooth, slightly damp sheen, fine-textured">
-      size: <e.g., "8 by 8 inches">
+      material: <e.g., "small amber glass bottle with a black rubber-bulb dropper cap">
+      color: <e.g., "warm amber glass, black cap, plain cream label band">
+      surface: <e.g., "glossy glass, soft highlight on the shoulder">
+      size: <e.g., "about 3 inches tall">
       forbidden_appearances:
-        - <e.g., "cotton cloth or fabric texture">
-        - <e.g., "lavender stitching or pattern">
+        - <e.g., "clear or blue glass">
+        - <e.g., "spray nozzle or pump top">
         - <e.g., "brand logo or pack visible">
         - <e.g., "tinted by ambient lighting">
 
@@ -44,10 +44,10 @@ assets:
     description_for_prompts: |
       The exact paragraph to paste into every shot prompt where this asset appears.
       Should match the visual_lock fields verbatim.
-      Example: "a thin disposable non-woven wet wipe — smooth fine surface, slightly
-      damp sheen, soft and flexible, the kind you pull from a baby wipe pack. NOT a
-      cotton cloth, NOT a towel, NOT a fabric. The wipe is ONE SOLID UNIFORM PURE
-      WHITE COLOR, no patterns, no logos, no prints, no shading variations."
+      Example: "a small amber glass dropper bottle, about the height of a thumb, with
+      a black rubber-bulb dropper cap and a plain cream label band. NOT a spray
+      bottle, NOT a pump, NOT clear glass. Same amber color, same cap, same label
+      band in every shot."
 ```
 
 ## How to use during Phase 5 (video gen)
@@ -66,8 +66,8 @@ If a new recurring asset gets added to the script mid-production (rare), build i
 
 ## Anti-pattern: re-describing the asset each shot
 
-❌ Shot 4 prompt: "the wipe sweeps in"
-❌ Shot 5 prompt: "the wipe is held by the hand"
-❌ Shot 6 prompt: "a plain white wipe descends"
+❌ Shot 4 prompt: "the bottle slides in"
+❌ Shot 5 prompt: "the dropper is held by the hand"
+❌ Shot 6 prompt: "a small brown bottle descends"
 
-✓ Every shot prompt pastes the same `description_for_prompts` paragraph verbatim AND passes the same `media_id` as an image ref. The model gets the same input every time → it draws the same wipe every time.
+✓ Every shot prompt pastes the same `description_for_prompts` paragraph verbatim AND passes the same `media_id` as an image ref. The model gets the same input every time → it draws the same bottle every time.

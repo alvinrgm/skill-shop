@@ -24,7 +24,7 @@ PHYSICAL DESIGN:
 - Distinguishing features (hat, mustache, glasses, accessories, props)
 - Texture (claymation/pixar/2D/realistic)
 - Any branded elements (uniform, logo placement)
-- What it does NOT have (e.g., "no body, no arms, no legs — just the coffee plant with a face")]
+- What it does NOT have (e.g., "no legs, no fingers — just the sponge body with stubby arms")]
 
 STYLE:
 [Aesthetic — claymation, stop-motion, pixar 3D, hand-drawn 2D, photorealistic, etc.
@@ -35,75 +35,71 @@ Color mood: "warm amber and golden", "cool industrial gray", "saturated playful 
 CHARACTER SHEET LAYOUT (single image, neutral [color] background):
 - TOP ROW: Front view, 3/4 left view, side profile, 3/4 right view, back view (all 5 full-body, evenly spaced, same scale)
 - MIDDLE ROW: 5 head close-ups showing different EXPRESSIONS — [list 5 expressions relevant to the character's emotional range, e.g., "calm/wise, warmly smiling, surprised, scared/wide-eyed, sad/melancholy"]
-- BOTTOM ROW: 3 detail studies — [list 3 distinguishing details to study close-up, e.g., "close-up of mustache and hat", "close-up of the bean's surface crease", "detail of suspenders"]
+- BOTTOM ROW: 3 detail studies — [list 3 distinguishing details to study close-up, e.g., "close-up of mustache and hat", "close-up of the sponge's pore texture", "detail of the badge"]
 
 All in the [style] aesthetic, consistent [light type] lighting, neutral [color] background.
 
 Aspect ratio: 16:9 horizontal. High detail, character-sheet quality.
 ```
 
-## Example — Berto (the wholesome bean farmer protagonist)
+## Example — Suds (an invented sponge-sheriff protagonist, for illustration only)
 
 ```
 Generate a character reference sheet for an animated character.
 
-CHARACTER: Berto — an anthropomorphized heirloom coffee plant from the 1890s. He is the protagonist of a stop-motion animated short. He is a wholesome, warm, slightly weathered highland farmer character.
+CHARACTER: Suds — an anthropomorphized kitchen sponge who acts as the sheriff of the sink. He is the protagonist of a stop-motion animated short. He is a steady, squinting, quietly brave small-town lawman.
 
 PHYSICAL DESIGN:
-- A single tall heirloom coffee plant (4-5 feet, slender), topped by one oversized warm-brown coffee bean with detailed surface texture
-- The oversized TOP BEAN has a face: kind crinkled eyes, weathered farmer features
-- A bushy gray-brown HANDLEBAR MUSTACHE on the top bean
-- A small WEATHERED BROWN STRAW HAT tilted slightly to one side, sitting on top of the bean
-- NO body, NO arms, NO legs — just the plant with a face on the top bean
+- A rectangular yellow kitchen sponge (palm-sized), with a dark green scrubber layer on top that reads like a flat-top haircut
+- A face on the front of the sponge: narrow squinting eyes, thick brown eyebrows, a small determined mouth
+- A neat gray WALRUS MUSTACHE
+- A tiny tan COWBOY HAT, slightly too small, tilted forward
+- A small tin SHERIFF'S STAR pinned to the front
+- Two short stubby clay arms, NO legs, NO fingers
 
 STYLE:
-- Hand-carved wooden folk-art aesthetic, like a stop-motion claymation character (Aardman / Wallace and Gromit warmth, but more carved-wood than plasticine)
-- Visible thumbprint imperfections, hand-sculpted texture
-- Warm golden-amber color palette
-- 1900-era Americana wholesome feel — like something a craftsman would whittle on a mountain farm porch
+- Plasticine stop-motion claymation, visible thumbprint imperfections, hand-sculpted texture
+- Warm morning palette: butter yellow, sage green, soft tan
+- Small-town western feel, but at kitchen-counter scale
 
 CHARACTER SHEET LAYOUT (single image, neutral cream background):
 - TOP ROW: Front view, 3/4 left view, side profile, 3/4 right view, back view (all 5 full-body, evenly spaced, same scale)
-- MIDDLE ROW: 5 head close-ups showing different EXPRESSIONS — calm/wise, warmly smiling, surprised, scared/wide-eyed, sad/melancholy
-- BOTTOM ROW: 3 detail studies — close-up of the handlebar mustache, close-up of the straw hat, close-up of the bean's crease and surface texture
+- MIDDLE ROW: 5 head close-ups showing different EXPRESSIONS — calm squint, half smile, surprised, scared/wide-eyed, determined glare
+- BOTTOM ROW: 3 detail studies — close-up of the mustache and hat brim, close-up of the sponge pore texture, close-up of the sheriff's star
 
-All in the hand-carved folk-art style, consistent soft warm lighting, neutral cream background.
+All in the claymation style, consistent soft warm lighting, neutral cream background.
 
 Aspect ratio: 16:9 horizontal. High detail, character-sheet quality.
 ```
 
-## Example — Instant Bean (the corrupted antagonist)
+## Example — the Grease Baron (an invented antagonist)
 
-For evolved/related characters, ALSO pass the OG character image as `role: image` ref so the lineage is preserved (the modern version should look like a corruption of the original, not a different character).
+For evolved/related characters (a corrupted twin, an older self, a villain built from the hero's world), ALSO pass the original character image as `role: image` ref so the lineage is preserved and the two read as belonging to the same world.
 
 ```
 Generate a character reference sheet for an animated character.
 
-CHARACTER: The hybridized 2026 mutant version of Berto — what big-agriculture turned him into after experimenting on him in 1968. He is a tragic antagonist figure: the same bean character DNA, but corrupted by industrial breeding. He raps in deadpan autotune style, miserable but flexing on you.
+CHARACTER: The Grease Baron — a blob of congealed cooking grease that rules the bottom of the sink. He is a pompous, theatrical villain who sings a slow power ballad about every pan he has ruined.
 
 PHYSICAL DESIGN:
-- The SAME bean character DNA as Berto (see reference image), but transformed by industrial hybridization
-- Now SHORT and SQUAT (half the height of original Berto — semi-dwarf, like yield-bred beans)
-- The bean body is unnaturally BULBOUS, overgrown, almost obscene — bred for yield, way too dense and heavy for the stalk
-- Texture is GLOSSY and PLASTIC-looking (lost the warm matte hand-carved quality of the original)
-- VACANT, glazed, dead-inside eyes — soul drained out
-- Mouth slightly open in a permanent deadpan rapper expression
-- NO mustache, NO hat (those are gone)
-- THICK GOLD CHAINS hanging around the thick stalk neck (multiple chains, layered, hip-hop style)
-- Color: pale washed-out yellow, almost sickly — not the warm golden-amber of the original
-- Slight slumped posture, like he's tired of being alive
+- A rounded, slumping BLOB of glossy amber-brown grease, about twice the height of Suds (see reference image for scale and world)
+- Small heavy-lidded eyes and a wide, smug mouth
+- A lopsided CROWN made of burnt crumbs and a bent bottle cap
+- A dribbling CAPE of gray dishwater draped behind him
+- Bits of old food suspended inside the translucent body
+- NO arms, NO legs — he oozes
 
 STYLE:
-- Same general hand-carved folk-art / stop-motion aesthetic as the original Berto character (visual continuity — they're family), but CORRUPTED — glossier, colder, more uncanny
-- Industrial dystopian energy
-- Aardman / Chicken Run claymation feel but darker and sadder
+- Same claymation world as Suds (visual continuity), but GLOSSY, wet-looking and slightly translucent
+- Colder, murkier palette: amber-brown, olive, dishwater gray
+- Theatrical villain energy, more pantomime than horror
 
 CHARACTER SHEET LAYOUT (single image, neutral cool gray background):
-- TOP ROW: Front view, 3/4 left view, side profile, 3/4 right view, back view (all 5 full-body, showing the squat proportions, evenly spaced)
-- MIDDLE ROW: 5 head close-ups — vacant deadpan default, autotuned rapping with mouth open, brief sad cracked expression, defeated/broken, hollow stare into camera
-- BOTTOM ROW: 3 detail studies — close-up of the gold chains, close-up of the vacant eye, close-up of the bulbous bred-for-yield bean body
+- TOP ROW: Front view, 3/4 left view, side profile, 3/4 right view, back view (all 5 full-body, evenly spaced)
+- MIDDLE ROW: 5 head close-ups — smug default, mid-song with mouth wide open, outraged, wobbling in fear, dissolving
+- BOTTOM ROW: 3 detail studies — close-up of the crumb crown, close-up of the food bits inside the body, close-up of the dishwater cape
 
-All in the corrupted hand-carved folk-art style, consistent flat industrial lighting, neutral cool gray background.
+All in the glossy claymation style, consistent flat kitchen lighting, neutral cool gray background.
 
 Aspect ratio: 16:9 horizontal. High detail, character-sheet quality.
 ```

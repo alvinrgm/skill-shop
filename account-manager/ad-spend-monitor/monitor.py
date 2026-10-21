@@ -59,8 +59,7 @@ def main() -> int:
         return 1
 
     # Pre-flight: confirm the shared Google OAuth token is alive before we run.
-    # A dead token would otherwise fail every client's Google fetch silently —
-    # the monitor went dark this way ~2026-06-09 → 06-16 with no alert.
+    # A dead token otherwise fails every client's Google fetch silently.
     if any(c.get("google_customer_id") for c in clients):
         h = health.check_google_auth()
         if not h["ok"] and h.get("is_auth"):

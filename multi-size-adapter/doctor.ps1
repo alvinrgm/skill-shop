@@ -1,6 +1,7 @@
 # multi-size-creative-adapter: health check for Windows. Re-runnable anytime.
 # Run: powershell -ExecutionPolicy Bypass -File doctor.ps1
-# Needs: Python 3 + your team's Gemini API key. Pillow is OPTIONAL (only for extra formats).
+# Needs: Python 3 + Pillow + your team's Gemini API key. Pillow is not used to generate; it
+# measures every output during the quality check (and handles extra formats).
 
 Set-Location -Path $PSScriptRoot   # check this package, not the current folder
 
@@ -33,9 +34,10 @@ if ($py) {
     & $py -c "import PIL" 2>$null
     if ($LASTEXITCODE -eq 0) {
         $ver = & $py -c "import PIL; print(PIL.__version__)" 2>$null
-        Show-Ok "Pillow (optional)" "installed (v$ver) - extra formats available"
+        Show-Ok "Pillow" "installed (v$ver) - quality-check measurements available"
     } else {
-        Show-Opt "Pillow (optional)" "not installed. Not needed for the four built-in formats."
+        Show-Fail "Pillow" "not installed. Needed to measure outputs in the quality check. Claude installs it for you: python -m pip install --user Pillow"
+        $failCount++
     }
 }
 

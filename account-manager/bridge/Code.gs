@@ -1,5 +1,5 @@
 // ===========================================
-// Document Bridge — Google Apps Script (Docs/Sheets/Slides/Drive/Gmail)
+// Document Bridge — Google Apps Script (Docs/Sheets/Slides/Drive)
 // ===========================================
 // Deploy this as a Web App in Google Apps Script. It lets an automated client
 // (e.g. the account-manager runtime / deck engine) natively create and edit
@@ -122,13 +122,6 @@ function doPost(e) {
         break;
       case 'rename_tab':
         result = renameTab(payload);
-        break;
-      // --- Gmail: search threads + DRAFT replies (never sends) ---
-      case 'gmail_search':
-        result = gmailSearch(payload);
-        break;
-      case 'gmail_draft_reply':
-        result = gmailDraftReply(payload);
         break;
       // --- Generic escape hatch: any Docs/Sheets/Drive/Slides REST method ---
       case 'google_api':
@@ -994,55 +987,6 @@ function renameTab(payload) {
     return { success: true, spreadsheetId: payload.spreadsheetId, oldName: payload.sheetName, newName: payload.newName };
   } catch (e) {
     return { error: 'renameTab failed: ' + e.message };
-  }
-}
-
-// Run this once from the editor after adding the Gmail scopes — it triggers the
-// authorization prompt for the new permissions (drafts/search). Safe; touches nothing.
-function authorize() {
-  var n = GmailApp.getInboxUnreadCount();   // forces gmail.readonly consent
-  Logger.log('Authorized. Inbox unread: ' + n);
-  return n;
-}
-
-// --- Gmail helpers (runs as the deploying account). DRAFTS ONLY — never sends mail. ---
-function gmailSearch(payload) {
-  if (!payload.query) return { error: 'query is required' };
-  var max = payload.max || 5;
-  var threads = GmailApp.search(payload.query, 0, max);
-  var out = [];
-  for (var i = 0; i < threads.length; i++) {
-    var th = threads[i];
-    var msgs = th.getMessages();
-    var last = msgs[msgs.length - 1];
-    out.push({
-      id: th.getId(),
-      subject: th.getFirstMessageSubject(),
-      lastFrom: last ? last.getFrom() : '',
-      lastDate: last ? last.getDate().toISOString() : '',
-      messageCount: th.getMessageCount(),
-      snippet: msgs[0] ? msgs[0].getPlainBody().slice(0, 140) : ''
-    });
-  }
-  return { threads: out };
-}
-
-function gmailDraftReply(payload) {
-  // payload: { threadId?, body, htmlBody?, to?, subject? }  -> creates a DRAFT, never sends.
-  var opts = {};
-  if (payload.htmlBody) opts.htmlBody = payload.htmlBody;
-  try {
-    if (payload.threadId) {
-      var th = GmailApp.getThreadById(payload.threadId);
-      if (!th) return { error: 'thread not found: ' + payload.threadId };
-      var d = th.createDraftReply(payload.body || '', opts);
-      return { draftId: d.getId(), threadId: payload.threadId, mode: 'reply' };
-    }
-    if (!payload.to) return { error: 'to is required when no threadId' };
-    var d2 = GmailApp.createDraft(payload.to, payload.subject || '', payload.body || '', opts);
-    return { draftId: d2.getId(), mode: 'standalone' };
-  } catch (e) {
-    return { error: 'gmailDraftReply failed: ' + e.message };
   }
 }
 

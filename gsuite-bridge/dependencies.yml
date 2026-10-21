@@ -8,6 +8,7 @@
 #   python          pip packages                           → doctor checks importability
 
 package: gsuite-bridge
+trust_level: public
 
 # No personal paths to parameterize — config lives entirely in .env.
 path_vars: []

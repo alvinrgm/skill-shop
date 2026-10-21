@@ -11,8 +11,8 @@ description: >
   "I have a new client", "is this any good", "what's the play for X",
   "run X through Rumelt", "apply the strategy framework", "stress-test this
   positioning", "what's the diagnosis for X", or any time the user is sizing
-  up a client, prospective brand, or their own positioning. Also triggers on
-  the /strategy slash command. Use proactively — if the user describes a
+  up a client, prospective brand, or their own positioning. Invoke it by
+  name (e.g. "use strategy-crystallizer on <topic>"). Use proactively — if the user describes a
   brand situation and seems to be reaching for a strategic frame, invoke
   this skill rather than free-styling. Most marketing strategies in the
   wild fail Rumelt's tests, so the value of forcing the framework is high.

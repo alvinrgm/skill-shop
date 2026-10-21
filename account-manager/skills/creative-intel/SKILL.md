@@ -13,10 +13,10 @@ description: >-
   competitor benchmarking via the Ads Library).
 ---
 
-<!-- ═══════════ FIRST-RUN ONBOARDING GATE (make-portable) ═══════════ -->
+<!-- ═══════════ FIRST-RUN ONBOARDING GATE ═══════════ -->
 ## ⚙️ First run? Onboard before doing anything else
 
-**Gate:** locate the `account-manager-portable` package dir (where `SETUP.md`, `doctor.sh`, and
+**Gate:** locate the `account-manager` package dir (where `SETUP.md`, `doctor.sh`, and
 `dependencies.yml` live — the repo these skills were copied from). If a `.onboarded` file does NOT
 exist there, do NOT start this skill's workflow — onboard first:
 1. `cd` to the package dir, run `bash doctor.sh`, read the ✅/❌ list.
@@ -86,7 +86,7 @@ density, claim type, CTA timing, tone, pacing). Uses Gemini (reads the package
 `from align import align; align(cv_dict, metrics_dict)` → maps the quartile
 drop-offs + hook onto the per-second timeline: hook rate (p25/impr), hold
 (p100/p25), the retention curve annotated with what's on screen at each point, and
-the BIGGEST DROP with its creative cause ("89% gone by ~7s, at the factory cut").
+the BIGGEST DROP with its creative cause ("e.g. 80% gone by ~5s, at the first scene change").
 Within-video, descriptive.
 
 ### 5. Cross-video regression (script/lib)

@@ -34,7 +34,7 @@ credential on your company's account.
 |---|---|---|---|
 | **Claude Code** | Yes | The app you actually talk to. It reads this skill, runs everything, looks at each generated image to check it, and writes your review sheet. | [claude.com/claude-code](https://claude.com/claude-code) — install, sign in with your work account, then open this folder in it. Needs a Claude subscription; **Claude usage is billed separately from the Google image generation below.** |
 | **Python 3** | Yes | Runs the engine under the hood (you never type Python) | Most Macs already have it. On Windows, install from [python.org/downloads](https://www.python.org/downloads/) and tick "Add Python to PATH". On a managed work laptop this may need your IT team — ask Claude to check first, it'll tell you if you already have it. |
-| **Pillow** | No | Only if you later want a format outside the four built-in ones | Skip it. Claude will install it for you if you ever ask for an extra format. |
+| **Pillow** (image library) | Yes, for the quality check | Measures every output during the check (safe zones, empty legal band), and handles any extra format outside the four built-in ones. Generating the four built-in formats does not use it. | Nothing to do: Claude installs it for you during setup. If your laptop blocks the install, generation still works but the measured checks are reported as NOT MEASURED. |
 | **Team Gemini API key** | Yes | Powers the re-composition (the AI that redesigns each format) | **Ask your team lead** — one shared key for the whole team. Claude will set it up with you; it will avoid putting the key into the chat itself, because chat transcripts are saved to disk and this key can be charged to your company. |
 
 ### For the team lead: creating the shared key (one time, ~15 minutes)
@@ -135,7 +135,7 @@ it'll explain the tradeoff before doing it.
 
 ## Run it (each time)
 1. Open **Claude Code** in this folder.
-2. Point Claude at the ad — by name ("the newest ExtraCash ad"), by folder, or by dragging the
+2. Point Claude at the ad — by name ("the newest Northridge ad"), by folder, or by dragging the
    file onto the Terminal window to paste its path. **Dragging an image into the chat itself
    is not enough**: Claude can see it but the tool needs the real file. On first run Claude
    asks where your ads live, so after that you can usually just name one.

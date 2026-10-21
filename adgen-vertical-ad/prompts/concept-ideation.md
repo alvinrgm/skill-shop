@@ -12,7 +12,7 @@ Surface 2-3 distinct creative concepts so the operator picks before we commit to
 
 ## What "wild" means
 
-The operator's preference is to push past safe / generic ad concepts. The coffee-brand spot's iconic moment was a hybridized bean character rapping in autotuned trap style. That kind of energy.
+The operator's preference is to push past safe / generic ad concepts. Think of a villain who stops the ad cold to sing a power ballad, or a mascot played completely straight in an absurd genre. That kind of energy.
 
 Reference points:
 - Iranian lego war commentary videos (visual archetype + character voice does the lifting)
@@ -54,63 +54,63 @@ Recommendation: I'd push [concept #N] because [reason].
 What do you want to develop?
 ```
 
-## Example output (the coffee brand — what we ended up doing)
+## Example output (an invented dish-soap brand, for illustration only)
 
 ```
 # Ad concept brief: [Brand]
 
-## Concept 1: "Berto's Story"
-**Archetype:** character origin story → corruption → redemption
-**Vibe reference:** Pixar Cars meets Iranian Lego war videos. An anthropomorphized bean as a character with a dramatic arc.
-**Hook (first 2 sec):** Wholesome bean character introduces himself in a 1900s field. Slam cut to him being abducted and experimented on by 1960s big-ag.
+## Concept 1: "Sink Showdown"
+**Archetype:** small-town western standoff, played completely straight
+**Vibe reference:** spaghetti-western framing at kitchen-counter scale, claymation, deadpan narration
+**Hook (first 2 sec):** Extreme close-up of a clay kitchen sponge squinting into the dawn light over a pile of dirty dishes. A tumbleweed of lint rolls past.
 **Story (6 shot outline):**
-1. Berto intros himself in golden 1900s coffee farm hillside (warm)
-2. SLAM CUT to 1968 lab — strapped to table, ROBUSTA-X syringe (cold horror)
-3. THE RAP — modern hybridized Berto raps in deadpan autotune about what was done to him (music video, multiple cuts)
-4. SOFT CUT back to the coffee farm hillside — original Berto still alive (warm restoration)
-5. Brew montage — pour-over, espresso, cold brew (mouth-watering)
-6. Bag CTA + "real beans, real mornings, no apologies" (definitive close)
-**CTA:** [brand domain] — single-origin beans, roasted fresh, pre-industrial
-**Risk:** rap shot is the centerpiece — if it lands, viral; if it doesn't, the whole spot collapses
-**Why it works:** the absurdity hooks (rapping bean), the science is real (Robusta-X hybridization in 1968 IS the origin of instant bean), and the brand IS the resolution to the corruption story
+1. Suds (the sponge sheriff) surveys the overflowing sink at dawn (warm, wide)
+2. The drain gurgles. The Grease Baron oozes up from it, crown of burnt crumbs and all (cold, ominous)
+3. THE ANTHEM: the Grease Baron sings a slow villain ballad about every pan he has ruined (music-video cuts, lip-synced to an external track)
+4. Suds is knocked flat into the suds of a cheap, harsh soap that does nothing (low point)
+5. The [Brand] bottle slides down the counter like a drink across a saloon bar; Suds catches it (the turn)
+6. One squeeze, the Baron dissolves, plates sparkle, Suds tips his hat + tagline
+**CTA:** [brand domain]: plant-based, cuts grease, kind to hands
+**Risk:** the villain song is the centerpiece; if it lands it gets shared, if it does not the middle drags
+**Why it works:** the product is literally the hero's weapon, so every beat after the turn sells
 
-## Concept 2: "The Exorcism"
-**Archetype:** supervillain / showdown
-**Vibe reference:** Aardman claymation, Wallace and Gromit, Liquid Death's "wholesome violence"
-**Hook (first 2 sec):** A jar of instant crystals in a kitchen RISES OFF the counter, eyes form in the granules, glowing toxic green. "I am freeze-dried."
+## Concept 2: "Sink Noir"
+**Archetype:** hard-boiled detective
+**Vibe reference:** black-and-white noir lighting, rain on the window, claymation
+**Hook (first 2 sec):** "The pan came in at midnight. It had been through things."
 **Story:**
-1. Woman mid-crash on the kitchen floor, supermarket instant jar glowing toxic green
-2. The instant jar becomes a CHEMICAL DEMON, hovering, dripping green
-3. Pantry door opens — tiny claymation ROASTER with a sack of the brand's beans
-4. STANDOFF — "Berto. Typica. 1892."
-5. Roaster throws grounds, demon SHRIEKS and deflates
-6. Woman eats heirloom brew, glows, levitates
+1. Rainy kitchen at night, a scorched pan sits on the counter like a client in a detective's office
+2. Detective Suds takes the case, narrating in voice-over
+3. Flashback: the lasagna incident
+4. Suds interrogates three cheap soaps; each one cracks under pressure
+5. The [Brand] bottle steps out of the shadows
+6. Morning light, clean pan, case closed
 7. Logo + tagline
-**CTA:** PRE-INDUSTRIAL. POST-BLOAT.
-**Risk:** more characters to develop (woman, roaster, demon jar), maybe too many voices
-**Why it works:** body-horror-as-comedy, names the heirloom varieties explicitly, immediate stakes (bloating)
+**CTA:** case closed on grease
+**Risk:** noir needs a lot of narration; harder to land in 30-50 sec vertical
+**Why it works:** the stubborn-grease problem maps cleanly onto "the case nobody could crack"
 
-## Concept 3: "The Trial"
-**Archetype:** courtroom drama
-**Vibe reference:** South Park trials, Aardman, "What if grains had a court of law"
-**Hook (first 2 sec):** Wide shot of a tiny claymation courtroom. The hybrid instant bean on the witness stand. "State your name." "I... I don't remember anymore."
+## Concept 3: "Dish Pile Documentary"
+**Archetype:** nature-documentary parody
+**Vibe reference:** hushed wildlife narration, macro lenses, claymation
+**Hook (first 2 sec):** Macro push-in on a cereal bowl. A whispered narrator: "Here, in the sink, only the strong survive."
 **Story:**
-1. Courtroom establishing — bean varieties as jury members
-2. The hybrid instant bean testifies, breaking down
-3. Prosecutor (Berto as lawyer) presents evidence — 1968 lab footage flashbacks
-4. Judge: "Guilty of crimes against gut health"
-5. Smash cut to brew montage
+1. Establishing macro shots of the dish pile as a landscape
+2. The narrator tracks a lone fork across the "plains"
+3. The grease "migrates" across a plate
+4. A dramatic predator moment: the [Brand] bottle arrives
+5. Time-lapse of the pile clearing
 6. Logo + CTA
-**CTA:** bring back the original
-**Risk:** more dialogue-heavy (3-4 voices), harder to script in 50 sec, less immediately viral
-**Why it works:** unique format (no one's done a bean courtroom drama), gives space to lay out the whole commodity-bean critique with comedy beats
+**CTA:** survival of the cleanest
+**Risk:** relies on one narrator voice, lower energy than Concept 1
+**Why it works:** cheap to produce (few characters), easy to cut into multiple lengths
 
 ---
 
-Recommendation: I'd push CONCEPT 1 ("Berto's Story") because:
+Recommendation: I'd push CONCEPT 1 ("Sink Showdown") because:
 - Single protagonist arc is easiest to track in 50 sec vertical
-- The rap shot is the kind of thing that gets shared (high viral coefficient)
-- Brand promise (single-origin beans) IS the resolution to the story — every beat sells
+- The villain song is the kind of thing that gets shared
+- The product IS the turn of the story, so every beat after it sells
 
 Which way?
 ```
@@ -119,7 +119,7 @@ Which way?
 
 If the operator rejects all 3 concepts:
 - Ask what specifically didn't work — too safe? too weird? wrong archetype?
-- Propose 2 NEW concepts that address his feedback
+- Propose 2 NEW concepts that address their feedback
 - Don't just iterate the same 3 with small tweaks
 
 If the operator picks one but wants modifications:
@@ -128,7 +128,7 @@ If the operator picks one but wants modifications:
 
 ## Voice rules for the concept brief itself
 
-The CONCEPT BRIEF is prose written for the operator. Voice rules from `~/.claude/CLAUDE.md` apply:
+The CONCEPT BRIEF is prose written for the operator. If they keep voice rules in their `CLAUDE.md`, apply them. An example house style:
 
 - All lowercase
 - → arrows for lists, not bullets  

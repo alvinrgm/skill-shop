@@ -1,23 +1,22 @@
 # adgen — client index
 
 Canonical map of brand name → folder slug → structure state. **Read this in Phase 0 of the
-adgen-vertical-ad skill before inferring any path.** The #1 path-navigation bug in past sessions
-was guessing the folder name from the full brand name (e.g. `acme-coffee-co/` instead of
-`acme/`). Don't guess — look here.
+adgen-vertical-ad skill before inferring any path.** The most common path-navigation bug is
+guessing the folder name from the full brand name (e.g. `acme-widget-co/` instead of `acme/`).
+Don't guess — look here.
 
-This ships as a TEMPLATE — replace the example rows with your own clients as you onboard them.
+This ships as an EMPTY TEMPLATE. Add one row per brand as you onboard it.
 
 | Brand (canonical name) | Folder slug | Shopify slug | Structure | Notes |
 |---|---|---|---|---|
-| Acme Coffee Co (example) | `acme/` | `acme` | ✅ two-level | example row — replace with your first client. Lock recurring mascots at `acme/brand/characters/<name>/`. |
-| Birchwood Pets (example) | `birchwood/` | — | ✅ two-level | example row — delete once you have real entries. |
+| _(none yet)_ | | | | Add your first brand here, e.g. `\| Acme Co \| acme/ \| acme \| ✅ two-level \| mascot locked at acme/brand/characters/<name>/ \|` |
 
 ## Brand-name normalization (do this at message 1)
 
 When the operator names a known client, normalize to the canonical name above before writing any
 file or brief. Absorb typos and domain references silently, e.g.:
-- "Acme Cofee" → **Acme Coffee Co** (typo)
-- "acmecoffee.com" / "acme coffee" → **Acme Coffee Co** → folder `acme/`
+- "Acme Coo" → **Acme Co** (typo)
+- "acme.example" / "acme" → **Acme Co** → folder `acme/`
 
 ## Folder law (enforced by `scripts/init_concept.sh`)
 
@@ -35,10 +34,10 @@ $ADGEN_HOME/<client>/
 
 - **`<YYYY-MM-DD>`** = the date the concept was first started (its origin date), so concepts sort
   chronologically and you can always tell when a thread began.
-- **`<angle>`** = the creative archetype / hook (`origin-story`, `manifesto`, `brew-your-own`).
-- **`<protagonist>`** = the character or POV carrying the spot (`berto`, `marv`, `mom`).
+- **`<angle>`** = the creative archetype / hook (`origin-story`, `manifesto`, `pharma-parody`).
+- **`<protagonist>`** = the character or POV carrying the spot (`suds`, `hank`, `mom`).
 
-Examples: `2026-06-03-origin-story-berto`, `2026-05-28-couplacups-marv`.
+Examples: `2025-03-14-sink-showdown-suds`, `2025-02-27-pharma-parody-hank`.
 
 `scripts/init_concept.sh <client> <YYYY-MM-DD>-<angle>-<protagonist>` validates the pattern and
 creates the full concept skeleton. It refuses slugs with spaces, missing date, or fewer than two

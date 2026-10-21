@@ -72,8 +72,12 @@ def metrics(shop_domain, start, end, ids=None):
 
 
 def preflight(shop_domain):
+    # Probe the trailing 14 full days (ending yesterday).
+    import datetime as _dt
+    end = _dt.date.today() - _dt.timedelta(days=1)
+    start = end - _dt.timedelta(days=13)
     try:
-        m = metrics(shop_domain, "2026-06-09", "2026-06-22", ids=["totalRoas"])
+        m = metrics(shop_domain, start.isoformat(), end.isoformat(), ids=["totalRoas"])
         if m.get("totalRoas", {}).get("current") is not None:
             return True, f"TW live (blended ROAS {m['totalRoas']['current']:.2f})"
         return False, "TW responded but no data"

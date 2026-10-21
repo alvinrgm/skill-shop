@@ -3,7 +3,7 @@
 # no other external infrastructure, nothing published anywhere.
 
 package: multi-size-creative-adapter
-trust_level: team   # scrubbed for teammates' own machines/accounts
+trust_level: public   # scrubbed for public distribution: no client names, no personal paths
 
 deps:
   - name: Claude Code
@@ -25,11 +25,12 @@ deps:
   - name: Pillow
     id: pillow
     type: python
-    required: false   # Not needed to GENERATE the four built-in formats (they come back at the
+    required: true    # Not needed to GENERATE the four built-in formats (they come back at the
                       # right shape and are written straight to disk). It IS needed to MEASURE
-                      # outputs during verification, and for opt-in extra shapes that need a crop.
-                      # Claude installs it unattended when a run needs it.
-    powers: "Two things: measuring outputs during verification (scripts/measure.py -- safe zones, dead space, legal band), and cropping for opt-in formats outside the four built-ins."
+                      # every output during the mandatory verification step (SKILL.md step 5),
+                      # for opt-in extra shapes that need a crop, and for selftest --full.
+                      # Claude installs it during onboarding; without it, checks read NOT MEASURED.
+    powers: "Two things: measuring every output during verification (scripts/measure.py -- safe zones, dead space, legal band), and cropping for opt-in formats outside the four built-ins."
     install: "python3 -m pip install --user Pillow   (note: 'python3 -m pip', not bare 'pip3' -- the bare form fails on some Python installs with an 'externally-managed-environment' error)"
     verify: "python3 -c 'import PIL; print(PIL.__version__)'"
 
@@ -47,7 +48,7 @@ deps:
     cost_note: "$0.134 per generated image at the resolution this tool uses, per Google's published pricing. 10 creatives x 4 formats = 40 images, about $5.40. Retries are billed too; Claude shows expected and worst-case before every batch."
 
 # ---------------------------------------------------------------------------
-# Clean-room certification (make-portable Phase 6.6 ship gate).
+# Clean-room certification (ship gate).
 # ONE command that cold-runs the pipeline from a freshly-unzipped, empty room with only the
 # operator's key installed. If this cannot pass, the package is not shippable -- a run on the
 # author's machine proves nothing, because the author's workspace already has everything.

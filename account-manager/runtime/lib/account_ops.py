@@ -1,7 +1,8 @@
 """Module C — account-ops recommender (Google).
 
-Wraps the existing Google Ads `diagnose` output (L0-L3 ladder + gated action
-queue) and fuses it with the living strategy + memory so the recommendations are
+Reads an OPTIONAL, bring-your-own Google Ads diagnose queue
+(<roster>/<slug>/snapshots/<YYYY-Www>/queue.json — this package does not ship a
+tool that produces it; with none, the queue is empty) and fuses it with the living strategy + memory so the recommendations are
 context-aware and doctrine-aligned (maximize conv value s.t. ROAS floor; honor
 the strategy's refusals). Recommend-only: produces a ranked action set for you;
 never touches the account.
@@ -28,7 +29,7 @@ def latest_snapshot_dir(slug):
 
 
 def load_queue(slug):
-    """Return the diagnose action queue items (already gated + mechanism-classified)."""
+    """Return the optional diagnose queue items (empty if you supply no queue.json)."""
     d = latest_snapshot_dir(slug)
     if not d:
         return {"week": None, "items": []}

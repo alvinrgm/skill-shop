@@ -5,7 +5,7 @@ RULE (permanent): ALL adgen image generation goes through this Gemini path, on
 your GEMINI_API_KEY. NEVER the Higgsfield MCP (that bills Higgsfield
 credits and is video-only). See SKILL.md image-gen HARD RULE.
 
-RESOLUTION RULE (permanent, 2026-05-29): CORE REFERENCE SHOTS — character hero
+RESOLUTION RULE (permanent): CORE REFERENCE SHOTS — character hero
 refs, character/product/environment contact sheets, any locked master reference —
 MUST be generated at 4K, highest quality (--size 4K, the default here). Lower
 res (1K/2K) is only acceptable for throwaway/scratch frames, never for a locked
@@ -38,7 +38,7 @@ from dotenv import load_dotenv
 
 # Runtime root (where .env + lib + client folders live). Configurable so this runs on any
 # machine; defaults to $ADGEN_HOME. Set ADGEN_HOME in your env to override.
-ADGEN = Path(os.environ.get("ADGEN_HOME") or os.environ.get("ADGEN_ROOT") or str(Path.home() / "Claude" / "adgen"))
+ADGEN = Path(os.environ.get("ADGEN_HOME") or os.environ.get("ADGEN_ROOT") or str(Path.home() / "adgen"))
 load_dotenv(ADGEN / ".env")
 
 MODEL = "gemini-3-pro-image-preview"  # Nano Banana Pro

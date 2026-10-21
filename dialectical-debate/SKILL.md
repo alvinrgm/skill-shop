@@ -124,9 +124,8 @@ adversarial:
 Then decide whether a **third round** is warranted. Spawn one if cross-examination
 surfaced a new crux that the round-1 agents weren't briefed to address, or if a
 factual dispute can be settled by one targeted investigation. Don't loop for its own
-sake — stop when another round wouldn't change the verdict. (The user specifically
-wants a second and third pass available; use the third when there's a live crux to
-resolve, not as ceremony.)
+sake — stop when another round wouldn't change the verdict. A third round is
+available; use it when there's a live crux to resolve, not as ceremony.
 
 ### Phase 4 — Judge and synthesize
 

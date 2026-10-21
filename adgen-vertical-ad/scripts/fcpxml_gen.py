@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate an FCPXML 1.13 file from a list of clips + audio tracks, ready for Final Cut Pro 12.2 import.
 
-HARD RULE (2026-06-03): Every audio file referenced in the project MUST be placed on the
+HARD RULE: Every audio file referenced in the project MUST be placed on the
 spine — not just declared as a resource. The narrator track, music bed, and per-clip stems
 all go on the timeline as connected clips at negative lanes. Opening the FCPXML must show
 a complete playable cut with all audio audible — no manual dragging from the event browser
@@ -97,10 +97,10 @@ def discover_audio(audio_dir, n_clips):
     PROACTIVE half of the "every audio track on the timeline" rule: instead of relying on the
     caller to remember --narrator/--music/--stems, scan the folder and place everything found.
     BACKSTOP half: any audio file that can't be classified is reported so nothing silently drops
-    off the timeline (the failure mode that produced silent-video-on-open, 2026-06-03).
+    off the timeline (the failure mode that produced silent-video-on-open).
 
     Returns (narrator_path, music_path, stems_list, unclassified_list).
-    - narrator: first file matching narrator/voiceover/_vo/full_vo/kiora
+    - narrator: first file matching narrator/narration/voiceover/_vo/full_vo
     - music:    first file matching music/_bed/suno/score/soundtrack
     - stems:    files matching shot<NN>...(audio|stem|native), ordered by shot number, length n_clips
     - unclassified: audio files matched none of the above (caller WARNS)
@@ -120,7 +120,7 @@ def discover_audio(audio_dir, n_clips):
         shot_m = re.search(r"shot[_-]?(\d+)", name)
         if shot_m and re.search(r"audio|stem|native", name):
             stems_by_shot[int(shot_m.group(1))] = str(p)
-        elif re.search(r"narrator|voiceover|full_vo|[_-]vo[_.-]|kiora", name):
+        elif re.search(r"narrator|narration|voiceover|full_vo|[_-]vo[_.-]", name):
             if narrator is None:
                 narrator = str(p)
             else:
@@ -160,7 +160,7 @@ def stable_uid(path):
     2. FCP caches the FIRST uid it sees for a file. Once cached, ALL future
        re-imports must reproduce that same uid → path-based with the same
        (stable) path always reproduces.
-    3. Content-based hashing was tried 2026-06-03 — it broke for projects
+    3. Content-based hashing was tried once — it broke for projects
        whose assets were already cached under path-based uids. Switching
        hash schemes mid-project means every uid changes, and FCP refuses
        the new import.
@@ -345,13 +345,13 @@ def build_fcpxml(clips, project_name, event_name=None, folder_name=None,
     # `<folder>` is NOT a valid element in FCPXML — only `collection-folder`
     # and `keyword-collection`, which group CLIPS not projects. The previous
     # patches tried `<folder>` in both spots and got rejected with explicit DTD
-    # errors from FCP (2026-06-02).
+    # errors from FCP.
     #
     # Naming convention used in adgen (Option A):
-    #   --event       = client name (the coffee brand, the pet brand, etc.)
-    #   --project-name = concept timeline (Berto Origin Spot, etc.)
+    #   --event       = client name ("Acme Co", etc.)
+    #   --project-name = concept timeline ("Sink Showdown", etc.)
     # For multiple timeline iterations of one concept, suffix the project name
-    # (e.g., "Berto Origin Spot — v1", "Berto Origin Spot — 9x16").
+    # (e.g., "Sink Showdown — v1", "Sink Showdown — 9x16").
     if folder_name:
         print(f"warning: --folder/{folder_name!r} is ignored — FCPXML doesn't "
               f"allow project-grouping folders inside events. Encode the "
@@ -374,8 +374,8 @@ def build_fcpxml(clips, project_name, event_name=None, folder_name=None,
     # Connected audio (narrator/music/stems) attaches as <asset-clip lane="-N">
     # children of the first V1 clip — convention per the HARD RULE.
     #
-    # CRITICAL: accumulate offset in FRAMES, never seconds. Past mistake
-    # (2026-06-03): used `offset_sec += p["duration"]` and re-rounded to
+    # CRITICAL: accumulate offset in FRAMES, never seconds. Past mistake:
+    # used `offset_sec += p["duration"]` and re-rounded to
     # frames per clip. The seconds-based accumulator drifts because
     # `round(5.06*24) + round(10.05*24) = 121 + 241 = 362 frames` but
     # `round((5.06+10.05)*24) = round(362.64) = 363 frames` — the operator saw
@@ -469,7 +469,7 @@ def main():
     ap.add_argument("--output", required=True, help="Output .fcpxml path")
     ap.add_argument("--project-name", default="ad_v1", help="Project name shown in FCP")
     ap.add_argument("--event", help="FCP event the project goes under (per FCPXML DTD, events sit directly inside <library>). In adgen we use this for the CLIENT name. Match an EXISTING event name in your library to merge re-imports into one place. Defaults to project-name if omitted.")
-    ap.add_argument("--folder", help="DEPRECATED — FCPXML doesn't support project-grouping folders. Anything passed here is warned-and-ignored; group via project naming instead (e.g., 'Berto Origin Spot — v1').")
+    ap.add_argument("--folder", help="DEPRECATED — FCPXML doesn't support project-grouping folders. Anything passed here is warned-and-ignored; group via project naming instead (e.g., 'Sink Showdown — v1').")
     ap.add_argument("--manifest", help="Optional YAML manifest with clips list")
     ap.add_argument("--narrator", help="Path to narrator audio (placed on lane -1 spanning the full timeline). REQUIRED for any Strategy B spot with 11L VO.")
     ap.add_argument("--music", help="Path to music bed audio (placed on lane -2 spanning the full timeline).")

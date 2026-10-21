@@ -9,9 +9,9 @@ The hard rule that prevented us from re-burning credits on the burlap-bag mistak
    - **Character contact sheets** (per character) — see `SKILL.md` Phase 3 + `prompts/character-contact-sheet.md`
    - **Product contact sheets** (per product/recurring physical asset) — see `prompts/product-contact-sheet.md`
 
-Both sheet types get uploaded to Higgsfield and passed into every shot prompt where that asset appears. Without locked sheets, the asset's appearance drifts across shots (wipe becomes cloth, bottle changes label, character changes face).
+Both sheet types get uploaded to Higgsfield and passed into every shot prompt where that asset appears. Without locked sheets, the asset's appearance drifts across shots (dropper becomes spray bottle, bottle changes label, character changes face).
 
-**Pet-wipes learning:** the wipe appeared in 3 shots and drifted every gen (cotton cloth, lavender pattern, off-white, paper towel). A product contact sheet at Phase 3 would have locked it once. ~100 credits in re-fires could have been avoided.
+**Product-drift learning:** a small dropper bottle appeared in 3 shots and drifted every gen (spray bottle, pump bottle, clear vial, glass jar). A product contact sheet at Phase 3 would have locked it once. ~100 credits in re-fires could have been avoided.
 
 ## The Phase 1 audit rule
 
@@ -95,17 +95,17 @@ Don't just dump the file list. Synthesize:
 
 HAVE:
 ✓ Logo: refs/logo.png (PNG, transparent bg)
-✓ Product hero: product images/heirloom_roast_front.png (front of bag, clean shot)
-✓ Product back: product images/heirloom_roast_back.png
-✓ Moodboard: 9 reference shots in moodboard/ (kitchens, brew bars, pour-overs)
+✓ Product hero: product images/hero_bottle_front.png (front of bottle, clean shot)
+✓ Product back: product images/hero_bottle_back.png
+✓ Moodboard: 9 reference shots in moodboard/ (kitchens, sinks, clean dish racks)
 ✓ Brand bible: bible.md (voice + positioning notes)
 ✓ Prior ad: brand_spot_9x16.mp4 (previous spot for reference)
 
 MISSING (will need to generate):
-✗ Bean character refs (no character in existing assets — generative shot)
-✗ 1968 lab setting (generative)
-✗ Modern hybridized bean character (generative)
-✗ Composed product hero in farmhouse setting (use existing product image as ref)
+✗ Mascot character refs (no character in existing assets — generative shot)
+✗ Night-time sink setting (generative)
+✗ Villain character (generative)
+✗ Composed product hero on the sink edge (use existing product image as ref)
 
 PROPOSAL:
 - Use existing logo + product images directly. No re-creation.
@@ -122,7 +122,7 @@ Examples of what this means in practice:
 
 | Wrong | Right |
 |---|---|
-| Generate a fake burlap bag with the brand logo printed on it | Use the existing product hero image (`heirloom_roast_front.png`) as a `role: image` ref to nano_banana_2 to compose it in a scene |
+| Generate a fake bottle with the brand logo printed on it | Use the existing product hero image (`hero_bottle_front.png`) as a `role: image` ref to nano_banana_2 to compose it in a scene |
 | Recreate the brand logo in a stylized way | Use the existing logo PNG. Pass it as image ref, reference it in prompt as "the brand logo from the reference image" |
 | Generate a synthetic product photo | Use the existing product photo |
 | Make up brand colors | Read them from the brand bible or the existing logo |
@@ -179,9 +179,9 @@ ASK: "Found two logo files: `logo_v1.png` and `logo_v2_new.png`. Which is curren
 When generating new assets that will be reused across ads, name them with a version stamp (paths are concept-relative — `concepts/<slug>/refs/...`):
 
 ```
-refs/characters/berto_v1.png    # First generation
-refs/characters/berto_v2.png    # After the operator's revision
-refs/characters/berto_v2_sheet.png  # Contact sheet for v2
+refs/characters/suds_v1.png    # First generation
+refs/characters/suds_v2.png    # After the operator's revision
+refs/characters/suds_v2_sheet.png  # Contact sheet for v2
 ```
 
 Don't overwrite. Old versions are useful for A/B comparison and rollback. If a character gets reused in a later concept, promote the locked version to `brand/characters/<name>/` per the character-promotion rule.
@@ -195,25 +195,25 @@ When you finish an ad and the brand folder gains new generated assets, leave a n
 
 ## Brand-global kit (brand/ — provided by the operator / brand, or promoted)
 - brand/logo.png — primary logo
-- brand/product-images/heirloom_roast_front.png — flagship product hero, front
-- brand/product-images/heirloom_roast_back.png — flagship product hero, back
-- brand/characters/berto/ — promoted brand mascot (sheet + bible), reused across concepts
+- brand/product-images/hero_bottle_front.png — flagship product hero, front
+- brand/product-images/hero_bottle_back.png — flagship product hero, back
+- brand/characters/suds/ — promoted brand mascot (sheet + bible), reused across concepts
 
 ## Per-concept generated assets
-### concepts/2026-04-acme-ad/
-- refs/characters/berto_v2.png — Berto hero ref (1890s bean farmer character)
-- refs/characters/berto_v2_sheet.png — Berto 3x3 contact sheet
-- refs/characters/instant_bean_v1.png — Hybridized instant bean (rapper antagonist)
-- refs/environments/1968_lab.png — Mid-century laboratory abduction setting
-- refs/environments/plantation_field.png — Industrial coffee plantation
-- refs/scenes/shot_01_field_intro.png — Berto in golden coffee farm hillside at sunrise
-- refs/scenes/shot_06_bag_hero.png — the coffee brand bag in farmhouse kitchen
+### concepts/<YYYY-MM-DD>-sink-showdown-suds/
+- refs/characters/suds_v2.png — Suds hero ref (sponge sheriff mascot)
+- refs/characters/suds_v2_sheet.png — Suds 3x3 contact sheet
+- refs/characters/grease_baron_v1.png — the Grease Baron (singing villain)
+- refs/environments/sink_night.png — night-time sink setting
+- refs/environments/counter_dawn.png — kitchen counter at dawn
+- refs/scenes/shot_01_counter_intro.png — Suds on the counter at dawn
+- refs/scenes/shot_06_bottle_hero.png — the brand's bottle on the sink edge
 
 ### Voice IDs used
-- Berto: seedance native, prompt "warm gravelly old-timey highland farmer voice"
-- Instant bean rapper: external Suno track (audio file in audio/bean_rap_full.mp3)
+- Suds: 11L voice `<voice_id>` (or seedance native with prompt "dry, steady, small-town sheriff voice with a slow drawl")
+- Grease Baron: external Suno track (audio file in audio/villain_song_full.mp3)
 
 ## Last updated: <iso date>
 ```
 
-This gives the next ad project a head-start. If a new ad for the brand needs the Berto character, the next session can REUSE `berto_v2_sheet.png` instead of regenerating.
+This gives the next ad project a head-start. If a new ad for the brand needs the Suds character, the next session can REUSE `suds_v2_sheet.png` instead of regenerating.

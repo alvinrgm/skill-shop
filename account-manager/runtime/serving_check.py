@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Daily serving / disapproval check — catches the gap where an ENABLED campaign
 silently stops serving (or an ad gets disapproved) and sits dead for days.
-Deterministic, no Claude, no API cost. Runs under the GOOGLE-ADS venv (needs the
-google-ads library + OAuth).
+Deterministic, no Claude, no API cost. Needs the optional google-ads library
+(`pip install google-ads`) + OAuth.
 
 For each Google client in the roster it flags:
   - ENABLED campaigns that are NOT actually serving (primary_status NOT_ELIGIBLE /
@@ -10,12 +10,11 @@ For each Google client in the roster it flags:
   - DISAPPROVED ads under enabled campaigns (with the policy topics)
 Then Slack-DMs you if anything is wrong (or --always for an all-clear).
 
-Run:  /path/to/google-ads/.venv/bin/python serving_check.py [--dry|--always]
+Run:  .venv/bin/python runtime/serving_check.py [--dry|--always]
 
-MUST run under a venv that has the `google.ads` module installed. The
-account-manager's own .venv may not have it — running it there throws
-ModuleNotFoundError: No module named 'google.ads'. Point your scheduler at the
-venv that has the google-ads library; only manual local runs hit this footgun.
+MUST run under a venv that has the `google.ads` module installed (it is optional
+in requirements.txt). Without it you get
+ModuleNotFoundError: No module named 'google.ads'.
 
 Config:
   - Roster dir: AM_ROSTER_DIR env, else package-local runtime/clients.

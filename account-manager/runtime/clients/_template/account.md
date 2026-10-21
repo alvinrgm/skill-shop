@@ -7,7 +7,7 @@
 - name: Client Name
 - mcc: 0000000000
 - login_customer_id:               # set ONLY if account is under a different MCC than your agency's primary
-- timezone: America/Denver
+- timezone: America/New_York  # your account's tz
 - currency: USD
 - brand_terms: [brandname, alt-spelling]
 - vertical: e-commerce / saas / etc

@@ -8,8 +8,8 @@
   BEFORE INSTALLING: replace every __PACKAGE_DIR__ below with the ABSOLUTE path
   to this package on your machine. __PACKAGE_DIR__ is the directory that
   contains the `ad-spend-monitor/` folder (the package root). For example, if
-  the package lives at /Users/you/account-manager-portable, then
-  __PACKAGE_DIR__ = /Users/you/account-manager-portable.
+  the package lives at /Users/you/skill-shop/account-manager, then
+  __PACKAGE_DIR__ = /Users/you/skill-shop/account-manager.
   Also point the python path at the interpreter where you installed
   requirements.txt (a venv's bin/python, or your system python3).
 

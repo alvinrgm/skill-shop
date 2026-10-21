@@ -14,11 +14,11 @@ monitored, and set it as META_ACCESS_TOKEN.
 
 Output shape mirrors lib/fetchers/google.py:
 {
-    "yesterday": 1234.56,
-    "mtd": 38400.00,
-    "trailing_30d_daily_avg": 1300.00,
+    "yesterday": 1200.00,
+    "mtd": 36000.00,
+    "trailing_30d_daily_avg": 1200.00,
     "history_days": 31,
-    "by_day": {"2026-05-29": 1234.56, ...},
+    "by_day": {"2025-01-29": 1200.00, ...},
 }
 """
 from __future__ import annotations

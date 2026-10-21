@@ -1,6 +1,6 @@
 Creative Commons Attribution 4.0 International (CC BY 4.0)
 
-Copyright (c) 2026 Alvin Ding
+Copyright (c) 2026 Rise Growth Marketing
 
 This work — the "AI Account Manager" skill system, its runtime code, the
 vendored deck engine, the Apps Script bridge source, the ad-spend-monitor,

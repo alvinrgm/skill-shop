@@ -5,9 +5,9 @@ so every AM workflow (weekly-report, creative-intel, account-ops) runs
 Two-tier context, both in the canonical roster folder:
   - strategy.md  : the LIVING strategy/positioning spine (slow-changing; operate against)
   - memory.md    : append-only tactical history + standing notes (fast-accumulating)
-plus account.md (config) and the latest diagnose snapshot (recent numbers).
-
-Nothing here is forked — it reads the existing google-ads/clients/<slug>/ files.
+plus account.md (config) and, optionally, the latest diagnose snapshot
+(<roster>/<slug>/snapshots/<week>/SUMMARY.md) if you supply one. This package
+does not ship a diagnose tool; with no snapshot, that section is simply omitted.
 """
 import os
 

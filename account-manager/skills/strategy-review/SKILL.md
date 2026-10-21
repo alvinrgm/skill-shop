@@ -14,10 +14,10 @@ description: >-
   <client>.
 ---
 
-<!-- ═══════════ FIRST-RUN ONBOARDING GATE (make-portable) ═══════════ -->
+<!-- ═══════════ FIRST-RUN ONBOARDING GATE ═══════════ -->
 ## ⚙️ First run? Onboard before doing anything else
 
-**Gate:** locate the `account-manager-portable` package dir (where `SETUP.md`, `doctor.sh`, and
+**Gate:** locate the `account-manager` package dir (where `SETUP.md`, `doctor.sh`, and
 `dependencies.yml` live — the repo these skills were copied from). If a `.onboarded` file does NOT
 exist there, do NOT start this skill's workflow — onboard first:
 1. `cd` to the package dir, run `bash doctor.sh`, read the ✅/❌ list.
@@ -47,7 +47,7 @@ Project: the package `runtime/` dir · roster: `runtime/clients/<slug>/`
 Goal: a strategy.md "fully loaded" with the client's real history + positioning.
 1. Gather ALL historical context:
    - `account.md` + `memory.md` (standing notes + tactical history)
-   - the latest diagnose snapshot(s) (`snapshots/<week>/SUMMARY.md`)
+   - the latest diagnose snapshot(s) if you supply them (optional; `snapshots/<week>/SUMMARY.md`)
    - the **living reporting deck** (read via Drive; mine the strategic throughline
      across periods — what's been tested, decisions, dynamics; for big decks use a
      subagent + chunked reads)

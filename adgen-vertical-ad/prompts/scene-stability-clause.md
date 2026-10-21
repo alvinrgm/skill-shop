@@ -30,16 +30,16 @@ Replace `{N}` with the shot duration in seconds.
 
 → Tracking shots / pans / dolly moves — the scene is intentionally changing, this clause will fight the prompt
 → Crash zooms / push-ins — same
-→ Action sweeps (e.g., wipe sweeping through encampment) — the scene IS the action
+→ Action sweeps (e.g., a spray of water sweeping across a windowsill garden) — the scene IS the action
 
 ## Custom enumeration
 
-When the model has a specific bad habit on a project, enumerate the forbidden additions explicitly. Example from the pet brand:
+When the model has a specific bad habit on a project, enumerate the forbidden additions explicitly. Example (a windowsill-garden set):
 
 ```
 DO NOT add a clothesline. DO NOT add hanging laundry. DO NOT add tiny shirts,
-pants, or fabric items strung between strands. The encampment is an unfurnished
-outdoor camp — no laundry, no decorations.
+pants, or fabric items strung between the plant stems. The windowsill is bare
+apart from the three pots — no laundry, no decorations.
 ```
 
 Add a similar enumeration to the clause when re-firing a shot that had a known pop-in.
@@ -51,6 +51,6 @@ Add a similar enumeration to the clause when re-firing a shot that had a known p
 
 ## Why this works
 
-Seedance interprets short prompts loosely and fills in gaps. If you say "encampment with laundry strung between strands" once and then describe action, the model may decide to add more laundry over time. The stability clause is a hard guard: anything not in second 0 is FORBIDDEN at second N.
+Seedance interprets short prompts loosely and fills in gaps. If you say "windowsill with laundry strung between the stems" once and then describe action, the model may decide to add more laundry over time. The stability clause is a hard guard: anything not in second 0 is FORBIDDEN at second N.
 
-Tested on the pet-wipes spot shot 3 v9 — explicit clothesline-prohibition fixed the mid-scene pop-in that appeared in v8.
+Tested in production (shot 3, v8 → v9): the explicit clothesline-prohibition fixed the mid-scene pop-in that appeared in v8.

@@ -3,8 +3,7 @@
 (plus a few core fields) for the account manager.
 
 The roster directory defaults to the package-local runtime/clients/, but can be
-pointed at any roster you maintain via the AM_ROSTER_DIR env var (e.g. an existing
-google-ads client roster you reuse rather than fork).
+pointed at any roster you maintain via the AM_ROSTER_DIR env var.
 """
 import os
 import re

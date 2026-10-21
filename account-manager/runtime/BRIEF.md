@@ -1,6 +1,5 @@
 # AI Account Manager — Brief
 
-**Domain:** `ai-role-replacement`
 **Autonomy:** recommend-only. Nothing sends to clients or changes ad accounts unattended. The ONE sanctioned live write is the weekly deck append (additive prepend only, never edits/deletes existing slides).
 
 ## Goal
@@ -27,7 +26,7 @@ Module A comms drafts · Module C standalone account-ops recommender · full dat
 Per-period block, newest on top:
 1. Dated divider (`M/D` + dashboard label e.g. "Data dash" / "Internal Looker")
 2. KPI scorecard + campaign-breakdown slides — **native data tables** rendered from the locked `core_data_source` (carry the same data screenshots used to; screenshots deprecated)
-3. Top-line Observations — BLUF metric verdict first (e.g. `6.3x ROAS and 2.25x NC ROAS`), then `Observation/Insights` bullets, then `Next steps/Action taken`. Split **by platform**, **by segment**, or **combined** — set per client.
+3. Top-line Observations — BLUF metric verdict first (e.g. `Xx ROAS and Yx NC ROAS`), then `Observation/Insights` bullets, then `Next steps/Action taken`. Split **by platform**, **by segment**, or **combined** — set per client.
 4. Single-topic deep-dive slides (tests/anomalies)
 5. `Action items` closer — native table rolling up every Next-step, inline `(done)` status.
 

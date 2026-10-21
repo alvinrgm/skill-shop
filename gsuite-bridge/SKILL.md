@@ -215,8 +215,6 @@ bridge.api("sheets", "POST", f"/v4/spreadsheets/{sid}:batchUpdate",  {"requests"
 
 ---
 
-**Created by Alvin Ding.**
-
 A portable Google Workspace control + Slides style-matching skill for Claude Code, generalized
 from an internal agency deck-automation workflow.
 

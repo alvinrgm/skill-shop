@@ -49,8 +49,8 @@ prints the fix inline.
 ## Install
 
 ```bash
-git clone --depth 1 <REPO-URL> account-manager-portable
-cd account-manager-portable
+git clone --depth 1 <REPO-URL> skill-shop
+cd skill-shop/account-manager
 
 # 1. Python deps
 python3 -m venv .venv && source .venv/bin/activate

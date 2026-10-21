@@ -8,7 +8,7 @@ The single biggest source of wasted credits and iteration loops in past ad sessi
 > Dialogue** for any 2+ character shot (not concatenated clips), an **audio tag on every line**,
 > expressive v3 settings, voice+seed lock. Both apply to every talking spot.
 
-## DEFAULT = ElevenLabs voice, lip-synced inside seedance (verified 2026-06-04)
+## DEFAULT = ElevenLabs voice, lip-synced inside seedance (verified in production)
 
 **For any character that SPEAKS, default to ElevenLabs voice lip-synced inside seedance via
 `role: audio`.** This is verified-true behavior: seedance_2_0 accepts an external audio ref and
@@ -67,8 +67,8 @@ seedance-native take (skip the 11L setup) and accepts that the voice will drift 
 won't match the next ad. Even then, use IDENTICAL voice-description prompt language for a character
 in every shot. Default is still B.
 
-**Past mistake (the coffee brand "ask your abuelo," May 2026):** defaulted to seedance-native because it
-was the cheap default and the old rule discouraged 11L. The spot needed locked voice (couplabeers
+**Past mistake (a pharma-ad-parody spot):** defaulted to seedance-native because it
+was the cheap default and the old rule discouraged 11L. The spot needed locked voice (pharma-parody
 structure, 8 narrator beats). Took v1 → v2 → v3 and ~200 wasted credits to pivot. With 11L-as-
 default, v1 would have shipped clean.
 
@@ -101,7 +101,7 @@ Each video clip generated with seedance native audio enabled (default). Voice + 
 **When to use:** spots with NO spoken voice (pure visual + music + SFX), or a deliberate
 cheap/throwaway test cut. NOT the default for talking spots anymore — Strategy B (11L lip-sync) is.
 
-**If you do use it for a talking spot (escape hatch only):** use IDENTICAL prompt language for the same character in every shot. Example: every Berto shot includes "warm gravelly old-timey highland farmer voice" word-for-word. Variation in description = variation in voice. Accept that the voice still drifts clip-to-clip and won't match the next ad — that's exactly why B is the default.
+**If you do use it for a talking spot (escape hatch only):** use IDENTICAL prompt language for the same character in every shot. Example: every Suds shot includes "dry, steady, small-town sheriff voice with a slow drawl" word-for-word. Variation in description = variation in voice. Accept that the voice still drifts clip-to-clip and won't match the next ad — that's exactly why B is the default.
 
 ### Strategy B — Continuous external audio + visuals lip-synced to it
 

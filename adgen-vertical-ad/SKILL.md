@@ -3,7 +3,7 @@ name: adgen-vertical-ad
 description: End-to-end vertical ad production using Higgsfield (seedance + nano_banana_2) + ffmpeg + FCPXML. Triggered when the operator wants to produce a video ad for a brand from a PDP URL or brief. Encodes the full 7-phase pipeline (discovery, script, character + product refs, scene start-frames, video gen, audio stems, FCPXML deliverable) plus all hard-won pitfalls and recipes.
 ---
 
-<!-- ═══════════════ FIRST-RUN ONBOARDING GATE (packaged by make-portable) ═══════════════ -->
+<!-- ═══════════════ FIRST-RUN ONBOARDING GATE ═══════════════ -->
 ## ⚙️ First run? Onboard before making any ad
 
 **Gate:** if `.onboarded` does NOT exist in this skill's folder, do NOT start the ad workflow —
@@ -39,22 +39,22 @@ End-to-end vertical ad production. Optimized for a claymation-mascot creative mo
 
 ## HARD RULES (read before doing ANYTHING)
 
-→ **IMAGE GENERATION = Gemini "Nano Banana" via your Gemini key, NEVER Higgsfield.** Every image in this pipeline (character hero refs, contact sheets, environment sheets, scene start-frames, product hero composites) is generated through Google Gemini "Nano Banana" (Nano Banana **Pro** preferred) via the `google-genai` SDK + `GEMINI_API_KEY` (your key, in `$ADGEN_HOME/.env`). The canonical generator is **`scripts/gen_image.py`** (Gemini Nano Banana Pro via REST, supports the 4K size param the SDK doesn't) — it is aesthetic-NEUTRAL (passes your prompt verbatim), supports `--ref IMG` for the locked hero/contact-sheet, and is what you use for ALL stylized/claymation/cinematic/product work. **Do NOT use `lib/keyframe.py` for this pipeline, and do NOT hand-roll a one-off google-genai script.** `lib/keyframe.py` is the UGC iPhone-selfie SPECIALIST from a legacy UGC pipeline — it force-prepends an "amateur iPhone selfie, authentic UGC" style to EVERY prompt, which is wrong for claymation/cinematic. Reaching for keyframe.py, finding it's UGC-tuned, and then writing a one-off to escape it is a known trap (it created `gen_x_v4.py`-style sprawl) — `gen_image.py` already covers prompt + refs + size + aspect, so there's nothing a one-off buys you. **DO NOT call the Higgsfield MCP `generate_image` / `nano_banana_*` for images** — that bills scarce Higgsfield credits and is the wrong path (this rule exists because a past session burned the whole Higgsfield balance generating Berto heroes through the MCP, 2026-05-29). Higgsfield (`seedance_2_0`) is the **VIDEO** path only. Where any phase below says "Model: `nano_banana_2`", that means the **Gemini Nano Banana Pro path**, NOT the Higgsfield MCP. Exception: only if the operator explicitly says "use Higgsfield for this image."
-→ **REAL-PRODUCT LOCK GATE — never invent a real product; match it from a photo ON DISK (added 2026-06-24).** A real branded product (a coffee bag, a bottle, a specific label) CANNOT be reproduced from a text description — Gemini invents a plausible-but-wrong package every time, and no amount of "explicit instructions about the bag" fixes it. It MUST be matched from the actual product photo passed as `--ref` to `gen_image.py`. Enforce:
+→ **IMAGE GENERATION = Gemini "Nano Banana" via your Gemini key, NEVER Higgsfield.** Every image in this pipeline (character hero refs, contact sheets, environment sheets, scene start-frames, product hero composites) is generated through Google Gemini "Nano Banana" (Nano Banana **Pro** preferred) via the `google-genai` SDK + `GEMINI_API_KEY` (your key, in `$ADGEN_HOME/.env`). The canonical generator is **`scripts/gen_image.py`** (Gemini Nano Banana Pro via REST, supports the 4K size param the SDK doesn't) — it is aesthetic-NEUTRAL (passes your prompt verbatim), supports `--ref IMG` for the locked hero/contact-sheet, and is what you use for ALL stylized/claymation/cinematic/product work. **Do NOT use `lib/keyframe.py` for this pipeline, and do NOT hand-roll a one-off google-genai script.** `lib/keyframe.py` is the UGC iPhone-selfie SPECIALIST from a legacy UGC pipeline — it force-prepends an "amateur iPhone selfie, authentic UGC" style to EVERY prompt, which is wrong for claymation/cinematic. Reaching for keyframe.py, finding it's UGC-tuned, and then writing a one-off to escape it is a known trap (it created `gen_x_v4.py`-style sprawl) — `gen_image.py` already covers prompt + refs + size + aspect, so there's nothing a one-off buys you. **DO NOT call the Higgsfield MCP `generate_image` / `nano_banana_*` for images** — that bills scarce Higgsfield credits and is the wrong path (this rule exists because a past session burned the whole Higgsfield balance generating character heroes through the MCP). Higgsfield (`seedance_2_0`) is the **VIDEO** path only. Where any phase below says "Model: `nano_banana_2`", that means the **Gemini Nano Banana Pro path**, NOT the Higgsfield MCP. Exception: only if the operator explicitly says "use Higgsfield for this image."
+→ **REAL-PRODUCT LOCK GATE — never invent a real product; match it from a photo ON DISK.** A real branded product (a bag, a bottle, a specific label) CANNOT be reproduced from a text description — Gemini invents a plausible-but-wrong package every time, and no amount of "explicit instructions about the bag" fixes it. It MUST be matched from the actual product photo passed as `--ref` to `gen_image.py`. Enforce:
   → **A pasted/attached chat image is NOT a usable reference.** `--ref` needs a FILE PATH. If the user drops the product image into chat, SAVE it to `brand/refs/scraped/<name>.png` FIRST, then pass that path. (`gen_image.py` now hard-errors if a `--ref` path doesn't exist, and prints `⚠️ NO --ref` when it generates ref-less.)
   → **Verify the PDP scrape actually captured the product.** Many DTC/Shopify PDPs are JS-rendered, so crawling `<img>` in the static HTML returns nothing or just the logo. After Phase 0, `ls brand/refs/scraped/` and confirm a REAL product image landed. If it's empty/wrong, SAY SO and ask the user to drop the product photo — do NOT proceed to invent one.
-  → **If `gen_image.py` prints `⚠️ NO --ref` for a product or any locked asset, STOP** — it's being invented. Get the real image on disk and re-fire with `--ref`. This is the Phase-3 product-contact-sheet discipline (`prompts/product-contact-sheet.md`): lock the package from the real photo ONCE, reference everywhere. Don't freelance product visuals from text. (Encoded after a fresh-operator run on the coffee brand produced an invented coffee bag because no real product image ever reached `--ref`.)
+  → **If `gen_image.py` prints `⚠️ NO --ref` for a product or any locked asset, STOP** — it's being invented. Get the real image on disk and re-fire with `--ref`. This is the Phase-3 product-contact-sheet discipline (`prompts/product-contact-sheet.md`): lock the package from the real photo ONCE, reference everywhere. Don't freelance product visuals from text. (Encoded after a fresh-operator run produced an invented package because no real product image ever reached `--ref`.)
 
-→ **CORE REFERENCE SHOTS = 4K, highest quality (permanent, 2026-05-29).** Every locked reference — character hero refs, character/product/environment contact sheets, product hero composites — MUST be generated at **4K** (`scripts/gen_image.py --size 4K`, which is the default). These are the assets everything else is built from; they get the best quality. Lower res (1K/2K) is acceptable ONLY for throwaway/scratch frames, never for a locked reference. (4K needs the REST path in `gen_image.py` — the google-genai 1.47 SDK rejects `image_size`.)
-→ **Folder discipline — ONE folder per brand, two levels deep.** Read the "Folder structure — the two-level law" section below BEFORE creating any files. There is exactly one `$ADGEN_HOME/<brand>/` folder; brand-global assets live in `<brand>/brand/`, each ad concept lives in its own `<brand>/concepts/<slug>/`. Never spawn sibling top-level folders for the same brand (e.g. `acme-abuelo/`, `acme-higgsfield/`). Run Phase 0 (folder bootstrap) FIRST, before any scraping or generation.
-→ **ElevenLabs is now the DEFAULT voice source (changed 2026-06-04 — read fully):**
+→ **CORE REFERENCE SHOTS = 4K, highest quality (permanent).** Every locked reference — character hero refs, character/product/environment contact sheets, product hero composites — MUST be generated at **4K** (`scripts/gen_image.py --size 4K`, which is the default). These are the assets everything else is built from; they get the best quality. Lower res (1K/2K) is acceptable ONLY for throwaway/scratch frames, never for a locked reference. (4K needs the REST path in `gen_image.py` — the google-genai 1.47 SDK rejects `image_size`.)
+→ **Folder discipline — ONE folder per brand, two levels deep.** Read the "Folder structure — the two-level law" section below BEFORE creating any files. There is exactly one `$ADGEN_HOME/<brand>/` folder; brand-global assets live in `<brand>/brand/`, each ad concept lives in its own `<brand>/concepts/<slug>/`. Never spawn sibling top-level folders for the same brand (e.g. `acme-parody/`, `acme-higgsfield/`). Run Phase 0 (folder bootstrap) FIRST, before any scraping or generation.
+→ **ElevenLabs is the DEFAULT voice source (read fully):**
   → **For any character that SPEAKS, default to an ElevenLabs voice lip-synced inside seedance** via a `role: audio` ref. This is verified: seedance_2_0 accepts external audio and lip-syncs the mouth to it tight within a clip. A locked 11L voice stays identical within-clip, across-clips, AND across ads — which kills seedance native audio's #1 weakness (per-clip voice drift, mascot sounding different shot-to-shot). This is Strategy B and it is the norm now, not the exception.
   → **The method that keeps it drift-free (do this, don't overlay):** generate the full 11L track for the spot → cut into CONTIGUOUS non-overlapping per-shot segments at breath gaps (each ≥4s) → generate each seedance clip with `role: audio` = its own segment → concat. Each clip lip-syncs to exactly the audio it plays; assembled audio is continuous. NEVER overlay one continuous track on top of independently-synced clips (that's the old drift trap).
-  → **Decide it at Phase 2**, surfaced from the breakdown.md voice columns. Pick/clone ONE locked voice per character. Default to **Kiora** (`hGQkZQUA5RiOXIw7P9iO`) for warm female narrator; ask before picking a new one. NEVER use stock library voices (Brian/Aria/Roger) — they sound generic.
+  → **Decide it at Phase 2**, surfaced from the breakdown.md voice columns. Pick/clone ONE locked voice per character. Use the operator's house narrator voice from the `reference/voice-consistency.md` registry (it ships empty: on the first spot, ask them to pick one and log its voice_id there); ask before picking a new one. NEVER use stock library voices (Brian/Aria/Roger) — they sound generic.
   → **Strategy A (seedance native voice) is now the EXCEPTION** — use only when no character speaks (pure visual + music + SFX), or when the operator explicitly wants a fast/cheap throwaway test cut and accepts the voice drift. Don't reach for 11L as a Phase-5 RESCUE for one bad seedance clip mid-spot (re-fire seedance instead) — but DO architect 11L upfront at Phase 2 as the default voice path.
   → See `reference/audio-pipeline.md` (decision tree + contiguous-segment method) and `reference/voice-consistency.md`.
   → **MANDATORY: `reference/elevenlabs-dialogue-emotion.md` — apply its pre-flight checklist to EVERY 11L generation.** For any shot with 2+ characters talking, use the **Text to Dialogue** endpoint (`lib/elevenlabs.py` → `dialogue()`), NOT concatenated single-voice clips — it models conversational flow (reactions, timing). Every line MUST carry ≥1 audio tag (`[nervous]`, `[deadpan]`, `[sighs]`, `[strong Brooklyn accent]`, etc.) matched to the character bible's `emotional_range`. Lock v3 expressive settings (stability 0.35-0.45, style 0.1-0.15, NEVER Robust), lock voice+seed per character (+ `previous_request_ids`), generate 2-3 takes and pick best. Enforced at generation time, not optional.
-→ **SEEDANCE IP-FILTER STACKING — never name studios, films, archetypes, or iconic-imagery vocabulary in video prompts.** Higgsfield's `ip_detected` moderation runs a CLIP-style image+text matcher against an IP database. **Signals STACK** — one IP-coded word usually doesn't trip, but multiple stacking signals (studio + character + iconic setting + iconic palette) cross the threshold and block the job (and credits are charged on the failed attempt with no auto-refund). Discovered 2026-06-02 across two parallel Berto sessions; ~225 credits burned diagnosing it. **NEVER include in seedance prompts:**
+→ **SEEDANCE IP-FILTER STACKING — never name studios, films, archetypes, or iconic-imagery vocabulary in video prompts.** Higgsfield's `ip_detected` moderation runs a CLIP-style image+text matcher against an IP database. **Signals STACK** — one IP-coded word usually doesn't trip, but multiple stacking signals (studio + character + iconic setting + iconic palette) cross the threshold and block the job (and credits are charged on the failed attempt with no auto-refund). Discovered across two parallel sessions; ~225 credits burned diagnosing it. **NEVER include in seedance prompts:**
   → **Studios** — Aardman, Pixar, Disney, DreamWorks, Studio Ghibli, Laika, Sony Pictures Animation, Illumination
   → **Films / shows** — Wallace and Gromit, Toy Story, Yellowstone, Grapes of Wrath, Of Mice and Men, etc.
   → **Real people / actor archetypes** — Sam Elliott, John Dutton, "Most Interesting Man," Sheriff Woody, etc.
@@ -62,7 +62,7 @@ End-to-end vertical ad production. Optimized for a claymation-mascot creative mo
   → **Brand mascots / licensed characters by name**
   **Replacements that pass:**
   → "Aardman / Pixar / Laika style" → "hand-thumbed plasticine clay surface with visible fingerprint impressions and slight frame-to-frame judder" (claymation)
-  → "the claymation Berto character" → "the clay character from the start frame" / "the figure from the reference image" — the start_image is the identity lock; don't restate identity in text
+  → "the claymation sponge-sheriff character" → "the clay character from the start frame" / "the figure from the reference image" — the start_image is the identity lock; don't restate identity in text
   → "sepia Dust Bowl plain" → "open parched plain" / "dim brown-tan plain"
   → "cowboy hat" → "wide-brim hat" / "brimmed hat"
   → "old-Western drawl" → "deep slow drawl"
@@ -71,37 +71,37 @@ End-to-end vertical ad production. Optimized for a claymation-mascot creative mo
   → "prairie" → "open field"
   **Decision rule for prompts:** describe ACTION (what the character does) + ENVIRONMENT (where), NOT IDENTITY (who) or STYLE-BY-NAME. The start_image carries identity; the contact-sheet ref carries on-model lock; the text should be neutral physical description only.
   **PROACTIVE, not reactive — construct clean, don't write-then-scrub.** The seedance prompt is BUILT physical-description-only from the start, using the translation table in `prompts/seedance-shot.md`. Do not write a studio-named prompt and then try to fix it. **Gemini image prompts are EXEMPT** — naming "Aardman/Laika stop-motion style" in a Gemini Nano Banana image prompt is FINE and often useful (Gemini has no ip_detected filter). The ban applies ONLY to the seedance VIDEO prompt. When you adapt a Gemini start-frame prompt into a seedance prompt, TRANSLATE the studio/style language into physical description as a deliberate construction step. As a final tripwire before EVERY `generate_video` call, pipe the prompt through `scripts/lint_seedance_prompt.sh` — it blocks on banned vocab, music language, or a missing NO-MUSIC clause. The lint is insurance against a slip, not the mechanism; the mechanism is constructing it clean.
-  **If a clip flags `ip_detected`:** don't wait (no cancel tool — the job sits forever). Audit the prompt for studio names, film names, iconic-coded vocabulary; resubmit immediately with neutral language. Credits on the flagged job are abandoned (no auto-refund observed). Brand-name lines in 11L audio are SAFE to attach — the brand name alone tested clean 2026-06-02 (a brand-name 1.6s clip passed seedance with a known-good start image). The trigger is text-prompt vocabulary stacking, NOT audio content.
+  **If a clip flags `ip_detected`:** don't wait (no cancel tool — the job sits forever). Audit the prompt for studio names, film names, iconic-coded vocabulary; resubmit immediately with neutral language. Credits on the flagged job are abandoned (no auto-refund observed). Brand-name lines in 11L audio are SAFE to attach — the brand name alone tested clean (a brand-name 1.6s clip passed seedance with a known-good start image). The trigger is text-prompt vocabulary stacking, NOT audio content.
 → **"Stringout" defaults to CONCAT EXISTING FILES, never fire new gens.** When the operator says "stringout the clips" / "stringout incl all generations" / "let me see the cut" → ffmpeg concat what's already on disk in the project's `clips/` folder, in script order. Do NOT interpret as "go generate the missing shots and then concat." If shots are missing from the cut, surface that as "we have N of M clips done, here's the partial stringout" and ask whether to fire the missing gens. **Past mistake:** misread "stringout incl all generations" as "generate everything then concat" — fired 10 batch seedance calls without per-clip review, cost ~120 credits on stuff that didn't survive the next review pass.
-→ **FCPXML DELIVERABLE MUST HAVE EVERY AUDIO + VIDEO TRACK ON THE TIMELINE — never just imported as event assets (2026-06-03).** The operator's hard rule: when they open `final/project.fcpxml` in FCP 12.2, **every clip and every audio file must already be placed on the timeline spine at the correct offset.** Narrator VO on lane -1, music bed on lane -2, per-clip audio stems on lane -3, etc. The whole point of the FCPXML workflow is that they don't manually drag anything from the event browser to the timeline — opening the project should show a complete, playable cut with all tracks audible.
+→ **FCPXML DELIVERABLE MUST HAVE EVERY AUDIO + VIDEO TRACK ON THE TIMELINE — never just imported as event assets.** The operator's hard rule: when they open `final/project.fcpxml` in FCP 12.2, **every clip and every audio file must already be placed on the timeline spine at the correct offset.** Narrator VO on lane -1, music bed on lane -2, per-clip audio stems on lane -3, etc. The whole point of the FCPXML workflow is that they don't manually drag anything from the event browser to the timeline — opening the project should show a complete, playable cut with all tracks audible.
   ❌ Wrong: import audio as an `<asset>` but only add video to the `<spine>`. Audio sits in the event browser, FCP plays silent video.
   ✓ Right: every audio file referenced in the project goes on the spine as a connected `<asset-clip lane="-N">` under the V1 clips (or as a long connected clip spanning the whole timeline for a continuous narrator/music bed).
   Per skill spec: A1 = per-clip native audio (on the asset-clip's primary lane); A2 (lane=-1) = narrator VO if Strategy B; A3 (lane=-2) = music bed; A4 (lane=-3) = per-clip stems if separately mixed. Use `scripts/fcpxml_gen.py` with `--narrator <path>` and `--music <path>` flags — those flags exist specifically to enforce this rule and place the audio on the timeline automatically. NEVER hand-author an FCPXML that omits any audio file from the spine. If the project has 11L narrator, music bed, AND per-clip stems → all three go on the spine, never just imported.
-  **Past mistake (2026-06-03, acme-marv):** generated FCPXML with only video clips on the timeline. Narrator was a separate `.mp3` not referenced anywhere. The operator opened the project, heard silence, called it out. Had to manually patch FCPXML to add narrator on lane -1. This rule exists to prevent that round-trip.
+  **Past mistake (a pharma-parody spot):** generated FCPXML with only video clips on the timeline. Narrator was a separate `.mp3` not referenced anywhere. The operator opened the project, heard silence, called it out. Had to manually patch FCPXML to add narrator on lane -1. This rule exists to prevent that round-trip.
 → **CTA must be SPOKEN VO**, not text-overlay-only. Bake the closing tagline into a character or narrator line. Text overlay is reinforcement, not primary delivery.
 → **15s max per seedance clip** (fast mode). Server silently clamps anything higher. Dialogue budget: ≤9 turns / ≤60 words per 15s.
-→ **PRODUCT / LABEL hero shots → ken-burns over the locked 4K product composite, NOT seedance (2026-06-04).** Seedance warps typography and bag geometry even WITH product contact sheets passed as refs — past coffee-brand shots showed the bag flipping backwards, wrong on-pack text, and the wrong seam count despite 8 lines of "bag stability" prompting and full-angle contact sheets. The contact sheet locks what the product LOOKS like for the model, but seedance still re-renders (and mangles) fine text + structure every gen. So for any shot whose job is "show the product / label clearly," skip seedance: take the locked 4K product hero composite (perfect text, generated via Gemini at Phase 4) and do a slow centered ken-burns push-in (see `reference/ffmpeg-cookbook.md` — pans IN toward a CENTERED product, zoom so slow it's near-imperceptible, product never leaves frame). Reserve seedance for shots where the product is in motion/handled and minor label imperfection is acceptable.
-→ **When seedance blocks (ip_detected / nsfw twice), SURFACE it — never silently swap to a static ken-burns fallback (2026-06-04).** Past mistake (Berto origin): shots 5 and 6 quietly became static ken-burns pans after seedance blocked, and the operator had to ask "why are these just static Ken Burns that don't look good?" If a shot can't pass seedance after the retry sequence, STOP and tell the operator: "shot N is blocked after retries; options are (a) re-storyboard the composition, (b) ken-burns over the start frame as a deliberate static shot, (c) drop it. Which?" Let them choose. A static substitute is a creative decision, not a silent fallback.
+→ **PRODUCT / LABEL hero shots → ken-burns over the locked 4K product composite, NOT seedance.** Seedance warps typography and bag geometry even WITH product contact sheets passed as refs — past pantry-product shots showed the bag flipping backwards, wrong on-pack text, and the wrong seam count despite 8 lines of "bag stability" prompting and full-angle contact sheets. The contact sheet locks what the product LOOKS like for the model, but seedance still re-renders (and mangles) fine text + structure every gen. So for any shot whose job is "show the product / label clearly," skip seedance: take the locked 4K product hero composite (perfect text, generated via Gemini at Phase 4) and do a slow centered ken-burns push-in (see `reference/ffmpeg-cookbook.md` — pans IN toward a CENTERED product, zoom so slow it's near-imperceptible, product never leaves frame). Reserve seedance for shots where the product is in motion/handled and minor label imperfection is acceptable.
+→ **When seedance blocks (ip_detected / nsfw twice), SURFACE it — never silently swap to a static ken-burns fallback.** Past mistake (a mascot origin spot): shots 5 and 6 quietly became static ken-burns pans after seedance blocked, and the operator had to ask "why are these just static Ken Burns that don't look good?" If a shot can't pass seedance after the retry sequence, STOP and tell the operator: "shot N is blocked after retries; options are (a) re-storyboard the composition, (b) ken-burns over the start frame as a deliberate static shot, (c) drop it. Which?" Let them choose. A static substitute is a creative decision, not a silent fallback.
 → **Every recurring on-screen asset needs a contact sheet at Phase 3** (character OR product). Without locked refs, the asset's appearance drifts across shots. See `prompts/product-contact-sheet.md`.
 → **Locked-camera shots need the scene stability clause** in the prompt. See `prompts/scene-stability-clause.md`. Without it, the model adds props mid-shot.
 → **Do the work, don't summarize.** When the operator asks for a script, storyboard, dialogue table, or full breakdown — write it OUT, completely. No "[5 features stacked]" placeholders, no shorthand tables. If something is in the brief, spell it out. Tables with truncated descriptions are not deliverables.
 → **Pre-surface QA before claiming "done."** For every shot you intend to deliver: whisper-transcribe the audio to verify dialogue landed; extract frames at t=1, t=mid, t=end to verify no pop-ins and continuity matches prior shot. If any check fails → re-fire BEFORE telling the operator it's good.
-→ **Agitate first, then benefit-drop.** Every script follows pain → product → benefit. The first 1-2 shots agitate the actual customer pain points using brand-native vocabulary and biological/sensory specifics (sticking, chafe, itching, brittle, cracked, dull-bladed, etc — pull these from the brief, never invent generic). The product-reveal shot drops named features as VO beats timed to product visuals (each beat = one feature). The closing shot has characters experience the benefits in real-time, then deliver the spoken CTA. NEVER write a script where pain is implicit or features are never named — the operator will reject it. Default first draft to this structure unless they explicitly override.
-→ **ALWAYS surface generated assets two ways: a clickable link AND an auto-opened Finder window (2026-06-04).** Every time you surface generated assets (image, video, audio stem, doc, sheet) for the operator to review:
+→ **Agitate first, then benefit-drop.** Every script follows pain → product → benefit. The first 1-2 shots agitate the actual customer pain points using brand-native vocabulary and biological/sensory specifics (pinching, itching, brittle, cracked, dull-bladed, etc — pull these from the brief, never invent generic). The product-reveal shot drops named features as VO beats timed to product visuals (each beat = one feature). The closing shot has characters experience the benefits in real-time, then deliver the spoken CTA. NEVER write a script where pain is implicit or features are never named — the operator will reject it. Default first draft to this structure unless they explicitly override.
+→ **ALWAYS surface generated assets two ways: a clickable link AND an auto-opened Finder window.** Every time you surface generated assets (image, video, audio stem, doc, sheet) for the operator to review:
   1. **Push the actual files via `SendUserFile`** so they're clickable directly in their chat client. (Plain markdown `file://` links may not render as clickable in the chat client — use SendUserFile for the files themselves; per the operator's standing rule this OVERRIDES generic relative-path link advice.) For multi-asset surfaces, send the set.
   2. **Auto-open a Finder window at the deliverables folder** with `open "$ADGEN_HOME/<brand>/concepts/<slug>/<subdir>"` (e.g. the `clips/`, `final/`, or `refs/scenes/` folder being reviewed). They asked for this explicitly — they want the folder popped open so they can browse siblings, not hunt for it.
   Do NOT just describe the asset, do NOT just say "saved to refs/", do NOT rely on a bare path they have to copy. They review on their laptop; the click + the open Finder window are the fastest paths to seeing the work. Audio files still open via QuickTime, never Music.app (`open -a "QuickTime Player" <path>`).
-→ **AUDIO playback uses QuickTime, NEVER Music.app.** When you `open` an audio file (`.mp3`, `.wav`, `.m4a`, `.aac`, `.flac`) for the operator to review, use `open -a "QuickTime Player" /path/to/file.mp3`. macOS routes audio files to Music.app by default, which auto-adds them to their music library — that's pollution they didn't ask for. QuickTime Player handles audio cleanly with no library side-effects. Apply this to every audio open command, including in shell scripts and helpers. Rule set 2026-06-02.
-→ **BLUF / Minto surface style — show only what needs sign-off. Applies to EVERY surface, not just phase gates (2026-06-04).** This includes mid-session status recaps, progress updates, "where are we" answers — not only the formal phase-end deliverables. The operator has explicitly said they don't read the long explanation blocks ("too much too read. minto bluf pls. cavemen language"). Going forward, every surface to them follows this structure:
+→ **AUDIO playback uses QuickTime, NEVER Music.app.** When you `open` an audio file (`.mp3`, `.wav`, `.m4a`, `.aac`, `.flac`) for the operator to review, use `open -a "QuickTime Player" /path/to/file.mp3`. macOS routes audio files to Music.app by default, which auto-adds them to their music library — that's pollution they didn't ask for. QuickTime Player handles audio cleanly with no library side-effects. Apply this to every audio open command, including in shell scripts and helpers.
+→ **BLUF / Minto surface style — show only what needs sign-off. Applies to EVERY surface, not just phase gates.** This includes mid-session status recaps, progress updates, "where are we" answers — not only the formal phase-end deliverables. The operator has explicitly said they don't read the long explanation blocks ("too much too read. minto bluf pls. cavemen language"). Going forward, every surface to them follows this structure:
   → **Top line:** the decision or deliverable, 1-2 sentences
   → **What they must sign off on:** a numbered list of 2-4 concrete y/n or pick-one questions. NEVER more than 4. Each item phrased so they can answer in 1-3 words.
   → **What's next on "go":** 1 line telling them what I'll do once they approve
   → **Hide:** my thinking, alternatives I considered and rejected, justifications, my drafts, my reasoning chains, my exploration notes. These go to disk in the project folder (brief.md, breakdown.md, etc.) where they can read if they want — but they don't pollute the chat surface.
-  Past mistake (the coffee brand "ask your abuelo," May 2026): surfaced full deliverable text + observation lists + "what to verify on playback" + cost accounting + 3-path comparison tables at every stage. The operator stopped reading. Important sign-off requests got lost in the noise. Going forward, the chat surface is for decisions, not for showing my work.
+  Past mistake (a pharma-parody spot): surfaced full deliverable text + observation lists + "what to verify on playback" + cost accounting + 3-path comparison tables at every stage. The operator stopped reading. Important sign-off requests got lost in the noise. Going forward, the chat surface is for decisions, not for showing my work.
 
 ## Folder structure — the two-level law (READ BEFORE creating any files)
 
-**Past mistake (corrected 2026-05-29):** this skill used to dump everything for a brand into one flat `$ADGEN_HOME/<brand>/` folder — brand bible, logo, product photos, refs, clips, and final all interleaved at the root. Running four concepts for one brand produced four sibling top-level folders (`acme/`, `acme-higgsfield/`, `acme-abuelo/`, `acme-identity-preserved/`) with the brand kit duplicated and scattered across them. The operator had to manually untangle it. Never again. There is exactly ONE folder per brand: brand-global assets are shared at the top, and each concept is isolated in its own subfolder.
+**Past mistake (since corrected):** this skill used to dump everything for a brand into one flat `$ADGEN_HOME/<brand>/` folder — brand bible, logo, product photos, refs, clips, and final all interleaved at the root. Running four concepts for one brand produced four sibling top-level folders (`acme/`, `acme-higgsfield/`, `acme-parody/`, `acme-identity-preserved/`) with the brand kit duplicated and scattered across them. The operator had to manually untangle it. Never again. There is exactly ONE folder per brand: brand-global assets are shared at the top, and each concept is isolated in its own subfolder.
 
 **Canonical layout:**
 ```
@@ -138,18 +138,18 @@ $ADGEN_HOME/<brand>/
 
 **Character promotion rule:** characters default to concept-level (`concepts/<slug>/refs/characters/`). The moment a character recurs in a 2nd concept as a brand mascot, promote its contact sheet + bible to `brand/characters/<name>/` and have both concepts reference it there. Don't duplicate a mascot's refs across concept folders — lock once, reference everywhere (same principle as the asset-lock spec).
 
-**Concept slug (convention as of 2026-06-04):** `<YYYY-MM-DD>-<angle>-<protagonist>`, all lowercase kebab, NO spaces. e.g. `2026-06-03-origin-story-berto`, `2026-05-28-couplacups-marv`, `2026-06-03-city-launch-mom`.
+**Concept slug convention:** `<YYYY-MM-DD>-<angle>-<protagonist>`, all lowercase kebab, NO spaces. e.g. `2025-03-14-sink-showdown-suds`, `2025-02-27-pharma-parody-hank`, `2025-03-14-city-launch-mom`.
 - **`<YYYY-MM-DD>`** = the day the concept was first started (its origin date) — full date, so threads sort chronologically AND you can see when each began.
-- **`<angle>`** = the creative archetype / hook (`origin-story`, `manifesto`, `freak-bean`, `city-launch`, `brew-your-own`).
-- **`<protagonist>`** = the character / POV carrying the spot (`berto`, `marv`, `mom`).
+- **`<angle>`** = the creative archetype / hook (`origin-story`, `manifesto`, `sink-showdown`, `pharma-parody`, `city-launch`).
+- **`<protagonist>`** = the character / POV carrying the spot (`suds`, `hank`, `mom`).
 `init_concept.sh` enforces this (date + ≥2 descriptor tokens). Pick angle + protagonist from the concept, not the brand (the brand is already the parent folder). **Don't rename pre-convention concepts in place** — renaming breaks FCP's path-based asset uids and manifest refs (track grandfathered slugs in CLIENTS.md).
 
 **Path convention for the rest of this skill:** unless a path is explicitly prefixed `brand/` (brand-global) or written as an absolute `$ADGEN_HOME/<brand>/...`, every relative path in the phases below (`refs/`, `clips/`, `audio/`, `final/`, `handoff/`, `breakdown.md`, etc.) is relative to the **current concept folder** `$ADGEN_HOME/<brand>/concepts/<slug>/`. That is the working root from Phase 1 onward.
 
 ### Phase 0 — folder bootstrap (do this FIRST, before Phase 1 scraping)
 
-0. **Read `$ADGEN_HOME/CLIENTS.md` FIRST.** It is the canonical brand → folder-slug map. Do NOT infer the folder name from the full brand name (past bug: looked for `acme-coffee-co/` when the folder is `acme/`). **Normalize the brand name at message 1** using the table there — e.g. "Acme Coffee" / "acmecoffee.com" → canonical **Acme Coffee Co** → folder `acme/`. If the client isn't in CLIENTS.md, it's new — add a row.
-1. Resolve `<brand>` from CLIENTS.md (or kebab-case a genuinely new brand: "Acme Pet Co" → `acme-pet-co`).
+0. **Read `$ADGEN_HOME/CLIENTS.md` FIRST.** It is the canonical brand → folder-slug map. Do NOT infer the folder name from the full brand name (past bug: looked for `acme-widget-co/` when the folder is `acme/`). **Normalize the brand name at message 1** using the table there — e.g. "Acme" / "acme.example" → canonical **Acme Co** → folder `acme/`. If the client isn't in CLIENTS.md, it's new — add a row.
+1. Resolve `<brand>` from CLIENTS.md (or kebab-case a genuinely new brand: "Example Pet Co" → `example-pet-co`).
 2. **Create the concept with the helper — do NOT hand-`mkdir`:**
    ```
    ~/.claude/skills/adgen-vertical-ad/scripts/init_concept.sh <brand> <YYYY-MM-DD>-<angle>-<protagonist>
@@ -181,7 +181,7 @@ When activated, read these in order:
 10. `reference/fcpxml-template.md` — schema + asset mapping + timeline structure for FCP 12.2.
 
 Prompt templates live in `prompts/`. Required-use templates:
-→ `prompts/breakdown-template.md` — Phase 2 combined script + audio track production document (the canonical Phase 2 deliverable as of 2026-05-28; replaces the older split script.md + audio-mixed-in-cells approach)
+→ `prompts/breakdown-template.md` — Phase 2 combined script + audio track production document (the canonical Phase 2 deliverable; replaces the older split script.md + audio-mixed-in-cells approach)
 → `prompts/reference-spot-deconstruction.md` — Phase 1.5 5-axis analysis of any reference spot the operator shares
 → `prompts/handoff-manifest-template.md` — Phase 7 (and Phase 1 deliverable plan) FCP-ready handoff folder structure
 → `prompts/product-contact-sheet.md` — Phase 3 product packaging + bare product contact sheets
@@ -193,7 +193,7 @@ Reusable scripts live in `scripts/`.
 
 ## Voice + brand rules carry over
 
-The operator's voice rules from `~/.claude/CLAUDE.md` apply to ALL prose output (brief writeups, script writing, surface messages):
+If the operator keeps voice/writing rules in their `CLAUDE.md`, those apply to ALL prose output (brief writeups, script writing, surface messages). An example of the kind of house style this covers:
 - All lowercase
 - → arrows for lists, not bullets
 - No em dashes (—). Use ellipses (...) or new sentences.
@@ -201,13 +201,13 @@ The operator's voice rules from `~/.claude/CLAUDE.md` apply to ALL prose output 
 - Lead with a number or sharp claim
 - Educate before selling
 
-For ad scripts specifically: characters can speak in any voice/dialect that fits the spot. **The brand voice rules apply to YOUR prose (brief writeups, surface messages, internal docs) — NOT to in-script character dialogue.** In-script dialogue uses normal capitalization, em dashes if natural for the character, whatever the character would actually say. Lowercase-only is for your messages to the operator, not for what the dad says to his wife on screen.
+For ad scripts specifically: characters can speak in any voice/dialect that fits the spot. **The brand voice rules apply to YOUR prose (brief writeups, surface messages, internal docs) — NOT to in-script character dialogue.** In-script dialogue uses normal capitalization, em dashes if natural for the character, whatever the character would actually say. House-style rules (e.g. lowercase-only) are for your messages to the operator, not for what a character says on screen.
 
 ## Image-prompt methodology carries over
 
-Every STILL image in this pipeline is generated with `gen_image.py` (Gemini Nano Banana) — Phase 3 character/product bibles, Phase 4 environment + product refs, contact sheets, start-frames. For AUTHORING those prompts, use the **`image-prompt-writer`** skill's methodology: the Recipe (Subject → Background/Scene → Photography Style → Lens → Lighting → Mood), affirmative avoid-clauses (Gemini has no `--no` flag), precise materials, the **Object-Lock + Fail-Conditions** pattern for character/product consistency across frames, one-edit-at-a-time chaining, and Nano-Banana-Pro escalation for readable text / spatial work. See `~/.claude/skills/image-prompt-writer/` (SKILL.md + `reference/`). That is the still-image authoring layer; seedance VIDEO prompts keep their own rules below (IP-safe, `NO MUSIC`).
+Every STILL image in this pipeline is generated with `gen_image.py` (Gemini Nano Banana) — Phase 3 character/product bibles, Phase 4 environment + product refs, contact sheets, start-frames. For AUTHORING those prompts, use this still-image methodology: the Recipe (Subject → Background/Scene → Photography Style → Lens → Lighting → Mood), affirmative avoid-clauses (Gemini has no `--no` flag), precise materials, the **Object-Lock + Fail-Conditions** pattern for character/product consistency across frames, one-edit-at-a-time chaining, and Nano-Banana-Pro escalation for readable text / spatial work. That is the still-image authoring layer; seedance VIDEO prompts keep their own rules below (IP-safe, `NO MUSIC`).
 
-**Before writing ANY contact sheet (Phase 3/4) or seedance prompt (Phase 5), reason through `reference/scene-dimensions.md`** — the generalized shot grammar (subject · optics · lighting · composition · environment · material · style-register · mood · consistency, plus the video-only layer: camera move · action · audio+NO-MUSIC · stability · IP-safe translation). Every dimension you leave blank, the model fills with its generic default. This is the "think through all the details" checklist; the image-prompt-writer recipe above is its still-image subset.
+**Before writing ANY contact sheet (Phase 3/4) or seedance prompt (Phase 5), reason through `reference/scene-dimensions.md`** — the generalized shot grammar (subject · optics · lighting · composition · environment · material · style-register · mood · consistency, plus the video-only layer: camera move · action · audio+NO-MUSIC · stability · IP-safe translation). Every dimension you leave blank, the model fills with its generic default. This is the "think through all the details" checklist; the still-image recipe above is its subset.
 
 ## The 7-phase pipeline
 
@@ -239,12 +239,12 @@ Steps:
 5. Write `brief.md` (in the concept folder: `concepts/<slug>/brief.md`) with sections:
    - Product summary
    - Hero claims (the 3-5 sellable benefits)
-   - **Claim sourcing — REQUIRED for any factual or historical claim.** If the spot rests on a fact (a heritage/origin story, a nutrition stat, a "survived the X" historical hook, a "grown without Y" line), cite where it's verified BEFORE writing the script around it. Fact-check it now, not after the operator asks ("since this is a brand video, everything has to be legitimate and true"). Flag claims you couldn't verify as ⚠ unverified so they don't get scripted as fact. Encode legal-safe phrasing here too (e.g. "grown without glyphosate" not "no glyphosate"; never assert a production technique that isn't true — e.g. don't claim "wood-fired roast" when the brand drum-roasts).
+   - **Claim sourcing — REQUIRED for any factual or historical claim.** If the spot rests on a fact (a heritage/origin story, a nutrition stat, a "survived the X" historical hook, a "grown without Y" line), cite where it's verified BEFORE writing the script around it. Fact-check it now, not after the operator asks ("since this is a brand video, everything has to be legitimate and true"). Flag claims you couldn't verify as ⚠ unverified so they don't get scripted as fact. Encode legal-safe phrasing here too (e.g. "made without added sulfates" not "sulfate-free" when trace amounts can't be ruled out; never assert a production technique that isn't true — e.g. don't claim "wood-fired roast" when the brand drum-roasts).
    - ICP (target audience, motivations, blockers)
    - Brand voice notes
    - Existing assets inventory
    - Missing assets (what we'd need to generate)
-   - **Product-benefit → asset coverage matrix — REQUIRED.** List every product-led functional benefit (from Hero claims) in a table, mapped to which shot/asset delivers it. A benefit with no asset covering it is a gap — surface it. This prevents the campaign-asset failure where emotional/brand beats got covered but specific product benefits ("the bean quality," "the roast," "the cup outcome") were tackled by no video or static. Columns: `Benefit | Delivered by (shot # / static / none) | Notes`.
+   - **Product-benefit → asset coverage matrix — REQUIRED.** List every product-led functional benefit (from Hero claims) in a table, mapped to which shot/asset delivers it. A benefit with no asset covering it is a gap — surface it. This prevents the campaign-asset failure where emotional/brand beats got covered but specific product benefits ("the ingredient quality," "the process," "the end result") were tackled by no video or static. Columns: `Benefit | Delivered by (shot # / static / none) | Notes`.
    - **Handoff plan** → the structure of the final FCP-handoff folder, locked at Phase 1 not invented at Phase 7. Required sub-sections:
      - Target duration (e.g., "30s / 45s / 60s")
      - Number of shots planned
@@ -268,7 +268,7 @@ Deconstruct the reference across 5 axes:
 4. **Format-mimicry beats** — what genre conventions does it borrow (pharma-ad cadence, sportscaster register, SNL Weekend Update beat, etc.)?
 5. **Punchline structure** — where does the joke / reveal / emotional landing happen? what supports it?
 
-The reference-spot-analysis.md becomes input to Phase 2's breakdown. It locks the audio architecture decision BEFORE we get to generation. Without this step, we tend to copy the reference's visual tone but miss its structural backbone. **Past mistake:** referenced SNL Couplabeers for the "ask your abuelo" spot but built a Strategy A per-clip-audio pipeline instead of Strategy B continuous-narrator. Took 3 stringouts (v1 / v2 / v3) and ~200 wasted credits before pivoting to the correct architecture.
+The reference-spot-analysis.md becomes input to Phase 2's breakdown. It locks the audio architecture decision BEFORE we get to generation. Without this step, we tend to copy the reference's visual tone but miss its structural backbone. **Past mistake:** referenced SNL Couplabeers for a pharma-parody spot but built a Strategy A per-clip-audio pipeline instead of Strategy B continuous-narrator. Took 3 stringouts (v1 / v2 / v3) and ~200 wasted credits before pivoting to the correct architecture.
 
 See `prompts/reference-spot-deconstruction.md` for the template.
 
@@ -278,13 +278,13 @@ See `prompts/reference-spot-deconstruction.md` for the template.
 
 Steps:
 1. Propose 2-3 wild concepts. Each should:
-   - Have a clear narrative archetype (e.g., "bean as character with origin story", "supervillain instant coffee vs heirloom beans")
+   - Have a clear narrative archetype (e.g., "kitchen sponge as a small-town sheriff", "pompous grease villain vs plant-based soap")
    - Reference visual aesthetics (claymation, lego, pixar, etc.)
    - Include a 6-8 shot outline
    - Have a clear hook and CTA
 2. Use `prompts/concept-ideation.md` as the template.
 3. The operator picks one (or rejects all and you propose more).
-4. Write the full **breakdown**. Save to `breakdown.md` (this replaces the older split `script.md` + `storyboard.md` structure as of 2026-05-28). **REQUIRED FORMAT: markdown table.** One row per shot. The breakdown is the Hollywood-studio-style pre-production document → it locks visual AND audio AND track sources in one place, so audio architecture cannot drift mid-production.
+4. Write the full **breakdown**. Save to `breakdown.md` (this replaces the older split `script.md` + `storyboard.md` structure). **REQUIRED FORMAT: markdown table.** One row per shot. The breakdown is the Hollywood-studio-style pre-production document → it locks visual AND audio AND track sources in one place, so audio architecture cannot drift mid-production.
 
    Required columns:
 
@@ -294,7 +294,7 @@ Steps:
    - `Sec` — target duration in seconds
    - `Visual` — what happens on screen, including camera, characters present, action, key props. One paragraph max per row. Use `<br><br>` for line breaks within a cell.
    - `In-scene dialogue (seedance)` — dialogue lip-synced to on-screen characters, generated by seedance with native audio. Speaker labels in CAPS. Empty if no in-scene dialogue.
-   - `Narrator VO (11L)` — voice-over delivered as overlay, not lip-synced. Generated separately (11L Kiora etc) and mixed in. Empty if no VO.
+   - `Narrator VO (11L)` — voice-over delivered as overlay, not lip-synced. Generated separately (your locked 11L narrator voice) and mixed in. Empty if no VO.
    - `Music + SFX` — what music bed plays (Suno track / continuous piano / silence), ambient/SFX descriptions in parens.
    - `Char refs` — which character refs (dad_sheet, wife_hero, etc.) feed into this shot's start frame + seedance call.
    - `Env refs` — which environment refs (kitchen_sheet, dinner_party, etc.) feed in.
@@ -302,7 +302,7 @@ Steps:
    **Forcing functions baked into the columns:**
    → If a row has BOTH `In-scene dialogue` AND `Narrator VO` populated → flag in the row: hybrid audio shot, plan the overlay timing now.
    → If a row has ONLY `Narrator VO` and no in-scene dialogue → that shot is a silent-visual + VO overlay → can be ffmpeg ken-burns over a still instead of seedance video gen. Save credits.
-   → If multiple rows share the same `Narrator VO` voice (e.g., 11L Kiora on rows 1, 4, 6, 7b) → that's a Strategy B spot per `reference/audio-pipeline.md`. Generate the 11L track FIRST, before any seedance gens. Lock voice consistency upstream.
+   → If multiple rows share the same `Narrator VO` voice (e.g., the 11L narrator on rows 1, 4, 6, 7b) → that's a Strategy B spot per `reference/audio-pipeline.md`. Generate the 11L track FIRST, before any seedance gens. Lock voice consistency upstream.
 
    See `prompts/breakdown-template.md` for the full template with worked examples.
 
@@ -310,18 +310,18 @@ Steps:
 
    **STRUCTURAL DEFAULT — pain-agitate → product-feature-drop → benefit-embody → CTA.** Every script defaults to this arc unless the operator explicitly directs otherwise. Apply it shot-by-shot:
 
-   - **Opening shots (~first 40-50% of runtime):** agitate the actual customer pain. Pull the pain vocabulary directly from `brief.md` — the brand's own language, not generic copywriting verbs. Get specific, biological, sensory. Examples that work: *"the elastic digs in. by noon there's a trench around your calf."* (compression socks: skin bite). *"it's bitter by the bottom of the cup. every single cup."* (the coffee brand: heirloom beans vs industrial). *"another puddle by the door. another ruined rug."* (pet cleanup). Each opening shot stacks 1-2 distinct pain notes. NEVER state the pain abstractly ("uncomfortable socks" / "bad coffee" / "messy accidents") — agitate it concretely.
+   - **Opening shots (~first 40-50% of runtime):** agitate the actual customer pain. Pull the pain vocabulary directly from `brief.md` — the brand's own language, not generic copywriting verbs. Get specific, biological, sensory. Examples that work: *"the elastic digs in. by noon there's a trench around your calf."* (compression socks: skin bite). *"the pan's still greasy after the second scrub. again."* (dish soap: stuck-on grease). *"the leaves are yellow at the tips. every week, more of them."* (houseplant food: a struggling plant). Each opening shot stacks 1-2 distinct pain notes. NEVER state the pain abstractly ("uncomfortable socks" / "greasy dishes" / "sad plants") — agitate it concretely.
 
-   - **Product-reveal shot (~middle of spot):** product visible, characters absent or in VO. Each beat of the visible product reveal carries one named feature in the VO. If the product rotates 4 times, that's 4 feature beats. **Drop ≥2 distinct named benefits in the reveal — one differentiator is not enough (2026-06-04).** A past Berto draft leaned on a single origin claim and the operator rejected it as too thin; the quality story needs multiple concrete claims, not a single attribute. Use the brand's exact feature claims from `brief.md` ("100% combed cotton", "double-reinforced heel", "seam-free toe"), not paraphrases. Storyboard for this shot MUST list the visual beats with their VO mapping (Beat 1: cotton ripple → "hundred percent combed cotton"; Beat 2: heel close-up → "double-reinforced heel"; etc). Cross-check against the brief's product-benefit → asset coverage matrix: the benefits you promised to cover here should actually be named here.
+   - **Product-reveal shot (~middle of spot):** product visible, characters absent or in VO. Each beat of the visible product reveal carries one named feature in the VO. If the product rotates 4 times, that's 4 feature beats. **Drop ≥2 distinct named benefits in the reveal — one differentiator is not enough.** A past draft leaned on a single origin claim and the operator rejected it as too thin; the quality story needs multiple concrete claims, not a single attribute. Use the brand's exact feature claims from `brief.md` ("100% combed cotton", "double-reinforced heel", "seam-free toe"), not paraphrases. Storyboard for this shot MUST list the visual beats with their VO mapping (Beat 1: cotton ripple → "hundred percent combed cotton"; Beat 2: heel close-up → "double-reinforced heel"; etc). Cross-check against the brief's product-benefit → asset coverage matrix: the benefits you promised to cover here should actually be named here.
 
-   - **Closing shot (~final 15-25%):** the same characters from opening, but the benefits are now physically embodied — what was wet/dry, stuck/lifted, dull/sharp, cracked/whole. Dialogue names the reversal in plain brand-voice ("lifted. separated. dry as a damn bone."). Final line of the spot is the spoken CTA with the brand URL or tagline ("[brand] dot com... your balls will thank you").
+   - **Closing shot (~final 15-25%):** the same characters from opening, but the benefits are now physically embodied — what was pinched/loose, greasy/clean, dull/sharp, cracked/whole. Dialogue names the reversal in plain brand-voice ("no trench. no itch. forgot I had them on."). Final line of the spot is the spoken CTA with the brand URL or tagline ("[brand] dot com... your feet will thank you").
 
-   **BRIDGE BEAT — required when the pain arc has a villain / historical-loss peak.** If the spot's pain arc isn't just "product is annoying" but "something was taken / lost / industrialized away" (heirloom-coffee spots, craft-revival spots, anti-corporate-villain spots, brand-as-survivor spots), the script MUST include a **"but I'm still here" bridge beat** between the loss-peak and the product reveal. Without it, the jump from "they killed me / shrunk me down / made me forget what I was for" straight to "single-origin beans. the original kind." reads as a non sequitur — the audience doesn't yet know HOW the protagonist survived to be in the bag. Specifically:
+   **BRIDGE BEAT — required when the pain arc has a villain / historical-loss peak.** If the spot's pain arc isn't just "product is annoying" but "something was taken / lost / industrialized away" (heritage-recipe spots, craft-revival spots, anti-corporate-villain spots, brand-as-survivor spots), the script MUST include a **"but I'm still here" bridge beat** between the loss-peak and the product reveal. Without it, the jump from "they killed me / shrunk me down / made me forget what I was for" straight to "[product]. the original kind." reads as a non sequitur — the audience doesn't yet know HOW the protagonist survived to be in the product. Specifically:
 
    - The bridge beat is 1-2 lines of VO at the end of the loss-peak shot, OR a dedicated transition shot before the product reveal
-   - The beat names *survival + mechanism* — what kept the thing alive across the lost decades. Examples: *"didn't take. a handful of farmers kept the real seed alive."* / *"didn't take. some of us stayed in the ground, waiting."* / *"they buried it. then a few people remembered."*
-   - The beat is brand-narrative-true, not generic. For the bean mascot: heirloom growers + small-batch roasters actually kept Berto's variety alive through the instant-coffee era. For an analogous brand (heritage anything), find the real survival path and name it.
-   - Without the bridge, the operator reads the cut and says some version of *"the transition from X to Y is rough / I don't know how we got here."* Encoded 2026-06-03 after Berto Origin Spot shot-4→shot-5 read jarring ("didn't take." → "single-origin beans. the original kind.") — operator: *"the part where we say 'didn't take' doesn't transition nicely next. I feel like we should say 'but I still exist' and say a little bit about how it still exists."*
+   - The beat names *survival + mechanism* — what kept the thing alive across the lost decades. Examples: *"they closed the old workshop. one family kept the recipe in a shoebox."* / *"they tried to replace us. a few of us kept doing it the slow way."* / *"everyone forgot it. then a few people remembered."*
+   - The beat is brand-narrative-true, not generic. For a heritage brand, find the real survival path (who actually kept the recipe, craft or ingredient alive) and name it.
+   - Without the bridge, the operator reads the cut and says some version of *"the transition from X to Y is rough / I don't know how we got here."* Encoded after a mascot origin spot's loss-peak → product-reveal cut read jarring — operator: *"that doesn't transition nicely. we should say 'but I still exist' and a little bit about how it still exists."*
 
    This rule applies *in addition to* the pain → product → benefit arc, not instead of it. The bridge is an extra beat inserted between pain-peak and product-reveal whenever the pain peak involves loss/extinction/historical-villain framing.
 
@@ -341,7 +341,7 @@ Steps:
 
    - `Composition` — frame type (wide / medium / close / extreme close + angle: eye-level / low / high)
    - `Foreground / Mid / Background` — literal contents of each plane, named characters, props, setting details. Use **FG:**, **MID:**, **BG:** labels.
-   - `Product variant` — **REQUIRED column (2026-06-04).** The EXACT product SKU/variant visible in this shot (e.g. "Heirloom Roast bag" vs "regular house-blend bag" vs "bare brewed cup"). Empty if no product on screen. This is a per-shot pre-flight: past bug put the Heirloom Roast bag in a shot that needed the regular blend, caught only after the start-frame was generated. Naming the variant per row forces the check before the start-frame fires.
+   - `Product variant` — **REQUIRED column.** The EXACT product SKU/variant visible in this shot (e.g. "Lemon 16oz bottle" vs "Unscented 16oz bottle" vs "refill pouch"). Empty if no product on screen. This is a per-shot pre-flight: past bug put the wrong variant in a shot that needed the regular one, caught only after the start-frame was generated. Naming the variant per row forces the check before the start-frame fires.
    - `Lighting + Color` — light direction + quality + mood, then color palette as `/`-separated list.
    - `Camera + Action` — camera move + speed + what happens during the shot.
    - `9:16 zones + Anti` — where elements sit vertically (upper-third, mid, lower-third), plus anti-instructions (NO captions / NO logo bake-in / etc.) and any reference brand asset that should anchor the frame.
@@ -350,7 +350,7 @@ Steps:
 
 **Stop. Get script + storyboard approval together before generating refs.**
 
-**Format note (HARD):** both deliverables MUST be tables. Prose-paragraph format was rejected (the operator caught the gap on a pet-brand dry run — paragraphs aren't scannable, tables are). Don't revert to prose even if it feels "richer" — the operator reads tables, not prose.
+**Format note (HARD):** both deliverables MUST be tables. Prose-paragraph format was rejected (the operator caught the gap on a dry run — paragraphs aren't scannable, tables are). Don't revert to prose even if it feels "richer" — the operator reads tables, not prose.
 
 **Surface to the operator INLINE.** Don't link to the .md files and ask them to open them. Paste both tables directly in chat. They need to read them in-context, not file-hop. The .md files are persistent record; the chat surface is for review.
 
@@ -360,13 +360,13 @@ Steps:
 
 **Goal:** build a complete identity map for each character AND each recurring on-screen product so seedance never has to guess. **The bible is the single source of truth — visual AND voice locked together.** Past mistake: visual ref and voice description lived in different files, and every shot's prompt drifted because nobody enforced the link. Fix: per-character bibles + per-product lock sheets.
 
-**Product contact sheets are now REQUIRED at Phase 3** (added after pet wipe drift, ~100 credits in re-fires). For every product or recurring physical asset that appears in 2+ shots, generate:
+**Product contact sheets are now REQUIRED at Phase 3** (added after a product drifted across shots, ~100 credits in re-fires). For every product or recurring physical asset that appears in 2+ shots, generate:
 1. Packaging contact sheet (front / back / 3/4 / hero pull) — see `prompts/product-contact-sheet.md`
 2. Bare product contact sheet (flat / in-hand / in-use / texture macro) — same template
 
 Upload both to Higgsfield, store the media_ids in `refs/asset-lock.yml` per `reference/asset-lock-spec.md`, paste the locked `description_for_prompts` paragraph into every Phase 5 shot prompt that features the product. Same workflow as character contact sheets — locked once, referenced everywhere, no drift.
 
-**Environment contact sheets are also REQUIRED at Phase 3 for any master set** (added after the operator caught the gap on the "ask your abuelo" project — the kitchen appears in 4 shots with different angles + time-of-day, and a single Phase 4 env ref locks none of that). Decision rule:
+**Environment contact sheets are also REQUIRED at Phase 3 for any master set** (added after the operator caught the gap on a pharma-parody project — the kitchen appears in 4 shots with different angles + time-of-day, and a single Phase 4 env ref locks none of that). Decision rule:
 
 → Setting appears in **2+ shots** → generate an environment contact sheet at Phase 3.
 → Setting appears in **1 shot only** → single env ref at Phase 4 is fine (per the existing Phase 4 spec).
@@ -375,7 +375,7 @@ The environment contact sheet locks the room's geometry, materials, fixtures, an
 
 Without environment contact sheets, master sets drift across shots → cabinets reposition, counter materials change, lamps shift, wall colors vary. Same drift problem character and product contact sheets solve. Catching this at Phase 3 saves an estimated 100+ credits in Phase 5 re-fires per master set.
 
-**ALSO REQUIRED for any master set reused across 2+ cuts: a single LOCKED PLATE (added 2026-06-18).** The multi-angle contact sheet TEACHES the model the space — it does NOT lock cut-to-cut continuity. Generating each start-frame independently against the sheet's many angles makes the model re-invent the room every gen (geometry shifts, on-screen text/digits render differently shot-to-shot). The fix: generate ONE canonical EMPTY plate at the hero camera + one lighting state (`refs/environments/<setting>_plate.png`, 4K, shot aspect), then composite EVERY start-frame into it by passing the plate as the **primary `--ref`** ("use this EXACT room, place characters inside"). Pin any on-screen text/digit/label in WORDS per shot. Record as `canonical_plate:` in `asset-lock.yml`. Full method + the division of labor (plate=geometry, word-spec=text, character sheets=faces) → `prompts/environment-contact-sheet.md`. (Cost a re-roll on the "Undetected" spot when the elevator floor display drifted 03/2/05 across three frames.)
+**ALSO REQUIRED for any master set reused across 2+ cuts: a single LOCKED PLATE.** The multi-angle contact sheet TEACHES the model the space — it does NOT lock cut-to-cut continuity. Generating each start-frame independently against the sheet's many angles makes the model re-invent the room every gen (geometry shifts, on-screen text/digits render differently shot-to-shot). The fix: generate ONE canonical EMPTY plate at the hero camera + one lighting state (`refs/environments/<setting>_plate.png`, 4K, shot aspect), then composite EVERY start-frame into it by passing the plate as the **primary `--ref`** ("use this EXACT room, place characters inside"). Pin any on-screen text/digit/label in WORDS per shot. Record as `canonical_plate:` in `asset-lock.yml`. Full method + the division of labor (plate=geometry, word-spec=text, character sheets=faces) → `prompts/environment-contact-sheet.md`. (Cost a re-roll on a past spot when an elevator floor display drifted 03/2/05 across three frames.)
 
 **Where character artifacts live:** concept-level by default → `concepts/<slug>/refs/characters/`. If this character already exists as a locked brand mascot in `brand/characters/<name>/` (from a prior concept), DON'T regenerate it — reference the brand-level bible + sheet directly. If a character you generate here later recurs in a 2nd concept, apply the character-promotion rule: move its bible + contact sheet up to `brand/characters/<name>/` and reference from both concepts.
 
@@ -384,7 +384,7 @@ For each named character, produce **THREE artifacts**:
 1. **Hero ref** (1 image): `refs/characters/<name>_hero.png`
    - Gemini Nano Banana Pro via `scripts/gen_image.py`, **4K** (core reference shot), aspect 9:16
    - Use `prompts/character-ref.md` template
-   - For evolved/related characters (e.g., "instant bean" as a corruption of "Berto"), pass the OG character image as `role: image` ref. Lineage preserved.
+   - For evolved/related characters (e.g., a villain built from the hero's own world), pass the OG character image as `role: image` ref. Lineage preserved.
 
 2. **Contact sheet** (1 image): `refs/characters/<name>_sheet.png`
    - Gemini Nano Banana Pro via `scripts/gen_image.py`, **4K** (core reference shot), aspect 16:9 (horizontal layout for the grid)
@@ -417,7 +417,7 @@ For each named character, produce **THREE artifacts**:
          featuring this character so the voice timbre stays stable. Empty until first
          shot is generated and the operator approves the voice — then extract audio from that
          shot and lock it here.>
-       accent: <e.g., "Brooklyn / outer-borough NYC", "highland farmer", "British academic">
+       accent: <e.g., "Brooklyn / outer-borough NYC", "small-town Western", "British academic">
        pitch: <deep / medium / high>
        pace: <slow / measured / fast / variable>
      emotional_range:
@@ -429,7 +429,7 @@ For each named character, produce **THREE artifacts**:
      verbal_tics:
        - <e.g., "drops 'g' on -ing words: 'experimentin', talkin'">
        - <e.g., "starts complaints with 'oh you have GOT to'">
-       - <e.g., "interrupts Pollen with 'shut up Larry'">
+       - <e.g., "interrupts Fern with 'nobody asked, Fern'">
      ```
 
 **Generation flow within Phase 3:**
@@ -448,7 +448,7 @@ e) For evolved/related characters, pass the OG character's contact sheet AND OG 
 
 **Goal:** generate scene start-frames that compose character + setting + props.
 
-**STEP 0 — classify every shot boundary as NEW SCENE or CONTINUATION before generating ANY start-frame (2026-06-18).** A start-frame is generated ONLY for a NEW SCENE. A CONTINUATION shot does NOT get a generated start-frame at all — its start frame is the PREVIOUS clip's extracted last frame, produced at Phase 5 (continuity chaining). Generating an independent start-frame for a continuation shot is what causes the "characters teleported" hard cut, AND it's wasted gen spend. Classify:
+**STEP 0 — classify every shot boundary as NEW SCENE or CONTINUATION before generating ANY start-frame.** A start-frame is generated ONLY for a NEW SCENE. A CONTINUATION shot does NOT get a generated start-frame at all — its start frame is the PREVIOUS clip's extracted last frame, produced at Phase 5 (continuity chaining). Generating an independent start-frame for a continuation shot is what causes the "characters teleported" hard cut, AND it's wasted gen spend. Classify:
    - **NEW SCENE** (generate a start-frame here): the opening shot; any cut to a new location, new time, or new camera/angle that isn't a smooth continuation (e.g. the product void, a later "after" beat). 
    - **CONTINUATION** (do NOT generate — chain at Phase 5): the next shot is the same scene, same moment, characters mid-motion from where the previous shot ended (the beat just keeps rolling).
    Record the classification per shot in the storyboard/breakdown (a `Boundary: NEW | CONT (chains shot N)` note) and in `asset-lock.yml`. Then generate start-frames for the NEW-scene shots only.
@@ -494,7 +494,7 @@ For each shot in the script:
      - `audio`: only if music/lip-sync sync is needed (rap, jingle). Otherwise omit.
    - `prompt`: visual + AUDIO description with EXACT character voice prompt language (consistent across all shots for that character)
 
-   **CONTINUITY CHAINING (do this for any two consecutive shots in ONE continuous scene — prevents the "characters teleported" hard cut).** The locked plate keeps the ROOM identical across shots but does NOT keep the PEOPLE in continuous poses — independently-generated start-frames re-pose everyone, so the cut jumps. Fix: after shot N renders and is approved, extract its final frame (`ffmpeg -sseof -0.1 -i clips/shot_0N.mp4 -frames:v 1 -update 1 refs/scenes/shot_0M_start_chained.png`), upload it, and use it as shot N+1's `start_image`. Open shot N+1's prompt with "DIRECT CONTINUATION — the start frame IS the previous clip's final frame; continue their motion, do NOT re-arrange anyone," and write the action as forward motion (scarf comes up, haze thickens, counter ticks down). Only generate an INDEPENDENT start-frame when the boundary is a deliberate hard cut to a new time/angle/location (e.g. cutting to the product void). Decide per shot-boundary which are "continuous" (chain) vs "hard cut" (independent). See `reference/PITFALLS.md` → "Consecutive shots ... chain the previous clip's LAST FRAME."
+   **CONTINUITY CHAINING (do this for any two consecutive shots in ONE continuous scene — prevents the "characters teleported" hard cut).** The locked plate keeps the ROOM identical across shots but does NOT keep the PEOPLE in continuous poses — independently-generated start-frames re-pose everyone, so the cut jumps. Fix: after shot N renders and is approved, extract its final frame (`ffmpeg -sseof -0.1 -i clips/shot_0N.mp4 -frames:v 1 -update 1 refs/scenes/shot_0M_start_chained.png`), upload it, and use it as shot N+1's `start_image`. Open shot N+1's prompt with "DIRECT CONTINUATION — the start frame IS the previous clip's final frame; continue their motion, do NOT re-arrange anyone," and write the action as forward motion (confetti settles, eyebrows rise, counter ticks down). Only generate an INDEPENDENT start-frame when the boundary is a deliberate hard cut to a new time/angle/location (e.g. cutting to the product void). Decide per shot-boundary which are "continuous" (chain) vs "hard cut" (independent). See `reference/PITFALLS.md` → "Consecutive shots ... chain the previous clip's LAST FRAME."
 
 2. **Static product/food shots AND any product/label hero shot: SKIP seedance entirely.** Use ffmpeg ken-burns over the locked 4K product composite. Per the HARD RULE: seedance warps on-pack text + bag geometry even with contact-sheet refs, so any shot whose job is "show the product/label clearly" goes ken-burns (centered, near-imperceptible slow push-in) over the Gemini composite that has perfect text. See `reference/ffmpeg-cookbook.md` for the recipe (it pans IN toward a centered product; product never leaves frame).
 
@@ -534,7 +534,7 @@ For each approved clip:
    ffmpeg -i clips/shot_NN_<name>.mp4 -vn -acodec libmp3lame -b:a 192k audio/shot_NN_<name>_audio.mp3
    ```
 
-3. If a shot has external audio (ElevenLabs VO, Suno music) saved separately, those go alongside in `audio/` with descriptive names (e.g., `shot_03_rap_suno.mp3`, `shot_05_vo_kiora.mp3`).
+3. If a shot has external audio (ElevenLabs VO, Suno music) saved separately, those go alongside in `audio/` with descriptive names (e.g., `shot_03_rap_suno.mp3`, `shot_05_vo_narrator.mp3`).
 
 ### Phase 7 — Deliverables
 
@@ -555,9 +555,9 @@ For each approved clip:
    - **FCP library/event/project conventions (the operator's setup — apply EVERY time):**
      → Hierarchy on the operator's FCP side is FLAT: library → event → project. FCPXML's DTD does NOT permit project-grouping folders at either level — past sessions burned import attempts with DTD errors trying `<folder>` inside `<library>` AND inside `<event>`. The script's `--folder` flag is deprecated/warn-and-ignore.
      → **Library = your master ads library** (e.g. `Client ads`). Have it active in FCP before importing.
-     → **Event = client name** — `Acme Coffee Co`, `Birchwood Pets`, etc. ONE event per client. Re-imports with the same event name merge in place instead of spawning duplicates.
-     → **Project = concept name** — `Berto Origin Spot`, `Abuelo v4`, etc. Multiple concepts per client = multiple sibling projects within the same client event.
-     → **Timeline iterations** of one concept (cut variants, aspect-ratio reframes) use project-name suffixes: `Berto Origin Spot — v1`, `Berto Origin Spot — 9x16`, `Berto Origin Spot — 4x5`.
+     → **Event = client name** — `Acme Co`, `Example Brand`, etc. ONE event per client. Re-imports with the same event name merge in place instead of spawning duplicates.
+     → **Project = concept name** — `Sink Showdown`, `Pharma Parody v4`, etc. Multiple concepts per client = multiple sibling projects within the same client event.
+     → **Timeline iterations** of one concept (cut variants, aspect-ratio reframes) use project-name suffixes: `Sink Showdown — v1`, `Sink Showdown — 9x16`, `Sink Showdown — 4x5`.
      → **Canonical CLI:** `python3 scripts/fcpxml_gen.py --output final/project.fcpxml --project-name "<Concept>" --event "<Client>" clips/shot_*.mp4`
      → **Manifest field for posterity:** `event: "<Client>"` and `project_name: "<Concept>"` in the concept's `manifest.yml`.
      → **If an old event name gets stuck in the operator's library** (e.g. from a prior import with a different convention), don't re-rename in the FCPXML — fix it FCP-side: drag the orphan event's contents into the canonical event (same-library drag = move, not copy), then right-click → Delete Event on the now-empty orphan.
@@ -584,7 +584,7 @@ For each approved clip:
      - name: amber
        hero_ref: refs/characters/amber_hero.png
        sheet_ref: refs/characters/amber_sheet.png
-       voice_prompt: "warm gravelly old-timey highland farmer voice"
+       voice_prompt: "dry, steady, small-town sheriff voice with a slow drawl"
    open_issues:
      - <anything you flagged>
    ```
@@ -617,12 +617,12 @@ For brand-consistent series (same characters): credits go down per ad after the 
 
 ## ElevenLabs is the DEFAULT voice source
 
-**Superseded the old "11L is forbidden" rule on 2026-06-04.** For any speaking character, default to
+**Superseded the old "11L is forbidden" rule.** For any speaking character, default to
 an ElevenLabs voice lip-synced inside seedance (`role: audio`), per the HARD RULE near the top and
 the Strategy B decision tree in `reference/audio-pipeline.md`. The reason: seedance native audio
 drifts in timbre clip-to-clip; a locked 11L voice is identical within-clip, across-clips, and across
 ads. The ElevenLabs client is wired at `lib/elevenlabs.py` (key in `$ADGEN_HOME/.env`); usage
-patterns + the Kiora voice id are in `reference/audio-pipeline.md`.
+patterns are in `reference/audio-pipeline.md`; your locked voice ids live in `reference/voice-consistency.md`.
 
 The one thing 11L is still NOT for: a Phase-5 RESCUE of a single bad seedance clip mid-spot. If a
 clip's voice is off, re-fire that clip (with its locked audio segment) — don't bolt on a different
@@ -685,7 +685,7 @@ See `scripts/`:
 
 Most ads should follow the pipeline as written. Don't reinvent the structure per project. The script changes, the characters change, the product changes — the pipeline doesn't.
 
-If you're tempted to skip a phase or merge two ("we don't need separate character ref + contact sheet for this simple ad"), DON'T. Skipping the contact sheet is exactly what made shot 3 of the coffee spot drift. The pipeline phases exist because each one prevented a specific past failure.
+If you're tempted to skip a phase or merge two ("we don't need separate character ref + contact sheet for this simple ad"), DON'T. Skipping the contact sheet is exactly what made shot 3 of a past spot drift. The pipeline phases exist because each one prevented a specific past failure.
 
 If you genuinely need to deviate, surface to the operator first with the reason. They'll either approve the shortcut or remind you why we have the rule.
 
