@@ -98,7 +98,7 @@ app.post("/authorize", async (c) => {
 		headers.append("Set-Cookie", approvedClientCookie);
 		headers.append("Set-Cookie", sessionBindingCookie);
 
-		return redirectToGoogle(c.req.raw, c.env, stateToken, Object.fromEntries(headers));
+		return redirectToGoogle(c.req.raw, c.env, stateToken, headers);
 	} catch (error: any) {
 		console.error("POST /authorize error:", error);
 		if (error instanceof OAuthError) {
@@ -113,22 +113,22 @@ async function redirectToGoogle(
 	request: Request,
 	env: Env,
 	stateToken: string,
-	headers: Record<string, string> = {},
+	init: HeadersInit = {},
 ) {
-	return new Response(null, {
-		headers: {
-			...headers,
-			location: getUpstreamAuthorizeUrl({
-				clientId: env.GOOGLE_CLIENT_ID,
-				hostedDomain: hostedDomainHint(env),
-				redirectUri: new URL("/callback", request.url).href,
-				scope: "email profile https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/documents https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/presentations https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/calendar",
-				state: stateToken,
-				upstreamUrl: "https://accounts.google.com/o/oauth2/v2/auth",
-			}),
-		},
-		status: 302,
-	});
+	// Keep a Headers object end to end: a plain object would collapse repeated Set-Cookie values.
+	const headers = new Headers(init);
+	headers.set(
+		"location",
+		getUpstreamAuthorizeUrl({
+			clientId: env.GOOGLE_CLIENT_ID,
+			hostedDomain: hostedDomainHint(env),
+			redirectUri: new URL("/callback", request.url).href,
+			scope: "email profile https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/documents https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/presentations https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/calendar",
+			state: stateToken,
+			upstreamUrl: "https://accounts.google.com/o/oauth2/v2/auth",
+		}),
+	);
+	return new Response(null, { headers, status: 302 });
 }
 
 /**
