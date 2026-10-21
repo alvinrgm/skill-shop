@@ -1,0 +1,82 @@
+{
+  "_readme": "The one list of what this shop publishes. risegm.com/skills renders its cards from this file, so a new entry here is a new card on the site. Slugs are published anchors (risegm.com/skills#<slug>): never rename or remove one. Optional field image: a repo-relative path to the card image. Check with: python3 scripts/check_catalog.py",
+  "items": [
+    {
+      "slug": "adlib-creative-intel",
+      "kind": "plugin",
+      "tag": "Creative intelligence",
+      "name": "Ad Library creative intel",
+      "summary": "Harvest any brand's ads from the Meta Ad Library, videos included, then run computer vision over every frame. Hooks, formats, claims, pacing... a creative teardown that works on competitors.",
+      "needs": "Python, Playwright, ffmpeg, a Gemini API key",
+      "version": "1.0.0",
+      "published": "2026-08-25",
+      "updated": "2026-08-25"
+    },
+    {
+      "slug": "account-manager",
+      "kind": "plugin",
+      "tag": "Reporting",
+      "name": "The AI account manager",
+      "summary": "Weekly reporting decks drafted from live ad data plus a daily data-health check. The system we built when our account manager left, packaged to run on your accounts.",
+      "needs": "Python, a Google Apps Script bridge, your Meta and Google Ads API access",
+      "version": "1.0.0",
+      "published": "2026-06-30",
+      "updated": "2026-06-30"
+    },
+    {
+      "slug": "adgen-vertical-ad",
+      "kind": "plugin",
+      "tag": "Production",
+      "name": "Vertical ad production",
+      "summary": "Product page URL in, finished 9:16 video ad out. Script, characters, scene generation, audio, and an editable timeline for the final cut.",
+      "needs": "Gemini, ElevenLabs, Higgsfield and Suno accounts, ffmpeg, Final Cut Pro",
+      "version": "1.0.0",
+      "published": "2026-08-07",
+      "updated": "2026-08-07"
+    },
+    {
+      "slug": "multi-size-adapter",
+      "kind": "skill",
+      "tag": "Production",
+      "name": "Multi-size creative adapter",
+      "summary": "One master creative becomes every ad size you need. Layout-aware adaptation, not a dumb crop.",
+      "needs": "Python, Pillow, a Gemini API key",
+      "version": "1.0.0",
+      "published": "2026-08-25",
+      "updated": "2026-08-25"
+    },
+    {
+      "slug": "gsuite-bridge",
+      "kind": "skill",
+      "tag": "Utility",
+      "name": "Google Workspace bridge",
+      "summary": "Create fully formatted Google Docs, Sheets, and styled Slides decks straight from Claude Code, through your own Apps Script bridge.",
+      "needs": "A Google account, Python",
+      "version": "1.0.0",
+      "published": "2026-06-24",
+      "updated": "2026-06-24"
+    },
+    {
+      "slug": "dialectical-debate",
+      "kind": "skill",
+      "tag": "Method",
+      "name": "Dialectical debate",
+      "summary": "Stress-test any claim or decision. Opposing agents investigate independently, cross-examine each other, and return a confidence-rated verdict.",
+      "needs": "Claude Code only",
+      "version": "1.0.0",
+      "published": "2026-08-25",
+      "updated": "2026-08-25"
+    },
+    {
+      "slug": "strategy-crystallizer",
+      "kind": "skill",
+      "tag": "Method",
+      "name": "Strategy crystallizer",
+      "summary": "Run any brand question through Rumelt's strategy kernel. A falsifiable one-sentence thesis, coherent actions, explicit refusals, graded out of 70.",
+      "needs": "Claude Code only",
+      "version": "1.0.0",
+      "published": "2026-09-03",
+      "updated": "2026-09-03"
+    }
+  ]
+}
