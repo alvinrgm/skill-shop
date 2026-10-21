@@ -1,16 +1,16 @@
 {
-  "campaign": "northridge-get-paid-early",
+  "campaign": "quillford-first-bag",
   "sizes": [
     {
       "name": "1080x1080",
       "width": 1080,
       "height": 1080,
       "strategy": "generate",
-      "gen_prompt": "TASK: Adapt this ad into a square 1:1 version of itself, as the same brand designer would.\n\nINSTRUCTIONS:\n- Same dark green background, same typography style, same circular background motifs.\n- Keep the same text the ad already has: the wordmark 'NORTHRIDGE', the headline 'Get paid up to 2 days early', the subline 'No fees. No minimum balance.', and the mint-green pill button 'Get started'. Do not add or invent any new text.\n- Re-compose natively for a square 1:1 canvas so it reads as designed for this shape, not cropped.\n\nTHE BOTTOM QUARTER OF THIS IMAGE MUST CONTAIN NO TEXT AT ALL.\nThe bottom 25% of the canvas has NO text. No words. No letters. No paragraphs. No small print. No disclaimer. No legal copy. Do NOT reproduce the small legal paragraph from the source image. That area is reserved for a human to add text later. Any text there is a failure.\nIMPORTANT: fill that area by CONTINUING the existing background exactly as it appears elsewhere in the image, including the same colour gradient and the same circular motifs. It must blend seamlessly. Do NOT paint it as a flat block of solid colour and do NOT create any visible horizontal edge, seam, band, or change in tone anywhere in the image.",
+      "gen_prompt": "TASK: Adapt this ad into a square 1:1 version of itself, as the same brand designer would.\n\nINSTRUCTIONS:\n- Same dark espresso-brown background, same typography style, same circular background motifs.\n- Keep the same text the ad already has: the wordmark 'QUILLFORD · COFFEE', the headline 'Your first bag is on us', the subline 'Fresh-roasted. Shipped the same week.', and the amber pill button 'Claim your bag'. Do not add or invent any new text.\n- Re-compose natively for a square 1:1 canvas so it reads as designed for this shape, not cropped.\n\nTHE BOTTOM QUARTER OF THIS IMAGE MUST CONTAIN NO TEXT AT ALL.\nThe bottom 25% of the canvas has NO text. No words. No letters. No paragraphs. No small print. No disclaimer. No legal copy. Do NOT reproduce the small legal paragraph from the source image. That area is reserved for a human to add text later. Any text there is a failure.\nIMPORTANT: fill that area by CONTINUING the existing background exactly as it appears elsewhere in the image, including the same colour gradient and the same circular motifs. It must blend seamlessly. Do NOT paint it as a flat block of solid colour and do NOT create any visible horizontal edge, seam, band, or change in tone anywhere in the image.",
       "copy": {
-        "headline": "Get paid up to 2 days early",
-        "body": "No fees. No minimum balance.",
-        "cta": "Get started"
+        "headline": "Your first bag is on us",
+        "body": "Fresh-roasted. Shipped the same week.",
+        "cta": "Claim your bag"
       }
     },
     {
@@ -18,11 +18,11 @@
       "width": 1080,
       "height": 1920,
       "strategy": "generate",
-      "gen_prompt": "TASK: Adapt this ad into a vertical 9:16 story version of itself, as the same brand designer would.\n\nINSTRUCTIONS:\n- Same dark green background, same typography style, same circular background motifs.\n- Keep the same text the ad already has: the wordmark 'NORTHRIDGE', the headline 'Get paid up to 2 days early', the subline 'No fees. No minimum balance.', and the mint-green pill button 'Get started'. Do not add or invent any new text.\n- Re-compose natively for a vertical 9:16 story canvas so it reads as designed for this shape, not cropped.\n\nTHE TOP 15% OF THIS IMAGE MUST CONTAIN NO TEXT AT ALL.\nThe wordmark, the headline, the subline and the button ALL sit below the top 15% of the canvas. The top 15% is background only. Any text in the top 15% is a failure. Likewise the bottom 21% holds no text. Everything sits in the middle band of the canvas.\n\nTHE BOTTOM QUARTER OF THIS IMAGE MUST CONTAIN NO TEXT AT ALL.\nThe bottom 25% of the canvas has NO text. No words. No letters. No paragraphs. No small print. No disclaimer. No legal copy. Do NOT reproduce the small legal paragraph from the source image. That area is reserved for a human to add text later. Any text there is a failure.\nIMPORTANT: fill that area by CONTINUING the existing background exactly as it appears elsewhere in the image, including the same colour gradient and the same circular motifs. It must blend seamlessly. Do NOT paint it as a flat block of solid colour and do NOT create any visible horizontal edge, seam, band, or change in tone anywhere in the image.",
+      "gen_prompt": "TASK: Adapt this ad into a vertical 9:16 story version of itself, as the same brand designer would.\n\nINSTRUCTIONS:\n- Same dark espresso-brown background, same typography style, same circular background motifs.\n- Keep the same text the ad already has: the wordmark 'QUILLFORD · COFFEE', the headline 'Your first bag is on us', the subline 'Fresh-roasted. Shipped the same week.', and the amber pill button 'Claim your bag'. Do not add or invent any new text.\n- Re-compose natively for a vertical 9:16 story canvas so it reads as designed for this shape, not cropped.\n\nTHE TOP 15% OF THIS IMAGE MUST CONTAIN NO TEXT AT ALL.\nThe wordmark, the headline, the subline and the button ALL sit below the top 15% of the canvas. The top 15% is background only. Any text in the top 15% is a failure. Likewise the bottom 21% holds no text. Everything sits in the middle band of the canvas.\n\nTHE BOTTOM QUARTER OF THIS IMAGE MUST CONTAIN NO TEXT AT ALL.\nThe bottom 25% of the canvas has NO text. No words. No letters. No paragraphs. No small print. No disclaimer. No legal copy. Do NOT reproduce the small legal paragraph from the source image. That area is reserved for a human to add text later. Any text there is a failure.\nIMPORTANT: fill that area by CONTINUING the existing background exactly as it appears elsewhere in the image, including the same colour gradient and the same circular motifs. It must blend seamlessly. Do NOT paint it as a flat block of solid colour and do NOT create any visible horizontal edge, seam, band, or change in tone anywhere in the image.",
       "copy": {
-        "headline": "Get paid up to 2 days early",
-        "body": "No fees. No minimum balance.",
-        "cta": "Get started"
+        "headline": "Your first bag is on us",
+        "body": "Fresh-roasted. Shipped the same week.",
+        "cta": "Claim your bag"
       }
     }
   ]

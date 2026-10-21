@@ -24,7 +24,7 @@ Module A comms drafts · Module C standalone account-ops recommender · full dat
 
 ## House style (reverse-engineered from live decks)
 Per-period block, newest on top:
-1. Dated divider (`M/D` + dashboard label e.g. "Data dash" / "Internal Looker")
+1. Dated divider (`M/D` + dashboard label e.g. "Weekly dashboard")
 2. KPI scorecard + campaign-breakdown slides — **native data tables** rendered from the locked `core_data_source` (carry the same data screenshots used to; screenshots deprecated)
 3. Top-line Observations — BLUF metric verdict first (e.g. `Xx ROAS and Yx NC ROAS`), then `Observation/Insights` bullets, then `Next steps/Action taken`. Split **by platform**, **by segment**, or **combined** — set per client.
 4. Single-topic deep-dive slides (tests/anomalies)

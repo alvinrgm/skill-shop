@@ -17,6 +17,8 @@ jobs:
           base=${{ github.event.pull_request.base.sha || github.event.before }}
           git show "$base:catalog.json" > /tmp/base-catalog.json 2>/dev/null || : > /tmp/base-catalog.json
           python3 scripts/check_catalog.py --base /tmp/base-catalog.json
+      - name: Public leak gate (every package labeled public, no personal paths, emails, secrets or image metadata)
+        run: python3 scripts/check_public.py
 
   # A push to main changes what risegm.com/skills lists, so rebuild the site.
   # Set the repo secret RISEGM_SITE_DEPLOY_HOOK to a Vercel deploy hook URL for

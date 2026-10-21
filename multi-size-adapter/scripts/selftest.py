@@ -43,9 +43,9 @@ PROMPT = """TASK: Adapt this ad into a square 1:1 version of itself, as the same
 
 INSTRUCTIONS:
 - Same background, same typography style, same visual motifs.
-- Keep the same text the ad already has: the wordmark 'NORTHRIDGE', the headline 'Get paid up
-  to 2 days early', the subline 'No fees. No minimum balance.', and the pill button
-  'Get started'. Do not add or invent any new text.
+- Keep the same text the ad already has: the wordmark 'QUILLFORD · COFFEE', the headline 'Your
+  first bag is on us', the subline 'Fresh-roasted. Shipped the same week.', and the pill
+  button 'Claim your bag'. Do not add or invent any new text.
 - Re-compose natively for a square canvas so it reads as designed for this shape, not cropped.
 
 THE BOTTOM QUARTER OF THIS IMAGE MUST CONTAIN NO TEXT AT ALL.
@@ -105,9 +105,9 @@ def main() -> None:
     plan = {"campaign": "selftest",
             "sizes": [{"name": "1080x1080", "width": 1080, "height": 1080,
                        "strategy": "generate", "gen_prompt": PROMPT,
-                       "copy": {"headline": "Get paid up to 2 days early",
-                                "body": "No fees. No minimum balance.",
-                                "cta": "Get started"}}]}
+                       "copy": {"headline": "Your first bag is on us",
+                                "body": "Fresh-roasted. Shipped the same week.",
+                                "cta": "Claim your bag"}}]}
     plan_path = out_dir / "selftest-plan.json"
     out_dir.mkdir(parents=True, exist_ok=True)
     plan_path.write_text(json.dumps(plan, indent=2))

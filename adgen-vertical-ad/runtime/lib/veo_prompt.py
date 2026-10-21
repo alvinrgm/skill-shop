@@ -260,7 +260,7 @@ def product_interaction(
 ) -> VeoPrompt:
     """Scene where the character holds / uses / interacts with a product.
 
-    IMPORTANT: To actually lock the product's visual identity (logo, bag
+    IMPORTANT: To actually lock the product's visual identity (logo, packaging
     shape, label text), you need multi-reference support — which requires
     the FULL veo-3.1-generate-preview model, NOT Lite. Lite can only
     approximate from the text description. See docs/veo_prompt_guide.md

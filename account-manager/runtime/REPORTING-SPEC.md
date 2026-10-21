@@ -33,7 +33,7 @@ RULE CHANGES (stale screenshot rules to remove):
   screenshot") → "native tables rendered from the client's locked core_data_source."
 
 ## 3. Reporting deck structure (dark look; per-period block, newest prepended)
-1. **Period divider** — "M/D · Data dash"
+1. **Period divider** — "M/D · Weekly dashboard"
 2. **Weekly Observations** — metric headline + **Observation / Next steps / Action taken**; window
    footnote. [core_data_source]
 3. **KPI scorecard** — Metric | Last wk | Prior wk | WoW | Status (RAG vs goal/floor). [core_data_source]

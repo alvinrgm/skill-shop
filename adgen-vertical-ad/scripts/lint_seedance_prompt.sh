@@ -27,7 +27,7 @@ warn() { echo "  ⚠ warn:  $*" >&2; WARNINGS=$((WARNINGS+1)); }
 # --- 1. IP-stacking vocab (ip_detected risk). NOTE: these are fine in GEMINI image prompts;
 #        they must NOT reach a SEEDANCE prompt. The translation to physical description happens
 #        at construction time — this catches anything that leaked through. ---
-IP_TERMS="aardman pixar disney dreamworks ghibli laika illumination wallace and gromit toy story yellowstone grapes of wrath of mice and men sam elliott john dutton most interesting man sheriff woody dust bowl roundup"
+IP_TERMS="aardman pixar disney dreamworks ghibli laika illumination wallace and gromit toy story yellowstone grapes of wrath of mice and men sam elliott john dutton most interesting man sheriff woody dust bowl"
 for t in $IP_TERMS; do :; done
 # multi-word + single-word scan
 while IFS= read -r term; do
@@ -53,10 +53,9 @@ john dutton
 most interesting man
 sheriff woody
 dust bowl
-roundup
 EOF
 
-# --- 2. Music generation (the couplabeers piano slip). Seedance must generate NO music. ---
+# --- 2. Music generation. Seedance must generate NO music (a baked-in score collides with the FCP bed). ---
 # Scrub the negation clauses first so "NO MUSICAL SCORE" / "no music" don't self-trip the scan.
 LC_SCAN="$(printf '%s' "$LC" \
   | sed -E 's/no music\.? no musical score\.? no instrumental backing\.?//g' \
@@ -103,12 +102,11 @@ done <<'EOF'
 \bblood
 \bwound
 \bcut (me )?down
-pumped me full
+pumped (me |it )?full of
 \binjected
 \bneedle
 \bnaked
 \bstripped
-glyphosate
 EOF
 
 echo "" >&2

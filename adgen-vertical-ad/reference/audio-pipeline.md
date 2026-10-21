@@ -21,7 +21,7 @@ Why this is the default now (it used to be the exception):
   clips, and across ADS. Seedance native audio drifts per-clip (the #1 past complaint) — a mascot
   sounded different shot-to-shot. 11L kills that.
 - **Exact pronunciation + cadence + emotion** — brand names, technical terms, the CTA line all
-  land exactly, every time. No re-firing seedance to fix "glyphosate" gibberish.
+  land exactly, every time. No re-firing seedance to fix a mangled ingredient name like "polysorbate".
 - **Lip-sync works** — seedance moves the mouth to the provided audio, so it doesn't look dubbed.
 
 This replaces the old "11L is forbidden / 11L only for narrator spots" rule. The old fear was
@@ -53,7 +53,7 @@ Does any character SPEAK on screen (in-scene dialogue OR carried narrator)?
 │        Pick/clone ONE locked voice per character. Generate the full 11L track, cut into
 │        contiguous per-shot segments, lip-sync each clip to its segment, concat. Voice is
 │        locked within-clip, across-clips, and across-ads.
-│        Use for: ~every spot with talking characters — mascots, testimonials, pharma parody,
+│        Use for: ~every spot with talking characters — mascots, testimonials, genre parody,
 │        dialogue spots. This is now the norm, not the exception.
 │
 └── No spoken voice (pure visual + music + SFX)  → STRATEGY A — seedance native / no voice track
@@ -67,10 +67,10 @@ seedance-native take (skip the 11L setup) and accepts that the voice will drift 
 won't match the next ad. Even then, use IDENTICAL voice-description prompt language for a character
 in every shot. Default is still B.
 
-**Past mistake (a pharma-ad-parody spot):** defaulted to seedance-native because it
-was the cheap default and the old rule discouraged 11L. The spot needed locked voice (pharma-parody
-structure, 8 narrator beats). Took v1 → v2 → v3 and ~200 wasted credits to pivot. With 11L-as-
-default, v1 would have shipped clean.
+**Why not default to seedance-native because it's cheap:** a spot that needs a locked voice (a
+narrator carrying many beats, a recurring character) built on per-clip native audio only reveals
+the problem at stringout, and pivoting then means regenerating most of the spot. With 11L-as-
+default, v1 ships clean.
 
 ## The fundamental rule
 
@@ -117,7 +117,7 @@ External audio (Suno music, ElevenLabs VO, full continuous track) is the master.
 - If concatenating multiple clips, drift can accumulate at cut boundaries
 - Tight coupling between audio cuts and video cuts
 
-**When to use:** the DEFAULT for any talking spot — mascots, testimonials, pharma parody, dialogue. Also music videos / rap shots with specific lyrics (Suno track as the audio ref). Anytime voice/lyrics/cadence must stay locked.
+**When to use:** the DEFAULT for any talking spot — mascots, testimonials, genre parody, dialogue. Also music videos / rap shots with specific lyrics (Suno track as the audio ref). Anytime voice/lyrics/cadence must stay locked.
 
 ## The drift problem (the mistake we made)
 

@@ -35,7 +35,7 @@ These are codified in `SKILL.md` Phase 7 — repeated here as the canonical sche
 |---|---|---|
 | `<library>` | The operator's active library (must be set in FCP before import) | `Client ads` |
 | `<event name="...">` | Client name (ONE event per client) | `Acme Co`, `Example Brand` |
-| `<project name="...">` | Concept name (siblings within the client event) | `Sink Showdown`, `Pharma Parody v4` |
+| `<project name="...">` | Concept name (siblings within the client event) | `Sink Showdown`, `Office Safari v4` |
 | project-name suffix | Timeline iteration | `Sink Showdown — v1`, `... — 9x16`, `... — 4x5` |
 
 Re-imports with the same event name **merge in place** (no duplicate events spawn). If a stale event name lingers from a prior convention (e.g., an older per-concept event created before the one-event-per-client convention), the operator merges it by dragging contents inside the same library — same-library drag is a move, not a copy — then deletes the empty source event.

@@ -103,7 +103,7 @@ Compute the window from `comparison_window` (see Date math below).
   Sheet IDs + tabs are in the config / shown by `check`. A typical daily feed tab
   is an Adveronix/materialized export and reads fine.
   - **CONNECTED-SHEET CAVEAT:** some tabs are Google-native "connected sheets"
-    (a BigQuery/Looker data source), e.g. an "Original Conversion Values" tab.
+    (a BigQuery/Looker data source), e.g. a Looker-connected tab.
     Those return EMPTY via the Sheets values API. For a tab that reads back 0 rows
     but the deck/dashboard clearly has data, pull Google numbers from the
     Google Ads API (your own client / MCP) directly instead, not the sheet.
@@ -134,7 +134,7 @@ JSON file (e.g. `/tmp/<client>_weekly.json`) matching this schema:
 {
   "period_label": "6/25",
   "divider_label": "<from config>",
-  "dashboard": {"title": "Data dash", "metrics": ["Spend $X", "Revenue $Y", "ROAS Zx", "NC ROAS Wx"]},
+  "dashboard": {"title": "Weekly dashboard", "metrics": ["Spend $X", "Revenue $Y", "ROAS Zx", "NC ROAS Wx"]},
   "pacing": {"title": "Budget pacing — ...", "bold_labels": ["Meta","Google"],
              "bullets": ["Meta", "MTD $X -> projected EOM $Y vs $T target = Z% <status>", ...]},
   "sections": [{"title": "...", "bullets": [...], "bold_labels": [...]}],
@@ -205,7 +205,7 @@ Institutional knowledge must accumulate, or next week starts blind again.
 
 ## House style (match the existing decks)
 - **BLUF first.** Every observation slide title is the verdict with the number up
-  front: "Xx ROAS and Yx NC ROAS" / "Non-Brand: Revenue -15%; ROAS -40%".
+  front: "Xx ROAS and Yx NC ROAS" / "<Segment>: Revenue -X%; ROAS -Y%".
 - **Two-part body:** an `Observation` block (the diagnosis, telegraphic bullets
   with the numbers) then a `Next steps` block (imperative actions). The script
   bolds those labels.

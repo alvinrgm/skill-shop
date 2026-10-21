@@ -51,7 +51,7 @@ from their team lead — and even that does not get pasted into the chat (step 3
    preferences never go in that file:
 
    1. **"Where do your finished ads usually live?"** A folder path — the big one, because it
-      lets them later say "the latest Northridge ad" instead of hunting for a path. **Find it
+      lets them later say "the latest coffee ad" instead of hunting for a path. **Find it
       for them rather than asking them to produce a path.** Offer what you can see: look in
       Desktop, Downloads, Documents, Dropbox, Google Drive for folders with ad-shaped images
       and read back the two or three best candidates by name ("is it ~/Dropbox/Creative/Q3?").
@@ -98,7 +98,7 @@ most natural thing for a designer to do. Handle it gracefully rather than errori
   from?" Then **go find it yourself** (`ls`/`find` across their `creatives_dir`, Desktop and
   Downloads, newest first) and read back what you found for confirmation. Only if you genuinely
   cannot find it, ask them to paste the path or drag the file into a terminal window.
-- **If they name a file** ("the Northridge one", "yesterday's story ad"): look in their
+- **If they name a file** ("the coffee one", "yesterday's story ad"): look in their
   profile's `creatives_dir` and match it. Show them what you found and confirm before
   spending money.
 - **If they give a folder:** list the images in it, show the list, and confirm which ones
@@ -162,8 +162,8 @@ Never make them type a path if you can find the file for them.
 
    Add per-format blocks:
    - **9:16 story/reel safe zones.** Use the same absolute framing as the legal block; the
-     polite version ("keep text clear of the top 14%") was measured failing twice, putting
-     the wordmark at 11.9% from the top:
+     polite version ("keep text clear of the top 14%") can still fail, putting
+     the wordmark inside the unsafe band:
      ```
      THE TOP 15% OF THIS IMAGE MUST CONTAIN NO TEXT AT ALL.
      The wordmark, the headline, the subline and the button ALL sit below the top 15% of
@@ -179,8 +179,8 @@ Never make them type a path if you can find the file for them.
    - **LEGAL FINE PRINT: instruct the model to leave it blank on every size, AND verify it
      actually did.** The instruction below suppresses the legal block most of the time, but
      it is a request to a model, not a guarantee — on photo-dense creatives the model
-     sometimes regenerates the legal paragraph anyway, subtly garbled (verified live: a 9:16
-     photo ad reproduced a garbled version of its disclosure line, despite the block). So two
+     sometimes regenerates the legal paragraph anyway, subtly garbled (a story-size output can
+     reproduce a garbled version of the disclosure line despite the block). So two
      things are load-bearing, not one: (a) the instruction, and (b) the measured check in
      step 5 that the legal band is genuinely empty. Never ask the model to reproduce legal
      text. Put this block in every gen_prompt for a creative that has legal text:
@@ -202,9 +202,9 @@ Never make them type a path if you can find the file for them.
      every output, not some, and the cause is just the instruction being followed literally.
 
      **Use this absolute phrasing.** Where it comes from, honestly: on a handful of outputs
-     (fewer than ten, one brand, one model version) a polite negative instruction
-     ("do not reproduce the legal text") was ignored twice — the model redrew the legal block
-     anyway, subtly misspelled ("Membor FDIC") — while the blunt version held. That is a
+     (fewer than ten, one model version) a polite negative instruction
+     ("do not reproduce the legal text") can be ignored — the model redrew it anyway,
+     as a misspelled version of the legal block — while the blunt version held. That is a
      small sample, and the two wordings differ in more than politeness (the blunt one is also
      longer, repeated, capitalised, and adds a positive redirect), so the mechanism is not
      isolated. Treat it as "this works, and we do not know precisely why" rather than a law.
@@ -274,8 +274,8 @@ Never make them type a path if you can find the file for them.
      It reports where content actually starts and ends, how much dead canvas sits above the
      legal band, whether that band is genuinely empty, and the worst tonal step. It exits
      non-zero on a real failure. **Paste its numbers into the review sheet rather than your
-     impression.** A shipped sample once carried "safe zones OK" while the wordmark sat at
-     5.5% from the top: the eye reads a top-anchored logo as normal, because that is where
+     impression.** A shipped sample once carried "safe zones OK" while the wordmark sat
+     inside the top unsafe band: the eye reads a top-anchored logo as normal, because that is where
      logos live. If Pillow is missing the tool says "NOT MEASURED" — record that honestly,
      never substitute an estimate. (It needs Pillow; generation does not. Install it for the
      user: `python3 -m pip install --user Pillow`.)
@@ -291,12 +291,12 @@ Never make them type a path if you can find the file for them.
      legal/disclaimer TEXT there, it is a FAIL — regenerate that size (this is the format
      where suppression fails most often). If it keeps coming back, switch that size to a
      mechanical resize, or hand the designer the source legal to set by hand. **Never ship a
-     size whose legal band contains AI-generated text** — garbled legal on a financial ad is
+     size whose legal band contains AI-generated text** — garbled legal on a regulated ad is
      the single highest-consequence defect this tool can produce. Record the measured result
      in the review sheet, not an impression.
    **On FAIL: retry once** — regenerate that size with a
-   corrective line appended to its gen_prompt naming the exact defect ("the CTA pill turned
-   green; it must be a WHITE pill with dark text, as in the source"). Still failing → leave
+   corrective line appended to its gen_prompt naming the exact defect ("the button colour
+   changed; match the source button colour"). Still failing → leave
    the best attempt, mark the review sheet cell with the specific defect, and say plainly it
    needs designer rework. Never present a failed output as passed.
 

@@ -18,7 +18,7 @@ This template solves the same drift problem character contact sheets and product
 
 ## CRITICAL: the contact sheet is NOT the cut-to-cut continuity lock — the LOCKED PLATE is
 
-**The single biggest misuse of this template:** generating each shot's start-frame independently against the multi-angle contact sheet, expecting the room to stay identical across cuts. It won't. The contact sheet's whole job is to show the room from MANY angles + lighting states so the model UNDERSTANDS the space — which is exactly why it's ambiguous as a continuity lock. Six different views in → the model picks/blends a different room each generation → cabinets shift, the floor-number panel renders 1-digit in one shot and 2-digit in the next, lighting wanders. (This cost a re-roll on a past elevator spot: floor display read "03" / "2" / "05" across three start-frames, plus a doubled display in one.)
+**The single biggest misuse of this template:** generating each shot's start-frame independently against the multi-angle contact sheet, expecting the room to stay identical across cuts. It won't. The contact sheet's whole job is to show the room from MANY angles + lighting states so the model UNDERSTANDS the space — which is exactly why it's ambiguous as a continuity lock. Six different views in → the model picks/blends a different room each generation → cabinets shift, a wall sign renders one word in one shot and a different word in the next, lighting wanders.
 
 **The fix — lock a single PLATE for any master set reused across 2+ cuts:**
 1. After (or instead of) the multi-angle sheet, generate ONE canonical EMPTY plate: a single frame of the set at the ONE hero camera + ONE lighting state, no characters. 4K, the shot aspect (9:16). Save as `refs/environments/<setting>_plate.png`.
@@ -71,17 +71,15 @@ PANEL LAYOUT:
 
 Top row (3 panels, left to right):
   1. WIDE — wide-angle view of the full room showing the master spatial layout
-     at [time of day 1, e.g., overcast pre-noon / muted gray]
+     at [time of day 1]
   2. MEDIUM — eye-level medium showing the hero area of the room (where most
-     action happens — e.g., kitchen island) at the SAME time of day as panel 1
+     action happens — e.g., a desk cluster) at the SAME time of day as panel 1
   3. ALT ANGLE — opposite-side view of the same room at the same time of day,
      showing the geometry from a different perspective
 
 Bottom row (3 panels, left to right):
-  4. WIDE WARM — same wide angle as panel 1 but lit at [time of day 2, e.g.,
-     warm late-morning golden window light]
-  5. NIGHT — same medium angle as panel 2 but lit at [time of day 3, e.g.,
-     single warm pendant lamp + cool moonlight from window]
+  4. WIDE WARM — same wide angle as panel 1 but lit at [time of day 2]
+  5. NIGHT — same medium angle as panel 2 but lit at [time of day 3]
   6. DETAIL STUDY — close-up of a signature element of the room (a key wall,
      the counter material, a key fixture) showing the texture and material
      fidelity at neutral lighting
@@ -102,72 +100,63 @@ NO characters in any panel. NO captions other than the panel labels.
 NO product placement.
 ```
 
-## Example — Hank's kitchen (the invented hot-sauce pharma-parody spot)
+## Example — the fourth-floor office (the invented wildlife-documentary spoof)
 
 ```
-Environment reference contact sheet for "Hank's suburban family kitchen" — the
-master set of a vertical pharma-style ad parody. 6-panel grid on a clean
-neutral background with thin gray dividers and small white serif labels.
+Environment reference contact sheet for "the fourth-floor open-plan office" —
+the master set of a vertical wildlife-documentary-style spoof. 6-panel grid on
+a clean neutral background with thin gray dividers and small white serif labels.
 
 THE SET:
-- A modest suburban American family kitchen, ~12 feet wide, lived-in but
-  slightly-too-clean for the ad's mockumentary register
-- Walls: white painted upper section, white subway-tile backsplash above the
-  counter (square ceramic with clean light-gray grout)
-- Upper cabinets: flat-panel cream / off-white, simple recessed handles
-- Counter: warm wooden butcher-block (honey tone)
-- Lower cabinets: same cream as upper, flat-panel
-- Floor: light oak engineered hardwood
-- Hanging pendant lamp: single warm-bronze fixture above the kitchen island,
-  Edison-style bulb visible, fabric cord drop
-- Kitchen island: same butcher-block counter, two simple wooden stools at the
-  far side, an open pile of mail and a coffee mug
-- Window: one large window above the sink, frosted morning light, simple
-  white roman-blind half-raised
-- Appliances: stainless 2-slot toaster on the left counter, stainless stand
-  mixer on the back counter
-- Vibe: lived-in suburban American kitchen, slightly-too-clean for the
-  pharma-parody register, NOT a magazine-staged farmhouse, NOT a studio set
+- A mid-size open-plan office floor, ~40 feet deep, four rows of white
+  sit-stand desks separated by low fabric partitions (sage green)
+- Ceiling: exposed white-painted ductwork, long linear LED fixtures running
+  front-to-back in four parallel strips
+- Floor: charcoal low-pile carpet tiles with a subtle checkerboard of two grays
+- Back wall: floor-to-ceiling windows with thin black mullions, city rooftops
+  beyond, a row of potted snake plants on the sill
+- Left wall: a long whiteboard with faint ghosted marker residue, a wall clock
+- Kitchenette alcove at the far right: pale birch cabinets, a stainless sink,
+  a blue-jugged water cooler against the end wall
+- Desks: monitors on arms, a few lanyards and notebooks, one desk lamp per row
+- Vibe: ordinary, slightly-too-tidy corporate floor that a nature-doc camera
+  can treat as a habitat — NOT a glossy startup showroom, NOT a studio set
 
 PANEL LAYOUT:
 
 Top row:
-  1. WIDE COLD — wide-angle showing the full kitchen with the island in
-     foreground, lit at overcast pre-noon gray window light from camera-left,
-     low saturation muted slate-gray / cream / oat palette (the "before"
-     register)
-  2. MEDIUM COLD — eye-level medium on the kitchen island showing the mug,
-     mail, and stools at the SAME overcast pre-noon gray lighting
-  3. ALT ANGLE — opposite view showing the back counter with the stand mixer
-     and toaster, same overcast pre-noon lighting
+  1. WIDE DAWN — long-lens wide from the back-left corner looking across all
+     four desk rows, lights half-off, cool blue pre-sunrise window light,
+     low saturation slate / charcoal / pale sage palette
+  2. MEDIUM MORNING — eye-level medium on the third-row desk cluster at
+     mid-morning, overhead LEDs fully on, flat even white light
+  3. ALT ANGLE — reverse view from the windows toward the whiteboard wall and
+     the kitchenette alcove, same mid-morning lighting
 
 Bottom row:
-  4. WIDE WARM — same wide angle as panel 1 but lit at warm late-morning
-     golden window light from camera-left (the "after" register), restored
-     saturation, warm cream / golden honey / soft kraft palette
-  5. NIGHT — same medium angle as panel 2 but lit at night by ONLY the warm
-     pendant lamp above the island plus cool blue moonlight through the
-     window, high contrast deep shadows, slight chiaroscuro
-  6. DETAIL STUDY — close-up of the white subway tile + grout + the seam
-     where the warm butcher-block counter meets the tile, neutral lighting,
-     showing texture and material fidelity
+  4. KITCHENETTE — medium on the alcove: cabinets, sink, water cooler, under
+     the same overhead LEDs plus a small under-cabinet strip light
+  5. LATE AFTERNOON — same wide angle as panel 1 but lit by low warm amber
+     sun raking through the windows, long partition shadows across the carpet
+  6. DETAIL STUDY — close-up of a desk edge where the white laminate meets a
+     sage fabric partition, neutral lighting, showing texture and material
+     fidelity
 
 CONTINUITY LOCKS:
-- The kitchen island stays in the same position in panels 1, 2, 4, 5.
-- The stand mixer stays in the same position on the back counter in panels
-  1, 3, 4. (Panel 5 may not show it depending on angle.)
-- The pendant lamp position is fixed above the island in panels 1, 2, 4, 5.
-- The window position above the sink is fixed in all wide shots.
+- The four desk rows and the partitions stay in the same positions in panels
+  1, 2, 3, 5.
+- The water cooler stays at the end wall of the kitchenette in panels 3 and 4.
+- The LED strips run front-to-back in every panel that shows the ceiling.
+- The window wall position is fixed in all wide shots.
 - Only LIGHTING and CAMERA ANGLE vary. Geometry is locked.
 - Each panel labeled at the bottom in small clean white serif text.
 
-STYLE: Realism-leaning 3D Pixar render (Soul / Lightyear register, NOT Toy
-Story exaggeration). Suburban-mockumentary register: slightly-too-clean,
-calm, photographic. High-fidelity surface shaders, soft cinematic depth of
-field on close-ups, gentle film grain.
+STYLE: Photographic, observational-documentary register: long-lens
+compression, natural-looking light, shallow depth of field on mediums,
+gentle film grain. Calm and slightly austere.
 
-Color palette across the set: cream / off-white / warm honey wood / pale
-slate gray / soft warm bronze (the pendant lamp).
+Color palette across the set: white / charcoal / pale sage / brushed steel /
+warm amber (late-afternoon light only).
 
 Aspect ratio: 16:9 horizontal. High detail, environment-reference quality.
 NO characters in any panel. NO captions other than the panel labels.
@@ -229,7 +218,7 @@ Don't regenerate "for fun" — once approved, the sheet is the authoritative spa
 
 **Setting is an exterior** (street, field, beach): adapt the panel layout. Replace "WIDE / MEDIUM / ALT ANGLE / WIDE WARM / NIGHT / DETAIL" with appropriate panels for the exterior. The continuity-lock principle is the same: same physical location across all panels, only lighting + angle varies.
 
-**Setting changes structurally between shots** (e.g., "the kitchen, but in shot 5 the family-photo wall now has a hole punched in it"): treat as TWO settings. Contact sheet each separately. Then in the prompt for the changed shot, reference both sheets and describe the change.
+**Setting changes structurally between shots** (e.g., "the office, but in a later shot the whiteboard has been knocked over"): treat as TWO settings. Contact sheet each separately. Then in the prompt for the changed shot, reference both sheets and describe the change.
 
 ## Cost
 

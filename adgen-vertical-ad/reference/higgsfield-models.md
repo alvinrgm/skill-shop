@@ -79,18 +79,18 @@ Tested and validated as of May 2026 against the live Higgsfield MCP. Update if t
 Observed triggers (sanitize even when used metaphorically):
 
 **War / weapons:**
-- "bombs" (any context, even "bombs of '45")
+- "bombs" (any context, even metaphorical — "a flavor bomb")
 - "weapons", "guns", "shoot"
 - "war", "battle", "kill"
-- Specific WWII references: "'45", "1945", "Hitler", "Nazi"
+- Specific real-war references: named wars, war-year dates, "Hitler", "Nazi"
 
 **Violence:**
-- "cut" (especially "cut me down", "cut into")
+- "cut" (especially "cut down", "cut into")
 - "stab", "wound", "blood"
 - "destroy" (sometimes, depends on context)
 
 **Drugs / medical horror:**
-- "pumped me full of"
+- "pumped full of"
 - "injected" (less reliable; sometimes OK in clear medical context like "the doctor injected the syringe", but risky)
 - "drugged", "high", "needle"
 - "addict", "addiction"
@@ -100,15 +100,15 @@ Observed triggers (sanitize even when used metaphorically):
 - Innuendo even in cartoonish context
 - Phrases like "stripped", "naked" (even of objects)
 
-**Replacements that worked:**
-| Triggered | Replacement |
+**Example rewrites (illustrative — swap the loaded word, keep the energy):**
+| Risky | Rewrite |
 |---|---|
-| "they cut me down to half my size" | "they shrunk me down to half my size" |
-| "pumped me full of nitrogen" | "fed me factory nitrogen" |
-| "from the bombs of '45" | "short and dense is all they prize" (rewrote the line) |
-| "Roundup ready" | "Chemical-ready" |
-| "spraying glyphosate mist" | "leaving a trail of pale mist" |
-| "crop duster spraying" | "agricultural plane flying" |
+| "a flavor bomb in every sip" | "a burst of flavor in every sip" |
+| "this deal is a killer" | "this deal is unbeatable" |
+| "injected with attitude" | "packed with attitude" |
+| "cuts through grease like a knife" | "lifts grease right off the pan" |
+| "my battle with frizz" | "my daily frizz struggle" |
+| "shot straight to the top of the charts" | "rocketed to the top of the charts" |
 
 ## Pre-flight checklist before any video gen
 

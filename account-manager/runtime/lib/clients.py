@@ -85,7 +85,7 @@ def load(slug):
         # AM reporting fields
         "deck_id": am.get("deck_id"),
         "deck_insert_index": int(am.get("deck_insert_index", 1)),
-        "divider_label": am.get("divider_label", "Data dash"),
+        "divider_label": am.get("divider_label", "Weekly dashboard"),
         "headline_metric": am.get("headline_metric", "roas"),
         "observation_split": am.get("observation_split", "combined"),
         "platforms": am.get("platforms", ["google"]),

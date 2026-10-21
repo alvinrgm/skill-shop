@@ -16,7 +16,7 @@ track, cut into CONTIGUOUS per-shot segments, lip-sync each clip to its segment,
 Phase 2 from the breakdown.md voice columns. Use the operator's house narrator voice from the registry
 below (ask them to pick one on the first spot if the registry is empty).
 
-This is now the norm for: brand mascots (locked across ad 1 and ad 50), pharma/testimonial narrators,
+This is now the norm for: brand mascots (locked across ad 1 and ad 50), testimonial / documentary narrators,
 dialogue spots, music/rap (Suno track as the audio ref). Seedance native voice (Strategy A) is the
 EXCEPTION — pure-visual spots, or a deliberate cheap/throwaway test cut.
 

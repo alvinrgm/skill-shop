@@ -4,7 +4,7 @@ The handoff folder is the end-state deliverable: separate-tracks assets that the
 
 ## Why this exists
 
-Past mistake (a pharma-ad-parody spot): only built the handoff folder reactively after the operator said "this auto-stringout is unusable, give me the stems." Should have been planned at Phase 1 as the canonical deliverable, not invented at Phase 7 after auto-assembly failures.
+Plan the handoff folder at Phase 1 as the canonical deliverable. Don't build it reactively at Phase 7 after an auto-stringout gets rejected and the operator asks for stems.
 
 The auto-stringout (a single mp4 with all clips concatenated and audio mixed by ffmpeg) is fragile. Auto-mix decisions about ducking, overlay timing, and ambient bed transitions cannot match what the operator would do in FCP with proper editing eyes/ears. The handoff folder bypasses the fragile auto-mix and gives the operator the raw parallel tracks.
 
@@ -16,7 +16,7 @@ Build the handoff folder at every Phase 7 completion. Build it BEFORE the auto-s
 
 ```
 $ADGEN_HOME/<brand>/concepts/<slug>/handoff/
-├── MANIFEST.md              ← 12-shot order + per-shot audio strategy + narrator script + in-scene dialogue verbatim
+├── MANIFEST.md              ← shot order + per-shot audio strategy + narrator script + in-scene dialogue verbatim
 ├── video_silent/            ← V-only stems (h264, no audio) for clean FCP timeline drop
 │   ├── shot_01_<name>_silent.mp4
 │   ├── shot_02_<name>_silent.mp4
@@ -28,8 +28,8 @@ $ADGEN_HOME/<brand>/concepts/<slug>/handoff/
 │   ├── shot_01_<name>_seedance.mp3
 │   └── ... (one per shot)
 ├── audio_narrator/          ← 11L narrator stems (whichever 11L voice was used)
-│   ├── narrator_01_intro.mp3
-│   ├── narrator_02_neighbor.mp3
+│   ├── narrator_01_dawn.mp3
+│   ├── narrator_02_warm_water.mp3
 │   └── ... (one per narrator beat in the breakdown)
 ├── audio_music/             ← Suno music bed if generated (one continuous track across spot)
 │   └── bed_<style>_<duration>s.mp3
@@ -52,8 +52,8 @@ Same shot # / sec / shot name structure as breakdown.md, plus per-shot audio str
 
 | # | shot file | sec | audio strategy in FCP |
 |---|---|---|---|
-| 1 | `video_silent/shot_01_intro_silent.mp4` | 5.04 | Narrator `01_intro` carries. NO seedance dialogue. Skip seedance audio stem entirely (or use ducked at 10% as ambient bed). |
-| 2 | `video_silent/shot_02_cookout_silent.mp4` | 5.04 | Hybrid. seedance `02_cookout_seedance.mp3` for the neighbor's "Trust me" in-scene. Narrator `02_neighbor.mp3` overlays at t=2.5s. |
+| 1 | `video_silent/shot_01_dawn_silent.mp4` | 5.04 | Narrator `01_dawn` carries. NO seedance dialogue. Use the seedance audio stem only as ducked room tone (~10%). |
+| 6 | `video_silent/shot_06_still_cold_silent.mp4` | 4.04 | Hybrid. seedance `06_still_cold_seedance.mp3` for Otto's "Still cold." in-scene. Narrator `06_remarkable.mp3` overlays at t=2.5s. |
 | ... | ... | ... | ... |
 
 ### 3 — Audio mix logic
@@ -69,16 +69,14 @@ Two sub-sections:
 
 **Narrator script:**
 ```
-[01_intro]    For years... Hank's dinners had lost their spark.
-[02_neighbor] Then a neighbor told him about small-batch heat.
+[01_dawn]       Dawn, on the fourth floor. The herd begins to gather.
+[02_warm_water] By ten, his water has gone warm. He drinks it anyway. Survival demands it.
 ...
 ```
 
 **Seedance in-scene dialogue (verified via whisper):**
 ```
-[02_cookout]   NEIGHBOR: "Trust me. Two drops."
-[03_transform] HANK: "Linda. Have you always been this radiant?"
-               WIFE: "...Hank?"
+[06_still_cold] OTTO: "Still cold."
 ...
 ```
 
@@ -97,9 +95,9 @@ Be explicit about what the operator still has to do in FCP:
 ### 6 — Files at risk / flag for review
 
 Be honest. Surface known-imperfect clips:
-→ "shot_05c theater — verify the bottle reads as the hero bottle, not a generic one"
-→ "shot_02_cookout bottle stability — verify label stays facing camera the full 5s"
-→ "voice consistency between seedance Hank shots and the 11L narrator may feel like 'two different people' — that's expected since they ARE two different voices by design"
+→ "shot_05 ice rattle — verify the bottle reads as the hero bottle, not a generic one"
+→ "shot_02_warm_water cup — verify no props pop in mid-shot on the desk"
+→ "Otto's seedance voice in shot 6 and the 11L narrator are two different voices by design — expected, not a consistency bug"
 
 ### 7 — Absolute paths
 
@@ -121,8 +119,8 @@ mkdir -p handoff/{video_silent,video_with_audio,audio_seedance,audio_narrator,au
 
 # Map shot canonical-name → canonical mp4 (read from refs/current.yml or hardcoded)
 declare -A v3_clips=(
-  ["01_intro"]="shot_01_intro_v3.mp4"
-  ["02_cookout"]="shot_02_cookout_v3.mp4"
+  ["01_dawn"]="shot_01_dawn_v3.mp4"
+  ["02_warm_water"]="shot_02_warm_water_v3.mp4"
   # ... one entry per shot
 )
 

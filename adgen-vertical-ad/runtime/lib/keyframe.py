@@ -2,7 +2,7 @@
 
 Architectural role: lock identity, product, and aesthetic at the IMAGE stage
 before Veo ever touches a frame. The hypothesis is that 95% of first-shot
-failures come from Veo inventing faces, bag designs, and skin tones from
+failures come from Veo inventing faces, packaging designs, and skin tones from
 scratch. Keyframes hand Veo a finished reference so it only animates.
 
 Pipeline:
@@ -138,12 +138,12 @@ _FRAMING_PRESETS: dict[SceneType, str] = {
         "chest-up selfie framing, phone held at arm's length, she is looking "
         "DIRECTLY INTO the camera lens with both eyes making clear eye contact "
         "with the viewer, product held at chest height with both hands and "
-        "facing the camera lens, full bag label clearly visible and readable, "
+        "facing the camera lens, full product label clearly visible and readable, "
         "slight upward tilt, blurred kitchen background"
     ),
     SceneType.PRODUCT_ON_COUNTER_OVERHEAD: (
         "phone held above the counter looking straight down, casual overhead "
-        "iPhone snapshot, bag centered on a wooden kitchen counter, full label "
+        "iPhone snapshot, product centered on a wooden kitchen counter, full label "
         "visible, natural window light, NO shallow depth of field, deep focus "
         "phone-camera look, NOT a food-blog overhead, NOT styled"
     ),
@@ -174,11 +174,11 @@ _REF_MODE_INSTRUCTIONS: dict[str, str] = {
     "composite": (
         "use image 1 as the person reference: match her face, hair, skin tone, "
         "and clothing exactly; use image 2 as the product reference: match the "
-        "bag label design, colors, and text exactly; combine them naturally "
+        "product label design, colors, and text exactly; combine them naturally "
         "in the same scene"
     ),
     "composite_product_only": (
-        "use image 1 as the product reference: match the bag label design, "
+        "use image 1 as the product reference: match the product label design, "
         "colors, and text exactly"
     ),
     "style_hint": (
