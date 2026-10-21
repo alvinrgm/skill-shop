@@ -22,7 +22,8 @@
       "needs": "A free Cloudflare account, Node 20+, a Google Cloud OAuth client, and the vendor keys you want to connect",
       "version": "1.0.0",
       "published": "2026-10-21",
-      "updated": "2026-10-21"
+      "updated": "2026-10-21",
+      "image": "account-connectors/explainer/explainer-4x5.png"
     },
     {
       "slug": "adlib-creative-intel",
