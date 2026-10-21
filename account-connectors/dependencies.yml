@@ -1,0 +1,213 @@
+# dependencies.yml — the manifest. SINGLE SOURCE OF TRUTH for the installer.
+# SETUP.md, doctor.sh / doctor.ps1, and the SKILL.md onboarding gate all follow
+# this file. Every secret below is set on YOUR Cloudflare Worker with
+# `npx wrangler secret put NAME` (bash scripts/push-secrets.sh does all of them
+# from .env). Nothing here is shared with, or provided by, the package author.
+
+package: account-connectors
+trust_level: public
+
+path_vars:
+  - name: ACCOUNT_CONNECTORS_ENV
+    default: "<package>/.env"
+    purpose: "local staging file for your secrets (read by doctor.sh and the scripts; the live values are Cloudflare secrets)"
+
+deps:
+  # ---------------------------------------------------------------- tooling
+  - name: Node.js 20+ (with npm and npx)
+    id: node
+    type: cli
+    required: true
+    powers: "building, type-checking and deploying the Worker; the helper scripts"
+    install: "brew install node   # or the LTS installer from https://nodejs.org (npm and npx ship with it)"
+    get_url: https://nodejs.org/en/download
+    tier: free
+    verify: "node --version && npm --version && npx --version"
+
+  - name: npm packages (wrangler, typescript, MCP SDK)
+    id: npm_deps
+    type: cli
+    required: true
+    powers: "the Worker's code dependencies and the wrangler CLI"
+    install: "npm install"
+    tier: free
+    verify: "npx tsc --noEmit"
+
+  - name: curl
+    id: curl
+    type: cli
+    required: false
+    powers: "the post-deploy smoke test (scripts/smoke-test.sh)"
+    install: "preinstalled on macOS, Linux and Windows 10+; otherwise https://curl.se/download.html"
+    get_url: https://curl.se/download.html
+    verify: "curl --version"
+
+  # ---------------------------------------------------------------- hosting
+  - name: Cloudflare account + wrangler login
+    id: cloudflare
+    type: account-manual
+    required: true
+    powers: "hosting the server (Workers free plan is enough: Durable Objects with SQLite and KV are included)"
+    get_url: https://dash.cloudflare.com/sign-up
+    connect: "Create YOUR OWN free Cloudflare account at the get_url, then run: npx wrangler login (opens a browser). Walkthrough: SETUP.md step 3."
+    tier: "free Workers plan"
+    verify: "npx wrangler whoami"
+
+  - name: KV namespace OAUTH_KV
+    id: kv_namespace
+    type: account-manual
+    required: true
+    powers: "stores OAuth sessions, approval slips, per-user Meta tokens and Shopify store tokens"
+    connect: "Run: npx wrangler kv namespace create OAUTH_KV, then paste the printed id over REPLACE_WITH_YOUR_KV_NAMESPACE_ID in wrangler.jsonc. Walkthrough: SETUP.md step 3."
+    verify: "! grep -q REPLACE_WITH_YOUR_KV_NAMESPACE_ID wrangler.jsonc"
+
+  # ---------------------------------------------------------------- sign-in (required)
+  - name: Google OAuth client id (sign-in)
+    id: google_client_id
+    type: env-key
+    required: true
+    powers: "per-user Google sign-in to the server, and every Google Workspace tool acting as that user"
+    key: GOOGLE_CLIENT_ID
+    where: "Cloudflare secret GOOGLE_CLIENT_ID (staged in .env)"
+    get_url: https://console.cloud.google.com/apis/credentials
+    connect: "Create YOUR OWN Google Cloud project, set the OAuth consent screen (Workspace: Internal; Gmail: External + add yourself as a test user), create a Web application OAuth client with redirect URI <WORKER_BASE>/callback. Full walkthrough: SETUP.md step 4."
+    tier: "free"
+    verify: "bash doctor.sh"
+
+  - name: Google OAuth client secret (sign-in)
+    id: google_client_secret
+    type: env-key
+    required: true
+    powers: "the code exchange for per-user Google sign-in"
+    key: GOOGLE_CLIENT_SECRET
+    where: "Cloudflare secret GOOGLE_CLIENT_SECRET (staged in .env)"
+    get_url: https://console.cloud.google.com/apis/credentials
+    connect: "Shown next to YOUR OWN OAuth client id when you create it (SETUP.md step 4)."
+    verify: "bash doctor.sh"
+
+  - name: Cookie encryption key
+    id: cookie_key
+    type: env-key
+    required: true
+    powers: "signs the browser cookie that remembers which MCP clients you approved"
+    key: COOKIE_ENCRYPTION_KEY
+    where: "Cloudflare secret COOKIE_ENCRYPTION_KEY"
+    connect: "Leave blank in .env; run bash scripts/push-secrets.sh and it generates a random 32-byte key for you."
+    verify: "bash doctor.sh"
+
+  - name: Sign-in allowlist (emails and/or domains)
+    id: allowlist
+    type: env-key
+    required: true
+    powers: "who may sign in at all. Empty means nobody (the server fails closed), because it holds vendor keys for whoever signs in"
+    key: ALLOWED_EMAILS
+    where: "Cloudflare secrets ALLOWED_EMAILS and/or ALLOWED_DOMAINS (comma-separated)"
+    connect: "Type your own email (and teammates') into ALLOWED_EMAILS, or your Workspace domain into ALLOWED_DOMAINS. SETUP.md step 5."
+    verify: "bash doctor.sh"
+
+  - name: Worker base URL
+    id: worker_base
+    type: env-key
+    required: false
+    powers: "links the server hands out: the Meta sign-in redirect, Meta upload URLs, Shopify install links"
+    key: WORKER_BASE
+    where: "Cloudflare secret WORKER_BASE, e.g. https://account-connectors.<your-subdomain>.workers.dev"
+    connect: "Printed by your first npx wrangler deploy (SETUP.md step 3)."
+    verify: "bash scripts/smoke-test.sh"
+
+  - name: Admin email
+    id: admin_email
+    type: env-key
+    required: false
+    powers: "the vendor tools under the default admin-only ACL, the raw google_api passthrough, and approval slips that other users may redeem"
+    key: ADMIN_EMAIL
+    where: "Cloudflare secret ADMIN_EMAIL"
+    connect: "Your own email (recommended). With the shipped ACL ({}), only this person may use vendor tools until the ACL var grants others (SETUP.md step 5). Blank = no admin."
+
+  # ---------------------------------------------------------------- vendors (all optional)
+  - name: Meta System User token (reads)
+    id: meta_read
+    type: env-key
+    required: false
+    powers: "meta_get: read-only Graph API reads of your ad accounts (campaigns, insights, creatives)"
+    key: META_ACCESS_TOKEN
+    where: "Cloudflare secret META_ACCESS_TOKEN"
+    get_url: https://business.facebook.com/settings/system-users
+    connect: "In YOUR OWN Business Manager: create a System User, assign your ad account(s), Generate New Token with ads_read. Step by step with error fixes: SETUP.md, Meta."
+    tier: "free; needs admin on your Business Manager"
+    verify: "node scripts/check-vendors.mjs"
+
+  - name: Meta app id and secret (writes)
+    id: meta_app
+    type: env-key
+    required: false
+    powers: "meta_connect + the gated Meta write tools, acting as each signed-in person"
+    key: META_APP_ID
+    where: "Cloudflare secrets META_APP_ID and META_APP_SECRET"
+    get_url: https://developers.facebook.com/apps
+    connect: "Create YOUR OWN Business-type Meta app with Facebook Login for Business; valid OAuth redirect URI <WORKER_BASE>/meta/callback; give each person who will connect a role on the app. Walkthrough: SETUP.md, Meta writes."
+    verify: "node scripts/check-vendors.mjs"
+
+  - name: Google Ads developer token
+    id: gads_dev_token
+    type: env-key
+    required: false
+    powers: "gads_search: read-only GAQL queries"
+    key: GOOGLE_ADS_DEVELOPER_TOKEN
+    where: "Cloudflare secret GOOGLE_ADS_DEVELOPER_TOKEN"
+    get_url: https://ads.google.com/aw/apicenter
+    connect: "YOUR OWN Google Ads manager account > Tools > API Center. Production accounts need Basic access or higher. SETUP.md, Google Ads."
+    verify: "node scripts/check-vendors.mjs"
+
+  - name: Google Ads OAuth client and refresh token
+    id: gads_oauth
+    type: env-key
+    required: false
+    powers: "the server's stored Google Ads login used by gads_search"
+    key: GOOGLE_ADS_REFRESH_TOKEN
+    where: "Cloudflare secrets GOOGLE_ADS_CLIENT_ID, GOOGLE_ADS_CLIENT_SECRET, GOOGLE_ADS_REFRESH_TOKEN (and optional GOOGLE_ADS_LOGIN_CUSTOMER_ID)"
+    get_url: https://console.cloud.google.com/apis/credentials
+    connect: "In YOUR OWN Google Cloud project enable the Google Ads API, create a Desktop app OAuth client, then run node scripts/mint-google-ads-refresh-token.mjs --write-env (script ships in this package). Walkthrough: SETUP.md, Google Ads."
+    verify: "node scripts/check-vendors.mjs"
+
+  - name: Shopify app credentials or store tokens
+    id: shopify
+    type: env-key
+    required: false
+    powers: "shopify_query: read-only Admin GraphQL queries"
+    key: SHOPIFY_CLIENT_ID
+    where: "Cloudflare secrets SHOPIFY_CLIENT_ID + SHOPIFY_CLIENT_SECRET, and/or SHOPIFY_TOKENS"
+    get_url: https://dev.shopify.com
+    connect: "Create YOUR OWN app in the Shopify Dev Dashboard with read scopes and redirect URL <WORKER_BASE>/shopify/callback, then open <WORKER_BASE>/shopify/install?store=<subdomain>. Walkthrough: SETUP.md, Shopify."
+    verify: "node scripts/check-vendors.mjs"
+
+  - name: Klaviyo private API key
+    id: klaviyo
+    type: env-key
+    required: false
+    powers: "klaviyo_get: read-only Klaviyo API reads (campaigns, flows, metrics, segments)"
+    key: KLAVIYO_API_KEY
+    where: "Cloudflare secret KLAVIYO_API_KEY"
+    get_url: https://www.klaviyo.com/settings/account/api-keys
+    connect: "Create a private key with Read-only access in YOUR OWN Klaviyo account. SETUP.md, Klaviyo."
+    verify: "node scripts/check-vendors.mjs"
+
+  # ---------------------------------------------------------------- the connection itself
+  - name: account-connectors MCP connection
+    id: mcp_connection
+    type: mcp
+    required: true
+    powers: "every tool: Claude reaches your deployed server through this connection"
+    get_url: https://claude.ai/settings/connectors
+    connect: "claude.ai: Settings > Connectors > Add custom connector > <WORKER_BASE>/mcp. Claude Code: claude mcp add --transport http account-connectors <WORKER_BASE>/mcp, then /mcp to sign in."
+    mcp_tool_probe: "mcp__account-connectors__ping"
+    where: "MCP connection (per user), NOT a .env key"
+
+entry_run: "npm install && npm run check"
+
+certify:
+  exit_code: 0
+  min_bytes: 1000
+  artifacts:
+    - ".wrangler/dry-run/index.js"
+  audit: "python3 verify_portable.py ."

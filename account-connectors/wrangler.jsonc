@@ -1,0 +1,30 @@
+/**
+ * account-connectors: Cloudflare Worker config.
+ * Secrets (keys, tokens, the sign-in allowlist) are NOT here. Set them with
+ * `npx wrangler secret put NAME`; see SETUP.md and .env.example.
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "account-connectors",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-07-02",
+	"compatibility_flags": ["nodejs_compat"],
+	"migrations": [{ "new_sqlite_classes": ["AccountConnectorsMCP"], "tag": "v1" }],
+	"durable_objects": { "bindings": [{ "class_name": "AccountConnectorsMCP", "name": "MCP_OBJECT" }] },
+	// Replace with the id printed by: npx wrangler kv namespace create OAUTH_KV
+	"kv_namespaces": [{ "binding": "OAUTH_KV", "id": "REPLACE_WITH_YOUR_KV_NAMESPACE_ID" }],
+	"dev": { "port": 8788 },
+	"vars": {
+		// Per-user access to the vendor tools (Meta, Google Ads, Shopify, Klaviyo).
+		// "{}" (the default) = ADMIN-ONLY: only ADMIN_EMAIL may use vendor tools and
+		// every other signed-in user is refused (with no ADMIN_EMAIL, nobody is).
+		// Grant others explicitly, e.g.:
+		// {"owner@example.com": ["*"], "*": ["act_YOUR_AD_ACCOUNT_ID", "1234567890", "your-store", "klaviyo"]}
+		// {"*": ["*"]} lets EVERY signed-in user reach every account the server keys can see.
+		"ACL": "{}",
+		// Optional short names for accounts. Example:
+		// {"acme": {"gads": "1234567890", "meta": "act_YOUR_AD_ACCOUNT_ID", "shopify": "acme-store"}}
+		"CLIENTS": "{}"
+	},
+	"observability": { "enabled": true }
+}

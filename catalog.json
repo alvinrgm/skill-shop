@@ -14,6 +14,17 @@
       "image": "ad-library/explainer/explainer-4x5.png"
     },
     {
+      "slug": "account-connectors",
+      "kind": "plugin",
+      "tag": "Connectors",
+      "name": "Account connectors",
+      "summary": "Deploy your own MCP server on Cloudflare so Claude can work in Google Workspace, Meta Ads, Google Ads, Shopify and Klaviyo with your own keys. Sign-in allowlist, per-person account access, and writes that need an approval first.",
+      "needs": "A free Cloudflare account, Node 20+, a Google Cloud OAuth client, and the vendor keys you want to connect",
+      "version": "1.0.0",
+      "published": "2026-10-21",
+      "updated": "2026-10-21"
+    },
+    {
       "slug": "adlib-creative-intel",
       "kind": "plugin",
       "tag": "Creative intelligence",
