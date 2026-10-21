@@ -1,0 +1,10 @@
+{
+ "_note": "Winning (W) and losing (L) creative traits. A verdict moves only on evidence: your attribution read, a matched-spend comparison, or a finished batch test. Record the date, the source and the exact words of whoever gave the verdict.",
+ "traits": [
+  {"id": "W1", "kind": "winning", "title": "Example: the product huge in frame beats a lifestyle wide shot",
+   "evidence": [{"date": "YYYY-MM-DD", "source": "where the read came from", "read": "the number or the verdict, verbatim"}],
+   "applied_as": "how it is enforced: a template constraint, a badge, a default-on property"},
+  {"id": "L1", "kind": "losing", "title": "Example: testimonial-only layouts underperform as the lead ad",
+   "evidence": [], "applied_as": "template badge SUPPORT ONLY"}
+ ]
+}

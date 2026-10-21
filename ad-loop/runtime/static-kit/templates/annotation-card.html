@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  /* Inset-photo + annotation cards (elite-corpus pattern). Headline becomes an object
+     inside a rounded slab; photo sits as a rounded card on the field; two dark
+     annotation cards with line icons lie over the photo; wide bare bottom margin
+     (confident negative space). */
+  .canvas { background:var(--ground-2); }
+
+  .hook { padding:92px 100px 0; }
+  .hook .slab {
+    display:inline-block; background:var(--highlight); color:var(--ink);
+    font-family:var(--font-slab); font-style:italic; font-size:82px; line-height:1;
+    text-transform:uppercase; letter-spacing:-.01em;
+    padding:14px 26px 18px; border-radius:22px; transform:rotate(-1.2deg);
+  }
+  .hook .rest {
+    font-family:var(--font-serif); font-weight:600; font-size:70px; line-height:1.06;
+    color:var(--support); margin-top:14px;
+  }
+
+  .shot {
+    position:absolute; left:100px; top:430px; width:880px; height:640px;
+    border-radius:30px; overflow:hidden; box-shadow:0 26px 54px color-mix(in srgb, var(--ink) 20%, transparent);
+  }
+  .shot img { width:100%; height:100%; object-fit:cover; }
+
+  .note {
+    position:absolute; background:var(--ink); color:var(--ground);
+    border-radius:20px; padding:20px 22px 22px; width:322px;
+    box-shadow:0 16px 34px color-mix(in srgb, var(--ink) 30%, transparent);
+  }
+  .note .lbl {
+    font-family:var(--font-shout); font-size:15px; letter-spacing:.10em;
+    color:var(--highlight); text-transform:uppercase; display:block; margin:10px 0 8px;
+  }
+  .note .txt { font-family:var(--font-serif); font-size:23px; line-height:1.34; }
+  .note.a { left:132px; top:492px; }
+  .note.b { right:132px; top:790px; }
+
+  .fine {
+    position:absolute; left:100px; right:100px; top:1152px;
+    font-family:var(--font-serif); font-size:19px; color:var(--ink); opacity:.62;
+  }
+  .url-line { text-align:left; left:100px; right:auto; bottom:64px; color:var(--support); font-size:23px; }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="hook">
+      <span class="slab">{{slab}}</span>
+      <div class="rest">{{rest}}</div>
+    </div>
+
+    <div class="shot"><img src="{{img}}"></div>
+
+    <div class="note a">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 26 C 6 20 3 13 6 8 C 9 4 14 5 15 9 C 16 5 21 4 24 8 C 27 13 24 20 15 26 Z"
+              stroke="var(--highlight)" stroke-width="1.9" stroke-linejoin="round"/>
+      </svg>
+      <span class="lbl">{{lbl_a}}</span>
+      <div class="txt">{{txt_a}}</div>
+    </div>
+
+    <div class="note b">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 27 L15 9" stroke="var(--highlight)" stroke-width="1.9" stroke-linecap="round"/>
+        <path d="M15 14 C 9 13 6 9 7 4 C 12 4 15 8 15 14 Z" stroke="var(--highlight)" stroke-width="1.7" stroke-linejoin="round"/>
+        <path d="M15 14 C 21 13 24 9 23 4 C 18 4 15 8 15 14 Z" stroke="var(--highlight)" stroke-width="1.7" stroke-linejoin="round"/>
+      </svg>
+      <span class="lbl">{{lbl_b}}</span>
+      <div class="txt">{{txt_b}}</div>
+    </div>
+
+    <div class="fine">{{fine}}</div>
+    <div class="url-line">{{url}}</div>
+  </div>
+</body>
+</html>

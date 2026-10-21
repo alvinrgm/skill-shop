@@ -2,6 +2,41 @@
   "_readme": "The one list of what this shop publishes. risegm.com/skills renders its cards from this file, so a new entry here is a new card on the site. Slugs are published anchors (risegm.com/skills#<slug>): never rename or remove one. Optional field image: a repo-relative path to the card image. Check with: python3 scripts/check_catalog.py",
   "items": [
     {
+      "slug": "ad-library",
+      "kind": "plugin",
+      "tag": "Static ad production",
+      "name": "Ad creative library",
+      "summary": "Your brand kit, photo bank, templates and test roadmap in one Figma file. Claude maps what you've tested, plans each batch, builds 4:5 and 9:16 statics layer by layer, and runs size, sharpness and claim checks before handing you files to upload.",
+      "needs": "A paid Figma Full or Dev seat (Figma MCP), Python, a Gemini API key",
+      "version": "1.0.0",
+      "published": "2026-10-21",
+      "updated": "2026-10-21",
+      "image": "ad-library/explainer/explainer-4x5.png"
+    },
+    {
+      "slug": "ad-loop",
+      "kind": "plugin",
+      "tag": "Static ad production",
+      "name": "Static ad loop",
+      "summary": "Brief in, finished static ads out. Give it a brand URL and a short interview, and Claude runs each ad through scored rounds (copy, layout, product physics, a mock feed test) until it's genuinely good, or tells you where the ceiling is.",
+      "needs": "Python, Node 20+, Playwright Chromium, a Gemini API key",
+      "version": "1.0.0",
+      "published": "2026-10-21",
+      "updated": "2026-10-21"
+    },
+    {
+      "slug": "account-connectors",
+      "kind": "plugin",
+      "tag": "Connectors",
+      "name": "Account connectors",
+      "summary": "Deploy your own MCP server on Cloudflare so Claude can work in Google Workspace, Meta Ads, Google Ads, Shopify and Klaviyo with your own keys. Sign-in allowlist, per-person account access, and writes that need an approval first.",
+      "needs": "A free Cloudflare account, Node 20+, a Google Cloud OAuth client, and the vendor keys you want to connect",
+      "version": "1.0.0",
+      "published": "2026-10-21",
+      "updated": "2026-10-21",
+      "image": "account-connectors/explainer/explainer-4x5.png"
+    },
+    {
       "slug": "adlib-creative-intel",
       "kind": "plugin",
       "tag": "Creative intelligence",

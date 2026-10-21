@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  /* Character plate + brand-mark lockup. Sibling of portrait-column.html, for the
+     case where the brand has to do the recognition work because no pack is in
+     frame: the real brand mark is placed as an IMAGE at large scale (so the ad
+     carries two type families and not three), and the copy column sits in the
+     ground the plate itself left unlit.
+
+     Nothing is composited onto the plate but flat ink and the mark. Every
+     position and size below is passed in as explicit px so it can be MEASURED
+     against the plate's luminance profile before rendering, never eyeballed.
+     No scrim, no card, no bar — a scrim would be a second surface. */
+  .plate { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+
+  .head {
+    position:absolute;
+    left:{{head_x}}px; top:{{head_y}}px; width:{{head_w}}px;
+    font-family:var(--font-slab);
+    font-size:{{head_size}}px; line-height:1.12; letter-spacing:-.012em;
+    color:{{ink_color}};
+  }
+  .rule {
+    position:absolute;
+    left:{{rule_x}}px; top:{{rule_y}}px; width:{{rule_w}}px;
+    height:1px; background:{{ink_color}}; opacity:{{rule_op}};
+  }
+  .sub {
+    position:absolute;
+    left:{{sub_x}}px; top:{{sub_y}}px; width:{{sub_w}}px;
+    font-family:var(--font-serif); font-weight:500;
+    font-size:{{sub_size}}px; line-height:1.35;
+    color:{{sub_color}};
+  }
+  .mark {
+    position:absolute;
+    left:{{mark_x}}px; top:{{mark_y}}px; width:{{mark_w}}px;
+  }
+  .url {
+    position:absolute;
+    left:{{url_x}}px; top:{{url_y}}px;
+    font-family:var(--font-serif); font-weight:400;
+    font-size:{{url_size}}px; letter-spacing:.02em;
+    color:{{ink_color}}; opacity:{{url_op}};
+  }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <img class="plate" src="{{img}}">
+    <div class="head">{{head}}</div>
+    <div class="rule"></div>
+    <div class="sub">{{sub}}</div>
+    <img class="mark" src="{{mark}}">
+    <div class="url">{{url}}</div>
+  </div>
+</body>
+</html>

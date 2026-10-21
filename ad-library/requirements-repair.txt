@@ -1,0 +1,5 @@
+# Optional: only for scripts/label_composite.py (real-label repair on a generated plate)
+opencv-python-headless>=4.8
+scipy>=1.10
+numpy>=1.24
+pillow>=10.0

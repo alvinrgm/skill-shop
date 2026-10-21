@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .kicker { font-family:var(--font-serif); font-style:italic; font-size:28px; color:var(--support); text-align:center; padding-top:76px; }
+  .polaroid { position:relative; margin:64px auto 0; background:var(--paper); padding:24px 24px 90px; width:780px; box-shadow:0 24px 50px color-mix(in srgb, var(--ink) 20%, transparent); transform:rotate(-2deg); }
+  .polaroid img { display:block; width:100%; height:610px; object-fit:cover; filter:sepia(.12) saturate(.94); }
+  .tape { position:absolute; width:150px; height:44px; background:color-mix(in srgb, var(--ground) 90%, transparent); box-shadow:0 4px 8px color-mix(in srgb, var(--ink) 12%, transparent); }
+  .tape.left { top:-20px; left:-28px; transform:rotate(-8deg); }
+  .tape.right { top:-18px; right:-24px; transform:rotate(6deg); }
+  .caption { position:absolute; bottom:16px; left:16px; right:16px; font-family:var(--font-hand); font-size:32px; color:var(--ink); text-align:center; }
+  .headline { font-family:var(--font-slab); font-size:56px; color:var(--ink); text-align:center; line-height:1.1; margin-top:44px; padding:0 90px; }
+  .cta-wrap { text-align:center; margin-top:28px; }
+  .cta-wrap .cta-pill { font-size:21px; padding:16px 34px; }
+  .offer-line { font-family:var(--font-serif); font-size:23px; color:var(--support); text-align:center; margin-top:14px; }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="kicker">{{kicker}}</div>
+
+    <div class="polaroid">
+      <div class="tape left"></div>
+      <div class="tape right"></div>
+      <img src="{{img}}">
+      <div class="caption">{{caption}}</div>
+    </div>
+
+    <div class="headline">{{headline}}</div>
+    <div class="cta-wrap"><span class="cta-pill">{{cta}}</span></div>
+    <div class="offer-line">{{offer}}</div>
+  </div>
+</body>
+</html>

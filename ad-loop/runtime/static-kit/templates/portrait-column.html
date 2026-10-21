@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  /* Character-portrait column. ONE photographic/rendered plate carries the ad and
+     NOTHING is composited onto it — the only added layer is this type, set in the
+     column of ground the plate itself left empty. No scrim, no card, no bar: a scrim
+     would be a second surface and this template exists for the one-world rule.
+     The type column is passed in as explicit px so it can be MEASURED against the
+     plate's own luminance profile before rendering, never eyeballed. */
+  .plate { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+
+  .col {
+    position:absolute;
+    left:{{col_x}}px; top:{{col_y}}px; width:{{col_w}}px;
+  }
+  .head {
+    font-family:var(--font-slab);
+    font-size:{{head_size}}px; line-height:1.12; letter-spacing:-.012em;
+    color:{{ink_color}};
+  }
+  .hinge {
+    height:1px; background:{{ink_color}}; opacity:.38;
+    margin:{{hinge_gap}}px 0; width:{{hinge_w}}px;
+  }
+  .now {
+    font-family:var(--font-slab);
+    font-size:{{now_size}}px; line-height:1.12; letter-spacing:-.008em;
+    color:{{ink_color}};
+  }
+  .sub {
+    position:absolute;
+    left:{{sub_x}}px; top:{{sub_y}}px; width:{{sub_w}}px;
+    font-family:var(--font-serif); font-weight:500;
+    font-size:{{sub_size}}px; line-height:1.35;
+    color:{{sub_color}};
+  }
+  .brand {
+    position:absolute;
+    left:{{brand_x}}px; top:{{brand_y}}px;
+    font-family:var(--font-shout);
+    font-size:{{brand_size}}px; letter-spacing:.15em; text-transform:uppercase;
+    color:{{ink_color}};
+  }
+  .brand .url {
+    display:block; margin-top:{{url_gap}}px;
+    font-family:var(--font-serif); font-weight:400;
+    font-size:{{url_size}}px; letter-spacing:.02em; text-transform:none;
+    opacity:.78;
+  }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <img class="plate" src="{{img}}">
+
+    <div class="col">
+      <div class="head">{{head}}</div>
+      <div class="hinge"></div>
+      <div class="now">{{now}}</div>
+    </div>
+
+    <div class="sub">{{sub}}</div>
+
+    <div class="brand">{{brand}}<span class="url">{{url}}</span></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .canvas { background:radial-gradient(120% 90% at 50% 30%, var(--accent) 0%, var(--accent-deep) 70%); color:var(--ground); }
+  .stack { text-align:center; padding-top:120px; font-family:var(--font-slab); line-height:.96; }
+  .stack .s1 { display:block; font-size:96px; color:var(--highlight); }
+  .stack .s2 { display:block; font-size:150px; color:var(--paper); }
+  .stack .s3 { display:block; font-size:60px; color:var(--highlight); margin-top:18px; font-family:var(--font-serif); font-weight:700; }
+  .sub { font-family:var(--font-serif); font-size:30px; text-align:center; margin-top:26px; opacity:.92; }
+  .product { position:absolute; left:50%; transform:translateX(-50%); bottom:112px; height:480px; }
+  .product img { height:480px; filter:drop-shadow(0 30px 56px color-mix(in srgb, var(--ink) 40%, transparent)); }
+  .stamp { width:210px; height:210px; right:150px; bottom:300px; color:var(--highlight); font-size:22px; padding:32px; transform:rotate(9deg); }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="stack">
+      <span class="s1">{{line1}}</span>
+      <span class="s2">{{line2}}</span>
+      <span class="s3">{{line3}}</span>
+    </div>
+    <div class="sub">{{sub}}</div>
+
+    <div class="product"><img src="{{img}}"></div>
+    <div class="stamp">{{badge}}</div>
+
+    <div class="url-line">{{url}}</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,8 @@
+# Instruments + image handling
+pillow>=10.0
+numpy>=1.24
+# Gemini (vision instruments + feed-gate) and .env loading
+google-genai>=1.0.0
+python-dotenv>=1.0.0
+# Browser automation: inspo harvester, Ad Library lookup, in-feed mock
+playwright==1.62.0   # keep in lockstep with runtime/static-kit/package.json (one shared Chromium download)

@@ -1,0 +1,16 @@
+{
+ "_note": "The angle tree. Each sub-angle's `match` is a regex run against Meta ad NAMES to map past ads onto it (learn.py). Name new ads so they match (e.g. 'B01-A-taste-craving'). Replace the examples with your brand's angles.",
+ "thresholds": {"light_below_spend": 500},
+ "angles": [
+  {"id": "A1", "name": "Taste", "subs": [
+   {"id": "A1.1", "name": "Craving / indulgence", "match": "taste|craving|indulg", "hooks": [], "test_note": ""},
+   {"id": "A1.2", "name": "Texture close-up", "match": "texture|crunch|macro", "hooks": [], "test_note": ""}]},
+  {"id": "A2", "name": "Health", "subs": [
+   {"id": "A2.1", "name": "No added sugar", "match": "sugar", "hooks": [], "test_note": ""},
+   {"id": "A2.2", "name": "Protein", "match": "protein", "hooks": [], "test_note": ""}]},
+  {"id": "A3", "name": "Offer", "subs": [
+   {"id": "A3.1", "name": "First-order offer", "match": "offer|free.?ship|discount", "hooks": [], "test_note": ""}]},
+  {"id": "A4", "name": "Social proof", "subs": [
+   {"id": "A4.1", "name": "Reviews and quotes", "match": "review|testimonial|quote", "hooks": [], "test_note": ""}]}
+ ]
+}

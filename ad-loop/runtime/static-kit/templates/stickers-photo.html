@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .plate { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .headline { position:relative; font-family:var(--font-slab); font-size:64px; line-height:1.05; color:var(--ground); text-shadow:0 2px 18px color-mix(in srgb, var(--ink) 50%, transparent); text-align:center; padding:92px 120px 0; }
+  .sticker { position:absolute; width:150px; height:150px; border-radius:50%; background:color-mix(in srgb, var(--ground) 96%, transparent); border:2.5px solid var(--accent); color:var(--support); display:flex; align-items:center; justify-content:center; text-align:center; font-family:var(--font-serif); font-weight:700; font-size:21px; line-height:1.2; padding:18px; box-shadow:0 10px 24px color-mix(in srgb, var(--ink) 20%, transparent); }
+  .sticker.s1 { left:72px; top:460px; transform:rotate(-7deg); }
+  .sticker.s2 { left:96px; top:660px; transform:rotate(5deg); }
+  .sticker.s3 { left:72px; top:860px; transform:rotate(-4deg); }
+  .trio { position:absolute; left:0; right:0; bottom:150px; text-align:center; font-family:var(--font-serif); font-weight:700; font-size:25px; color:var(--ground); text-shadow:0 2px 12px color-mix(in srgb, var(--ink) 55%, transparent); }
+  .url-line { bottom:52px; color:var(--support); }
+  .cta-pill.small { position:absolute; left:50%; transform:translateX(-50%); bottom:88px; font-size:20px; padding:14px 30px; }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <img class="plate" src="{{img}}">
+    <div class="headline">{{headline}}</div>
+    <div class="sticker s1">{{s1}}</div>
+    <div class="sticker s2">{{s2}}</div>
+    <div class="sticker s3">{{s3}}</div>
+    <div class="trio">{{trio}}</div>
+    <span class="cta-pill small">{{cta}}</span>
+    <div class="url-line">{{url}}</div>
+  </div>
+</body>
+</html>

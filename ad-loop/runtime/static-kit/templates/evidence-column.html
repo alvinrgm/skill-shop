@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+/* ------------------------------------------------------------------ *
+   evidence-column — verbatim customer review fragments that all end on
+   the SAME word, set so that the shared word becomes a literal vertical
+   column of colour.
+
+   The rule, and the whole difference from `evidence-wall`:
+
+     every quote is set at ONE size. The line's left edge is placed at
+         left_i = COLUMN_X - advance(prefix_i)
+     so the shared word STARTS at COLUMN_X on every line. Lines are
+     ragged left (each buyer needed a different amount of sentence to get
+     there) and ragged right (their own punctuation). Nothing is scaled
+     to fit anything: the only per-line number is a measured advance
+     width, which is what typesetting has always been.
+
+   The predecessor fitted each line to a common measure, which made nine
+   different sizes and nine different x-positions for the shared word —
+   the device the concept was named for did not exist in the render.
+
+   Flat ink on a flat field for the type; the one photograph (the real
+   pack) is cropped by the canvas edges and carries no composited
+   shadow, so there is still nothing for a shadow-physics audit to find.
+ * ------------------------------------------------------------------ */
+
+:root{
+  --field:var(--ground);   /* --ground, --ink and --accent (the ONE accent) come from tokens.css */
+  --quiet:color-mix(in srgb, var(--ink) 76%, transparent);
+  --quieter:color-mix(in srgb, var(--ink) 72%, transparent);
+}
+
+/* ------------------------------------------------------------------ *
+   CANVAS PARAMETERS — every one a `var(NAME, default)`.
+   The defaults ARE the approved 1080x1350 (4:5) geometry, so a variant
+   that supplies no `root_style` renders byte-identically to it
+   (parameterise in place, then PROVE the old render reproduces, rather
+   than forking the solver).
+
+   A 9:16 re-layout supplies `root_style` with the overrides it needs.
+   Nothing here is a magic number in the layout code below; the layout
+   reads these and the JS reads the matching data-* attributes.
+ * ------------------------------------------------------------------ */
+.canvas{
+  --M:100px;               /* outer margin, 9.26% on 1080 (law 4)      */
+  --BAND:739px;            /* the width the quote block is solved into */
+  --CW:1080px;             /* canvas width                            */
+  --CH:1350px;             /* canvas height                           */
+  --WHOR:var(--M);         /* attribution column's RIGHT offset        */
+  --CHROME:800px;          /* y of the close block's first line; the
+                              whole chrome stack hangs off this as a
+                              rigid unit at frozen internal offsets    */
+  --PACKX:485px; --PACKY:745px; --PACKW:640px;   /* illustrative; solve per pack */
+
+  /* --- the chrome block's own type scale and internal rhythm ------------
+     Every number here is the approved 4:5 value, so a variant that
+     overrides none of them reproduces it byte for byte. They are variables
+     so a variant can make the close block faster (fewer lines) and bigger
+     (the freed room spent as type) — a change of RHYTHM, which the
+     frozen-rigid-unit convention was never meant to prevent, only to stop
+     happening silently. */
+  --CLOSE_FS:30px;  --CLOSE_DY:39px;
+  --SUB_FS:18px;    --SUB1_DY:105px;  --SUB2_DY:129px;
+  --STAT_FS:14px;   --STAT_DY:195px;
+  --MICRO_DY1:245px; --MICRO_DY2:265px;
+  --URL_FS:17px;    --URL_DY:320px;
+  --PREM_TOP:352px;        /* the premise line's own top; unused when no
+                              `premise` field is supplied (node deletes)  */
+
+  width:var(--CW);height:var(--CH);position:relative;overflow:hidden;
+  background:var(--field);
+  font-family:'Brand Serif','Times New Roman',serif;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
+
+/* --- the real pack, cropped by the right and bottom canvas edges ----------
+   Set --PACKW so rendered width / native width is <= 1.0 (law 29: a
+   DOWNsample only; e.g. 600px drawn from 1200px of native content = 2.0x
+   down). Check the arithmetic in your per-ad QA. No shadow: the pack's
+   base is off-canvas, so there is no ground plane for one to fall on. */
+.pack{position:absolute;left:var(--PACKX);top:var(--PACKY);width:var(--PACKW);display:block}
+
+/* --- brand mark, top right — OPTIONAL --------------------------------------
+   Draw it no wider than the file's native width (law 29: e.g. 240px from a
+   300px file = 0.8x). The right/top offsets cancel the file's own transparent
+   padding so the MARK's ink lands on the right margin and on the anchor's
+   top line; re-solve them for your logo file.
+
+   Supply no `mark` field and the node deletes itself (see the guard at the
+   bottom of the script). That is the superimposed-logo-free variant: when a
+   real pack is in frame, the pack's own printed wordmark is the brand
+   presence and a second raster lockup is a doubled, upscale-noisy repeat. */
+.mark{position:absolute;right:60px;top:80px;width:240px;display:block}   /* illustrative */
+
+/* --- the anchor: the invariant word, alone, huge. No eyebrow: the pattern
+       is the reveal, and a label spends it before the eye finds it. -------- */
+.anchor{
+  /* DEFAULT size/top. A variant may override BOTH with the optional
+     `anchor_style` field (an inline style string) — used when the top band has
+     no second object in it and the word is free to grow. Law 4's gate is the
+     MEASURED x-height band (10-14% of canvas height), checked in your per-ad QA, so the
+     number here is a proposal and the render is the verdict. */
+  position:absolute;left:var(--M);top:112px;
+  font-weight:900;font-size:196px;line-height:.86;
+  letter-spacing:-.035em;color:var(--accent);
+  white-space:nowrap;
+}
+
+/* --- the premise line — OPTIONAL ------------------------------------------
+   The story's SETUP: what was true before this product. Without it a cold
+   reader parses the invariant word as a word and misses it as a story (a
+   Reconstruction-Gap fatal).
+
+   It is NOT an eyebrow. An eyebrow explains the reveal before the eye finds
+   it and spends the idea; a setup line hands the reader the
+   clock-start and lets the column deliver the rest. So this line never says
+   how many people, never says they agree, and never says what happened next.
+
+   Its type is not chosen — it is `var(--CLOSE_FS)` and weight 500, i.e. the
+   CLOSE COUPLET's exact size and weight, in the same inherited family and
+   ink. That makes the brand's two voice moments a matched pair bracketing
+   the customers' six, and it is what stops a one-line serif sentence sitting
+   above six one-line serif quotes from reading as a seventh, unattributed
+   testimonial. The relation is structural here AND gated on the render in
+   your per-ad QA, because a template that can only produce it is worth more than
+   a check that notices it drifted.
+
+   Supply no `premise` field and the node deletes itself. */
+.premise{
+  position:absolute;left:var(--M);top:var(--PREM_TOP);
+  font-size:var(--CLOSE_FS);line-height:1.3;font-weight:500;
+}
+
+/* --- the wall ------------------------------------------------------------- */
+#wall{position:absolute;left:0;width:var(--CW)}
+.row{position:absolute;width:var(--CW)}
+.q{
+  position:absolute;top:0;
+  font-weight:500;line-height:1;white-space:nowrap;
+}
+.q .hang{position:absolute;right:100%;top:0}   /* opening quote hangs out of the measure */
+.q .inv{color:var(--accent)}                    /* the invariant word — the column */
+/* Attribution. The opacity is SOLVED for 4.5:1 on this field at this size as MEASURED on the
+   render, not as computed on the ideal composite: at 10px the antialiasing penalty ran ~26%
+   and a .72 alpha that computes to 5.39:1 measured 4.00:1 and failed. 11px at .86 measures
+   clear. (Per-element WCAG on exclusive ink catches this; a per-line test can certify these
+   at ~12:1 because they share a row band with a large quote.) */
+.who{
+  position:absolute;right:var(--WHOR);width:122px;
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:11px;line-height:1.45;letter-spacing:.075em;text-transform:uppercase;
+  color:color-mix(in srgb, var(--ink) 86%, transparent);text-align:right;
+}
+.who b{font-weight:700;font-size:12px;color:color-mix(in srgb, var(--ink) 92%, transparent);display:block}
+
+/* --- chrome, all of it left of the pack ------------------------------------ */
+/* The chrome stack is ONE RIGID UNIT hung off --CHROME. The offsets below are
+   the approved internal rhythm, frozen: moving the block across a canvas
+   change must not silently restyle it (not moving something is worth more
+   than improving it). */
+.close{position:absolute;left:var(--M);font-size:var(--CLOSE_FS);line-height:1.3;font-weight:500}
+.close.l1{top:var(--CHROME)}
+.close.l2{top:calc(var(--CHROME) + var(--CLOSE_DY))}
+.sub{position:absolute;left:var(--M);font-size:var(--SUB_FS);line-height:1.3;font-weight:400;color:var(--quiet)}
+.sub.l1{top:calc(var(--CHROME) + var(--SUB1_DY))}
+.sub.l2{top:calc(var(--CHROME) + var(--SUB2_DY))}
+.stat{
+  position:absolute;left:var(--M);top:calc(var(--CHROME) + var(--STAT_DY));
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:700;font-size:var(--STAT_FS);letter-spacing:.115em;text-transform:uppercase;
+  color:color-mix(in srgb, var(--ink) 82%, transparent);
+}
+/* law 18 compliance line. OPTIONAL: an operator may remove it (record the
+   decision in the client's claims folder). The rule and its styling stay here
+   deliberately — supplying `micro1`/`micro2` restores it exactly, at
+   zero cost, which is the cheapest possible insurance against that being the
+   wrong call on an ad that has not run. */
+.micro{
+  position:absolute;left:var(--M);
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:15px;line-height:1.33;letter-spacing:.02em;color:color-mix(in srgb, var(--ink) 88%, transparent);
+}
+.micro.l1{top:calc(var(--CHROME) + var(--MICRO_DY1))}
+.micro.l2{top:calc(var(--CHROME) + var(--MICRO_DY2))}
+.url{
+  position:absolute;left:var(--M);top:calc(var(--CHROME) + var(--URL_DY));
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:700;font-size:var(--URL_FS);letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+}
+</style>
+</head>
+<body>
+<div class="canvas" style="{{root_style}}">
+  <img class="pack" src="{{pack}}" alt="">
+  <img class="mark" src="{{mark}}" alt="">
+  <div class="anchor" style="{{anchor_style}}">{{anchor}}</div>
+  <div class="premise">{{premise}}</div>
+
+  <!-- data-top is the ONLY wall number carried here; BAND and MARGIN are read from the
+       canvas's own CSS variables so the solver and the stylesheet cannot disagree. -->
+  <div id="wall" data-top="{{wall_top}}" data-pitch-ratio="1.36"></div>
+
+  <div class="close l1">{{close1}}</div>
+  <div class="close l2">{{close2}}</div>
+  <div class="sub l1">{{sub1}}</div>
+  <div class="sub l2">{{sub2}}</div>
+  <div class="stat">{{stat}}</div>
+  <div class="micro l1">{{micro1}}</div>
+  <div class="micro l2">{{micro2}}</div>
+  <div class="url">{{url}}</div>
+</div>
+
+<script>
+/* ------------------------------------------------------------------------ *
+ * THE COLUMN RULE.
+ *
+ * One size for every line. Solved, not chosen:
+ *
+ *   blockEm = hang + max(prefix) + invariant + max(tail+closingQuote)   [em]
+ *   F       = BAND / blockEm                                            [px]
+ *   COLUMN_X = margin + (hang + max(prefix)) * F
+ *   left_i   = COLUMN_X - prefix_i * F
+ *
+ * Consequences that a ruler can then check on the rendered pixels:
+ *   · every invariant begins at COLUMN_X        -> one straight accent column
+ *   · every invariant is the same size          -> one size, no per-line scaling
+ *   · the longest line's hung quote lands on the margin, by construction
+ *   · line pitch is a constant ratio of F       -> one leading, not nine
+ *
+ * Runs after document.fonts.ready so the advances are the real ones.
+ * ------------------------------------------------------------------------ */
+function column(){
+  const wall   = document.getElementById('wall');
+  const canvas = document.querySelector('.canvas');
+  const cs     = getComputedStyle(canvas);
+  const cvar   = (n, d) => { const v = parseFloat(cs.getPropertyValue(n)); return isFinite(v) ? v : d; };
+  const quotes = {{quotes_json}};
+  const TOP    = +(wall.dataset.top || 375);      // default = the approved 4:5
+  const RATIO  = +wall.dataset.pitchRatio;
+  const BAND   = cvar('--BAND', 739);
+  const MARGIN = cvar('--M', 100);
+  const CH     = cvar('--CH', 1350);
+  const REF    = 100;
+  const INV    = ('{{invariant}}' || 'every time');   // the shared terminal word of the quote device (supply `invariant`)
+
+  // --- 1. build the rows, splitting each quote at its final invariant word
+  const rows = quotes.map(item => {
+    const i = item.t.toLowerCase().lastIndexOf(INV);
+    const row = document.createElement('div'); row.className = 'row';
+    const q   = document.createElement('div'); q.className = 'q';
+
+    const hang = document.createElement('span'); hang.className = 'hang'; hang.textContent = '“';
+    const pre  = document.createElement('span'); pre.className = 'pre';
+    pre.textContent = item.t.slice(0, i);
+    const inv  = document.createElement('span'); inv.className = 'inv';
+    inv.textContent = item.t.slice(i, i + INV.length);
+    const post = document.createElement('span'); post.className = 'post';
+    post.textContent = item.t.slice(i + INV.length) + '”';
+
+    q.appendChild(hang); q.appendChild(pre); q.appendChild(inv); q.appendChild(post);
+
+    const who = document.createElement('div'); who.className = 'who';
+    who.innerHTML = '<b>' + item.w + '</b>' + item.d;
+
+    row.appendChild(q); row.appendChild(who);
+    wall.appendChild(row);
+    return {row, q, hang, pre, inv, post, who, item};
+  });
+
+  // --- 2. measure advances once, at a reference size (width is linear in size
+  //        for an unbreakable line, so one measurement gives every size)
+  for (const r of rows){
+    r.q.style.fontSize = REF + 'px';
+    r.emPre  = r.pre.getBoundingClientRect().width  / REF;
+    r.emInv  = r.inv.getBoundingClientRect().width  / REF;
+    r.emPost = r.post.getBoundingClientRect().width / REF;
+    r.emHang = r.hang.getBoundingClientRect().width / REF;
+  }
+  const emHang = rows[0].emHang;
+  const emInv  = rows[0].emInv;
+  const maxPre  = Math.max(...rows.map(r => r.emPre));
+  const maxPost = Math.max(...rows.map(r => r.emPost));
+  const blockEm = emHang + maxPre + emInv + maxPost;
+
+  // --- 3. solve the single size and the single column position
+  const F        = BAND / blockEm;
+  const COLUMN_X = MARGIN + (emHang + maxPre) * F;
+  const PITCH    = RATIO * F;
+
+  // --- 4. place. Every line: same size, same column x, same pitch.
+  rows.forEach((r, i) => {
+    r.q.style.fontSize = F + 'px';
+    r.q.style.left = (COLUMN_X - r.emPre * F) + 'px';
+    r.row.style.top = (TOP + i * PITCH) + 'px';
+    r.row.style.height = F + 'px';
+    // the attribution's block bottom sits on the quote's own baseline
+    // (a typical serif puts its baseline ~0.78em below the top of a line-height:1 box)
+    r.who.style.top = (F * 0.78 - 30) + 'px';
+  });
+
+  wall.style.top = '0px';
+  wall.style.height = CH + 'px';
+
+  // --- 5. publish what the rule decided (build notes + qa read this)
+  window.__column = {
+    F: +F.toFixed(3), COLUMN_X: +COLUMN_X.toFixed(2), PITCH: +PITCH.toFixed(3),
+    BAND: BAND, MARGIN: MARGIN, TOP: TOP, CH: CH,
+    blockEm: +blockEm.toFixed(4), emHang: +emHang.toFixed(4), emInv: +emInv.toFixed(4),
+    maxPre: +maxPre.toFixed(4), maxPost: +maxPost.toFixed(4),
+    rows: rows.map((r, i) => ({
+      who: r.item.w, text: r.item.t,
+      emPre: +r.emPre.toFixed(4), emPost: +r.emPost.toFixed(4),
+      left: +(COLUMN_X - r.emPre * F).toFixed(2),
+      hungLeft: +(COLUMN_X - (r.emPre + emHang) * F).toFixed(2),
+      right: +(COLUMN_X + (emInv + r.emPost) * F).toFixed(2),
+      top: +(TOP + i * PITCH).toFixed(2)
+    }))
+  };
+  document.title = 'column ok';
+}
+/* The optional brand mark. An <img> with an empty/unfilled src is not a
+ * no-op — it is a broken-image box the renderer may paint and every
+ * pixel-measuring instrument downstream would then have to know about.
+ * So the node is DELETED when no mark was supplied, and the ad has exactly
+ * one brand presence: whatever the photograph in it actually prints. */
+(function(){
+  const m = document.querySelector('.mark');
+  if (m) {
+    const src = (m.getAttribute('src') || '').trim();
+    if (!src || src.indexOf('{{') === 0) m.remove();
+  }
+  /* The same mechanic, one level up. render.js fills an unsupplied {{field}}
+   * with "", so an optional TEXT line becomes an empty positioned box rather
+   * than nothing: it still occupies the DOM, still reports a client rect to
+   * probe.js, and still has to be explained to every downstream instrument.
+   * So the node is deleted. This is how a variant removes the compliance block
+   * and the second product line without forking the template — absence is
+   * expressed by not supplying a field, and proved on pixels in your QA. */
+  for (const el of document.querySelectorAll('.premise,.close,.sub,.stat,.micro,.url')) {
+    const t = (el.textContent || '').trim();
+    if (!t || t.indexOf('{{') === 0) el.remove();
+  }
+})();
+
+document.fonts.ready.then(column);
+</script>
+</body>
+</html>

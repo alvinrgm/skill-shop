@@ -1,0 +1,121 @@
+/* static-kit theme tokens: a NEUTRAL starter theme (greys + one blue accent).
+
+   Per client, copy this file to tokens.<client>.css (or edit it in place for a single
+   brand) and set the palette from the brand's own site. scripts/intake.py writes the
+   harvested colour candidates to <work>/<client>/brand/palette-CANDIDATES.md and any
+   self-hosted font files plus fonts/INDEX.md to <work>/<client>/brand/fonts/; you pick
+   the final values and enter them here by hand.
+
+   FONTS: no font files ship with this kit. Put the brand's own licensed web fonts in
+   fonts/ under the file names below; until you do, every face falls back to a system
+   font, so renders always work offline. Only use font files the brand licenses for
+   this use.
+
+   SLOTS: --ground / --ground-2 (the field and its deeper variant), --paper (the
+   lightest card/sticker surface), --ink (body type), --accent / --accent-deep (the
+   ONE accent), --support / --support-2 (secondary type and quiet marks),
+   --highlight, --soft, --soft-2 (tints for chips and bubbles). Templates reference
+   only these names, so re-theming is this one block. */
+
+@font-face {
+  font-family: 'Brand Shout';
+  src: url('fonts/brand-shout.woff2') format('woff2'), local('Arial Black');
+}
+@font-face {
+  font-family: 'Brand Display';
+  src: url('fonts/brand-display.woff2') format('woff2'), local('Georgia Bold');
+}
+@font-face {
+  font-family: 'Brand Serif';
+  src: url('fonts/brand-serif.woff2') format('woff2'), local('Georgia');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+:root {
+  --ground:#F4F4F2; --ground-2:#E4E4E1; --paper:#FFFFFF;
+  --ink:#1C1C1E; --accent:#2F5BD3; --accent-deep:#1E3A8A;
+  --support:#3A3A40; --support-2:#6E6E73;
+  --highlight:#C9D6F7; --soft:#D9D9D6; --soft-2:#BDBDB9;
+  --font-shout:'Brand Shout','Arial Black','Helvetica Neue',Arial,sans-serif;
+  --font-slab:'Brand Display','Rockwell','Georgia',serif;
+  --font-serif:'Brand Serif','Georgia','Times New Roman',serif;
+  --font-hand:'Bradley Hand','Segoe Print',cursive;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; overflow:hidden; }
+body { background:var(--ground); font-family:var(--font-serif); color:var(--ink); position:relative; }
+
+.canvas {
+  width:1080px;
+  height:1350px;
+  position:relative;
+  overflow:hidden;
+  background:var(--ground);
+}
+
+.cta-pill {
+  display:inline-block;
+  background:var(--accent);
+  color:var(--ground);
+  font-family:var(--font-shout);
+  font-size:24px;
+  letter-spacing:.08em;
+  padding:20px 40px;
+  border-radius:999px;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+.offer-bar {
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  background:var(--accent);
+  color:var(--ground);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:28px;
+  height:120px;
+  font-family:var(--font-serif);
+  font-size:26px;
+}
+
+.cta-chip {
+  border:2px solid var(--ground);
+  border-radius:999px;
+  padding:14px 30px;
+  font-family:var(--font-shout);
+  font-size:20px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+/* Shared outline/fill word treatment, used by polaroid + offer-led headlines */
+.outline { color:transparent; -webkit-text-stroke:2.5px var(--ink); }
+.fill-accent { color:var(--accent); }
+
+/* corpus-grammar pieces */
+.url-line {
+  position:absolute; left:0; right:0; bottom:52px;
+  text-align:center; font-family:var(--font-serif); font-size:23px;
+  letter-spacing:.02em; opacity:.9;
+}
+.stamp {
+  border-radius:50%; border:3px solid currentColor;
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  position:absolute; transform:rotate(-8deg);
+  font-family:var(--font-serif); font-weight:700; line-height:1.25;
+}
+.stamp::before {
+  content:''; position:absolute; inset:9px; border-radius:50%;
+  border:2px dashed currentColor; opacity:.85;
+}
+.callout {
+  position:absolute; font-family:var(--font-serif); font-weight:700;
+  font-size:27px; line-height:1.3; max-width:250px;
+}

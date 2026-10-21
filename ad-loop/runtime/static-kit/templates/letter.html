@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  /* Long-copy brand letter (elite-corpus pattern). Screaming display headline over a
+     narrative body column, the offer bolded inline (never a bar), product photo
+     bleeding into the bottom-right corner as the one shaped zone divider. */
+  .canvas { background:var(--ground); }
+  .headline {
+    font-family:var(--font-slab); font-size:92px; line-height:1.0;
+    color:var(--support); padding:100px 100px 0; letter-spacing:-.012em;
+  }
+  .body {
+    position:absolute; left:100px; top:432px; width:600px;
+    font-family:var(--font-serif); font-size:27px; line-height:1.58; color:var(--ink);
+  }
+  .body p { margin-bottom:24px; }
+  .body b { color:var(--accent); font-weight:700; }
+  .sign {
+    position:absolute; left:100px; top:900px; width:560px;
+    font-family:var(--font-serif); font-style:italic; font-size:26px;
+    line-height:1.42; color:var(--support);
+  }
+  .photo {
+    position:absolute; right:0; bottom:0; width:520px; height:470px;
+    object-fit:cover; object-position:50% 42%;
+    border-top-left-radius:36px;
+  }
+  .url-line { text-align:left; left:100px; right:auto; bottom:56px; color:var(--support); font-size:22px; }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="headline">{{headline}}</div>
+
+    <div class="body">{{body}}</div>
+    <div class="sign">{{sign}}</div>
+
+    <img class="photo" src="{{img}}">
+
+    <div class="url-line">{{url}}</div>
+  </div>
+</body>
+</html>
