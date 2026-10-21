@@ -6,7 +6,7 @@ Tested and validated as of May 2026 against the live Higgsfield MCP. Update if t
 
 ### nano_banana_2 (Google Nano Banana Pro) — image generation
 
-> ⛔ **DO NOT USE THIS VIA THE HIGGSFIELD MCP (as of 2026-05-29).** Image generation
+> ⛔ **DO NOT USE THIS VIA THE HIGGSFIELD MCP (as of May 2026).** Image generation
 > goes through Google Gemini "Nano Banana" directly, on your `GEMINI_API_KEY`
 > (`google-genai` SDK, wired at `lib/keyframe.py`) — NOT the Higgsfield `generate_image`
 > tool, which bills Higgsfield credits. See the image-gen HARD RULE in SKILL.md. This
@@ -55,7 +55,7 @@ Tested and validated as of May 2026 against the live Higgsfield MCP. Update if t
 - Music / rap (use external audio ref instead — Suno → upload → audio role)
 - Brand-specific or technical pronunciations (try phonetic spelling; if 2 attempts fail, switch to ElevenLabs)
 
-**Lip sync:** when `role: audio` is provided, seedance lip-syncs visuals to that audio TIGHT within one clip. **This is why ElevenLabs is now the DEFAULT voice path** for any speaking character (changed 2026-06-04): pass a locked 11L voice segment as `role: audio` and seedance lip-syncs to it, giving a voice that's identical within-clip, across-clips, and across ads. Cross-clip drift is avoided by cutting the 11L track into CONTIGUOUS per-shot segments (never overlay one continuous track on independently-synced clips). Full method + decision tree in `audio-pipeline.md`.
+**Lip sync:** when `role: audio` is provided, seedance lip-syncs visuals to that audio TIGHT within one clip. **This is why ElevenLabs is now the DEFAULT voice path** for any speaking character: pass a locked 11L voice segment as `role: audio` and seedance lip-syncs to it, giving a voice that's identical within-clip, across-clips, and across ads. Cross-clip drift is avoided by cutting the 11L track into CONTIGUOUS per-shot segments (never overlay one continuous track on independently-synced clips). Full method + decision tree in `audio-pipeline.md`.
 
 **Cost (fast mode, 720p, 9:16):**
 - 4-5 sec clip: ~10-15 credits

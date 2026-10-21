@@ -3,8 +3,8 @@
 # live here, so Claude can read it freely at the start of every run.
 # Anything here can be overridden for a single run just by saying so.
 
-# Where your finished ad files usually live, so you can say "the newest ExtraCash ad" instead
-# of hunting for a path. e.g. "~/Dropbox/Creative/2026 Q3"
+# Where your finished ad files usually live, so you can say "the newest Northridge ad" instead
+# of hunting for a path. e.g. "~/Dropbox/Creative/Q3"
 creatives_dir: ""
 
 # Where adapted formats should be written. Blank = ./outputs inside this folder, which is easy

@@ -20,9 +20,9 @@ If neither is configured, alerts still go to history JSONL — they just
 don't reach Slack. The script logs a clear warning.
 
 Alert format:
-    🟡 example-brand — meta 1.57× trailing 30d daily avg
-    Yesterday:  $2,861.95
-    30d avg:    $1,826.88
+    🟡 example-brand — meta 1.50× trailing 30d daily avg
+    Yesterday:  $3,000.00
+    30d avg:    $2,000.00
 
     Likely cause: Layer 2 (rate)
     Suggested:   Check recent budget cap changes or campaign launches.
@@ -264,14 +264,14 @@ if __name__ == "__main__":
         "layer": "pacing",
         "platform": "google",
         "severity": "red",
-        "summary": "Google pacing 103.9% of monthly budget (projected EOM $12,469 vs $12,000 target)",
+        "summary": "Google pacing 105.0% of monthly budget (projected EOM $12,600 vs $12,000 target)",
         "data": {
-            "mtd_spend": 1662.52,
+            "mtd_spend": 6300.00,   # day 15 of 30 -> 6,300 * 30 / 15 = 12,600
             "monthly_budget": 12000,
-            "projected_eom": 12469.0,
-            "ratio": 1.039,
+            "projected_eom": 12600.0,
+            "ratio": 1.05,
         },
-        "suggested_action": "Pause top spenders or lower daily caps. Tracking to overspend by $469.",
+        "suggested_action": "Pause top spenders or lower daily caps. Tracking to overspend by $600.",
     }
     blocks = _build_blocks("example-brand", fake)
     print(json.dumps(blocks, indent=2))

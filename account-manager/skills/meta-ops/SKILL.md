@@ -14,10 +14,10 @@ description: >-
   Meta client you configure.
 ---
 
-<!-- ═══════════ FIRST-RUN ONBOARDING GATE (make-portable) ═══════════ -->
+<!-- ═══════════ FIRST-RUN ONBOARDING GATE ═══════════ -->
 ## ⚙️ First run? Onboard before doing anything else
 
-**Gate:** locate the `account-manager-portable` package dir (where `SETUP.md`, `doctor.sh`, and
+**Gate:** locate the `account-manager` package dir (where `SETUP.md`, `doctor.sh`, and
 `dependencies.yml` live — the repo these skills were copied from). If a `.onboarded` file does NOT
 exist there, do NOT start this skill's workflow — onboard first:
 1. `cd` to the package dir, run `bash doctor.sh`, read the ✅/❌ list.

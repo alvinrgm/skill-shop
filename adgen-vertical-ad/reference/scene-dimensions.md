@@ -1,9 +1,9 @@
 # Scene Dimensions — the shot grammar
 
 The generalized set of inputs that define ANY shot — a single still, a contact-sheet panel, or
-a Higgsfield/seedance video clip. Synthesized from the `image-prompt-writer` recipe, an earlier UGC pipeline's
-"physics layer" (`photographySpecs.ts`), and adgen's hard-won practice. Don't merge those
-systems — this is the shared *thinking* underneath all of them.
+a Higgsfield/seedance video clip. Synthesized from standard photography and image-prompting
+practice plus adgen's hard-won lessons. This is the shared *thinking* underneath every prompt
+you write.
 
 **Core principle:** the image/video model has a DEFAULT for every dimension you don't specify —
 and the default is usually the generic, plasticky, dead-centre, flatly-lit "AI render" look.
@@ -13,7 +13,7 @@ processing — these are all just prompt tokens. The entire win is *thinking thr
 instead of leaving gaps for the model to guess.
 
 Use it as the **pre-step** before writing any contact sheet (Phase 3/4) or seedance prompt
-(Phase 5). The `image-prompt-writer` recipe (Subject → Scene → Style → Lens → Lighting → Mood)
+(Phase 5). The still-image recipe (Subject → Scene → Style → Lens → Lighting → Mood)
 is just the still-image *subset* of this grammar.
 
 ---
@@ -48,8 +48,8 @@ depth layering (FG / MID / BG) · leading lines · symmetry ↔ asymmetry · asp
 band for FCP captions/logo)
 
 ### 5. Environment
-setting / location · set dressing & props (art-directed details — a coffee-bean scatter, a wooden
-scoop) · background treatment (clean ↔ creamy bokeh ↔ busy) · continuity locks (what stays
+setting / location · set dressing & props (art-directed details — a scatter of herbs, a wooden
+spoon) · background treatment (clean ↔ creamy bokeh ↔ busy) · continuity locks (what stays
 fixed across shots)
 
 ### 6. Material / surface
@@ -67,8 +67,7 @@ the "no plastic sheen / no blown highlights" guardrail · specularity & reflecti
 | **3D-CGI / Octane render** | Octane/Redshift path-tracing, PBR materials, subsurface scattering, "impossible" hyperreal-3D perfection |
 | claymation / stop-motion | hand-thumbed plasticine, fingerprint impressions, slight frame-to-frame judder |
 | retro / analog | expired Polaroid / Super-8, light leaks, crushed blacks, soft vintage lens |
-*(Quick baselines for the look — you still set the other dimensions on top. These mirror an earlier UGC pipeline's
-`photographySpecs.ts` modes; reuse the vocabulary, no need to merge the code.)*
+*(Quick baselines for the look — you still set the other dimensions on top.)*
 
 ### 8. Mood / intent
 2–3 mood words · narrative beat / story role · brand register · palette (name 3–5 colours)

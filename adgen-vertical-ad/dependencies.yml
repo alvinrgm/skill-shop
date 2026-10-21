@@ -1,4 +1,4 @@
-# dependencies.yml — adgen-vertical-ad (3D/CGI ad workflow). Worked example for make-portable.
+# dependencies.yml — adgen-vertical-ad (3D/CGI ad workflow).
 # Source of truth → generates SETUP.md, doctor.sh, and the SKILL onboarding gate.
 
 package: adgen-vertical-ad
@@ -6,10 +6,10 @@ trust_level: public   # scrubbed for public distribution — no client names, no
 
 path_vars:
   - name: ADGEN_HOME
-    default: "$HOME/Claude/adgen"
+    default: "$HOME/adgen"
     purpose: root of the runtime folder (lib/, CLIENTS.md, per-client asset folders)
   - name: ADGEN_ROOT
-    default: "$HOME/Claude/adgen"
+    default: "$HOME/adgen"
     purpose: alias some scripts read for the same runtime root (defaults match ADGEN_HOME)
 
 deps:
@@ -89,8 +89,8 @@ deps:
 
   - name: Hedra
     id: hedra
-    type: alvin-only   # legacy key from the author's old config — recipients never set this up
+    type: author-only   # legacy, unused by the current pipeline — recipients never set this up
     required: false
     key: HEDRA_API_KEY
     powers: LEGACY — not used by the current pipeline
-    note: "Appears in old config. Skip it — the current pipeline does not call Hedra."
+    note: "Skip it — the current pipeline does not call Hedra."

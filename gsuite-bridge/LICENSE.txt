@@ -1,6 +1,6 @@
 Creative Commons Attribution 4.0 International (CC BY 4.0)
 
-Copyright (c) 2026 Alvin Ding
+Copyright (c) 2026 Rise Growth Marketing
 
 This work — the "gsuite-bridge" skill, its Apps Script, scripts, and documentation —
 is licensed under the Creative Commons Attribution 4.0 International License.

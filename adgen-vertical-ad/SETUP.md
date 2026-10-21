@@ -41,7 +41,7 @@ That's it — the agent does the rest. The manual steps below are a fallback.
 
 ## Manual setup (fallback)
 1. Put this folder at `~/.claude/skills/adgen-vertical-ad/`.
-2. `export ADGEN_HOME="$HOME/Claude/adgen"` (add to your shell profile).
+2. `export ADGEN_HOME="$HOME/adgen"` (add to your shell profile).
 3. `mkdir -p "$ADGEN_HOME" && cp -R runtime/lib runtime/CLIENTS.md runtime/requirements.txt "$ADGEN_HOME"/`
 4. `cp runtime/.env.example "$ADGEN_HOME/.env"` then fill `GEMINI_API_KEY` + `ELEVENLABS_API_KEY`.
 5. `pip install -r "$ADGEN_HOME/requirements.txt"` ; `brew install ffmpeg` ; `pip install openai-whisper`.

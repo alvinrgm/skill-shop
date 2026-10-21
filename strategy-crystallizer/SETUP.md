@@ -23,7 +23,7 @@ Copy this folder to your Claude Code skills directory:
 cp -R strategy-crystallizer ~/.claude/skills/strategy-crystallizer
 ```
 
-That's it. The skill auto-loads on the trigger phrases below (or `/strategy`).
+That's it. The skill auto-loads on the trigger phrases below (or invoke it by name: "use strategy-crystallizer on <topic>").
 
 ## Environment variable (optional)
 The skill reads and writes strategy docs under a working directory called
@@ -48,7 +48,7 @@ If those directories don't exist, the skill simply skips them.
 ## How to invoke
 Any of these (the skill triggers proactively on strategic brand talk):
 
-- `/strategy`
+- "use strategy-crystallizer on `<topic>`"
 - "build a strategy for `<brand>`"
 - "what should `<brand>` do"
 - "audit `<brand>`'s positioning"

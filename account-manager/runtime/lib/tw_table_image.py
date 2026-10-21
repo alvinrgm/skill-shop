@@ -21,11 +21,11 @@ according to the column type).
 
 `totals` is a dict:
     {
-        "label":   "(13 Campaigns)",
-        "spend":   "$7,400.42",
-        "roas":    "6.34",
-        "nc_roas": "2.25",
-        "nc_cpa":  "$36.55",
+        "label":   "(7 Campaigns)",
+        "spend":   "$5,000.00",
+        "roas":    "4.00",
+        "nc_roas": "2.00",
+        "nc_cpa":  "$50.00",
     }
 """
 
@@ -283,50 +283,42 @@ def render_tw_table(rows, totals, out_path="/tmp/tw_render.png"):
 # Demo data (a generic campaign performance table)
 # ---------------------------------------------------------------------------
 def _demo_rows():
+    # Synthetic, round numbers (not from any real account). Tuples are
+    # (this week, prior week, % change). Current-week rows sum to the totals below:
+    # spend $5,000 · revenue $20,000 (4.00x) · new-customer revenue $10,000 (2.00x)
+    # · 100 new customers ($50 NC CPA).
     return [
         {"campaign": "PMax - All Products",
-         "spend": (2628.85, 1088.27, 141.6), "roas": (5.81, 5.71, 1.7),
-         "nc_roas": (2.11, 1.86, 13.4), "nc_cpa": (39.71, 39.98, -0.7)},
-        {"campaign": "Search - Other - Non-Brand",
-         "spend": (1633.61, 2788.30, -41.4), "roas": (4.85, 4.19, 15.7),
-         "nc_roas": (1.73, 1.33, 29.8), "nc_cpa": (47.77, 55.54, -14)},
-        {"campaign": "Shopping Campaign - Primary",
-         "spend": (1424.92, 1854.83, -23.2), "roas": (3.84, 4.08, -5.9),
-         "nc_roas": (1.36, 1.28, 6), "nc_cpa": (61.02, 57.11, 6.8)},
+         "spend": (2000.00, 1600.00, 25), "roas": (4.00, 4.00, 0),
+         "nc_roas": (2.50, 2.00, 25), "nc_cpa": (50.00, 40.00, 25)},
+        {"campaign": "Search - Non-Brand",
+         "spend": (1000.00, 1250.00, -20), "roas": (3.00, 2.50, 20),
+         "nc_roas": (1.50, 1.00, 50), "nc_cpa": (50.00, 40.00, 25)},
+        {"campaign": "Shopping - Primary",
+         "spend": (800.00, 1000.00, -20), "roas": (3.00, 3.00, 0),
+         "nc_roas": (1.50, 1.25, 20), "nc_cpa": (80.00, 64.00, 25)},
         {"campaign": "PMax - Category A",
-         "spend": (441.69, 445.80, -0.9), "roas": (2.17, 3.68, -41.1),
-         "nc_roas": (0.85, 1.16, -27.2), "nc_cpa": (103.00, 65.73, 56.7)},
-        {"campaign": "Demand Gen Campaign",
-         "spend": (289.68, 284.22, 1.9), "roas": (4.17, 0.42, 892.8),
-         "nc_roas": (1.40, 0.13, 993.6), "nc_cpa": (52.31, 553.77, -90.6)},
-        {"campaign": "Shopping Campaign - Secondary",
-         "spend": (265.51, 243.17, 9.2), "roas": (3.21, 4.08, -21.4),
-         "nc_roas": (1.14, 1.29, -11.2), "nc_cpa": (71.37, 55.77, 28)},
-        {"campaign": "Search - Broad - Non-Brand",
-         "spend": (239.46, 299.26, -20), "roas": (6.63, 5.03, 31.7),
-         "nc_roas": (2.23, 1.73, 28.8), "nc_cpa": (32.19, 43.64, -26.2)},
-        {"campaign": "Search - Category B",
-         "spend": (191.27, 417.43, -54.2), "roas": (2.96, 3.99, -25.9),
-         "nc_roas": (1.07, 1.33, -19.8), "nc_cpa": (86.76, 57.34, 51.3)},
+         "spend": (500.00, 500.00, 0), "roas": (2.00, 2.50, -20),
+         "nc_roas": (0.80, 1.00, -20), "nc_cpa": (100.00, 80.00, 25)},
+        {"campaign": "Demand Gen",
+         "spend": (400.00, 400.00, 0), "roas": (2.00, 1.00, 100),
+         "nc_roas": (1.00, 0.50, 100), "nc_cpa": (80.00, 160.00, -50)},
         {"campaign": "Search - Brand",
-         "spend": (188.00, 183.10, 2.7), "roas": (67.08, 64.06, 4.7),
-         "nc_roas": (23.30, 20.68, 12.7), "nc_cpa": (3.51, 3.60, -2.6)},
-        {"campaign": "PMax - Category C",
-         "spend": (96.81, 126.76, -23.6), "roas": (3.30, "-", "-"),
-         "nc_roas": (0.89, "-", "-"), "nc_cpa": (66.47, "-", "-")},
+         "spend": (300.00, 250.00, 20), "roas": (16.00, 16.00, 0),
+         "nc_roas": (5.00, 4.00, 25), "nc_cpa": (15.00, 12.50, 20)},
         {"campaign": "Search - Competitors",
-         "spend": (0.62, 2.91, -78.6), "roas": ("-", "-", "-"),
+         "spend": (0.00, 0.00, 0), "roas": ("-", "-", "-"),
          "nc_roas": ("-", "-", "-"), "nc_cpa": ("-", "-", "-")},
     ]
 
 
 def _demo_totals():
     return {
-        "label": "(13 Campaigns)",
-        "spend": "$7,400.42",
-        "roas": "6.34",
-        "nc_roas": "2.25",
-        "nc_cpa": "$36.55",
+        "label": "(7 Campaigns)",
+        "spend": "$5,000.00",
+        "roas": "4.00",
+        "nc_roas": "2.00",
+        "nc_cpa": "$50.00",
     }
 
 

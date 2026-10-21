@@ -9,18 +9,18 @@
 #   init_concept.sh <client-slug> <YYYY-MM-DD>-<angle>-<protagonist>
 #
 # Examples:
-#   init_concept.sh acme 2026-06-03-origin-story-berto
-#   init_concept.sh acme 2026-05-28-couplacups-marv
+#   init_concept.sh acme 2025-03-14-sink-showdown-suds
+#   init_concept.sh acme 2025-02-27-pharma-parody-hank
 #
 # Naming law: <YYYY-MM-DD>-<angle>-<protagonist>, all lowercase kebab, NO spaces.
 #   - date  = the day the concept was first started (origin date, for chronological sort)
-#   - angle = creative archetype / hook (origin-story, manifesto, freak-bean, city-launch)
-#   - protagonist = the character / POV (amber, marv, mom)
+#   - angle = creative archetype / hook (origin-story, manifesto, pharma-parody, city-launch)
+#   - protagonist = the character / POV (suds, hank, mom)
 # At minimum: a valid date + two descriptor tokens.
 
 set -euo pipefail
 
-ADGEN_ROOT="${ADGEN_HOME:-${ADGEN_ROOT:-$HOME/Claude/adgen}}"
+ADGEN_ROOT="${ADGEN_HOME:-${ADGEN_ROOT:-$HOME/adgen}}"
 
 die() { echo "✗ $*" >&2; exit 1; }
 
@@ -39,11 +39,12 @@ fi
 if ! [[ "$SLUG" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}(-[a-z0-9]+){2,}$ ]]; then
   die "concept slug must be <YYYY-MM-DD>-<angle>-<protagonist> (date + >=2 descriptor tokens, lowercase kebab).
    got:      '$SLUG'
-   good e.g. '2026-06-03-origin-story-berto'"
+   good e.g. '2025-03-14-sink-showdown-suds'"
 fi
 # sanity-check the date portion is a real-ish date
 DATE_PART="${SLUG:0:10}"
-if ! date -j -f "%Y-%m-%d" "$DATE_PART" >/dev/null 2>&1; then
+if ! date -j -f "%Y-%m-%d" "$DATE_PART" >/dev/null 2>&1 \
+   && ! date -d "$DATE_PART" >/dev/null 2>&1; then   # BSD/macOS date, then GNU/Linux date
   die "date portion '$DATE_PART' is not a valid YYYY-MM-DD date"
 fi
 

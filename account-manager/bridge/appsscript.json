@@ -7,8 +7,6 @@
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/presentations",
     "https://www.googleapis.com/auth/drive",
-    "https://www.googleapis.com/auth/gmail.compose",
-    "https://www.googleapis.com/auth/gmail.readonly",
     "https://www.googleapis.com/auth/script.external_request"
   ],
   "webapp": {
@@ -21,11 +19,6 @@
         "userSymbol": "Drive",
         "version": "v3",
         "serviceId": "drive"
-      },
-      {
-        "userSymbol": "Gmail",
-        "version": "v1",
-        "serviceId": "gmail"
       },
       {
         "userSymbol": "Docs",

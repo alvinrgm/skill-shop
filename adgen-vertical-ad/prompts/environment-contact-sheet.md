@@ -16,9 +16,9 @@ Without an environment contact sheet:
 
 This template solves the same drift problem character contact sheets and product contact sheets solve — generate the grid once, lock the appearance, reuse the media_id everywhere.
 
-## CRITICAL: the contact sheet is NOT the cut-to-cut continuity lock — the LOCKED PLATE is (added 2026-06-18)
+## CRITICAL: the contact sheet is NOT the cut-to-cut continuity lock — the LOCKED PLATE is
 
-**The single biggest misuse of this template:** generating each shot's start-frame independently against the multi-angle contact sheet, expecting the room to stay identical across cuts. It won't. The contact sheet's whole job is to show the room from MANY angles + lighting states so the model UNDERSTANDS the space — which is exactly why it's ambiguous as a continuity lock. Six different views in → the model picks/blends a different room each generation → cabinets shift, the floor-number panel renders 1-digit in one shot and 2-digit in the next, lighting wanders. (This cost a re-roll on the "Undetected" spot elevator spot, 2026-06-18: floor display read "03" / "2" / "05" across three start-frames, plus a doubled display in one.)
+**The single biggest misuse of this template:** generating each shot's start-frame independently against the multi-angle contact sheet, expecting the room to stay identical across cuts. It won't. The contact sheet's whole job is to show the room from MANY angles + lighting states so the model UNDERSTANDS the space — which is exactly why it's ambiguous as a continuity lock. Six different views in → the model picks/blends a different room each generation → cabinets shift, the floor-number panel renders 1-digit in one shot and 2-digit in the next, lighting wanders. (This cost a re-roll on a past elevator spot: floor display read "03" / "2" / "05" across three start-frames, plus a doubled display in one.)
 
 **The fix — lock a single PLATE for any master set reused across 2+ cuts:**
 1. After (or instead of) the multi-angle sheet, generate ONE canonical EMPTY plate: a single frame of the set at the ONE hero camera + ONE lighting state, no characters. 4K, the shot aspect (9:16). Save as `refs/environments/<setting>_plate.png`.
@@ -102,10 +102,10 @@ NO characters in any panel. NO captions other than the panel labels.
 NO product placement.
 ```
 
-## Example — Dad's kitchen (the "ask your abuelo" spot)
+## Example — Hank's kitchen (the invented hot-sauce pharma-parody spot)
 
 ```
-Environment reference contact sheet for "Dad's suburban family kitchen" — the
+Environment reference contact sheet for "Hank's suburban family kitchen" — the
 master set of a vertical pharma-style ad parody. 6-panel grid on a clean
 neutral background with thin gray dividers and small white serif labels.
 
@@ -124,8 +124,8 @@ THE SET:
   far side, an open pile of mail and a coffee mug
 - Window: one large window above the sink, frosted morning light, simple
   white roman-blind half-raised
-- Appliances: stainless 2-slot toaster on the left counter, stainless KitchenAid
-  stand mixer on the back counter
+- Appliances: stainless 2-slot toaster on the left counter, stainless stand
+  mixer on the back counter
 - Vibe: lived-in suburban American kitchen, slightly-too-clean for the
   pharma-parody register, NOT a magazine-staged farmhouse, NOT a studio set
 
@@ -201,7 +201,7 @@ If a setting also gets a single canonical hero plate (rare — only when one spe
 For every shot that takes place in this setting, pass the environment contact sheet as `role: image` ref alongside the character contact sheet:
 
 ```bash
-# Compose the start-frame prompt with the image-prompt-writer recipe
+# Compose the start-frame prompt with the still-image recipe
 # (Subject → Scene → Photography Style → Lens → Lighting → Mood), then generate via Gemini:
 python3 ~/.claude/skills/adgen-vertical-ad/scripts/gen_image.py \
   --out refs/scenes/shot_NN_start.png \

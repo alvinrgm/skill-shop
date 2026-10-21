@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # multi-size-creative-adapter: health check. Re-runnable anytime.
-# Needs: Python 3 + your team's Gemini API key. Pillow is OPTIONAL (only for extra formats).
+# Needs: Python 3 + Pillow + your team's Gemini API key. Pillow is not used to generate; it
+# measures every output during the quality check (and handles extra formats).
 set -u
 
 # Always check the package this script lives in, not whatever folder you happen to be in.
@@ -30,9 +31,10 @@ fi
 
 if [ -n "$PY" ] && $PY -c "import PIL" >/dev/null 2>&1; then
   ver="$($PY -c 'import PIL; print(PIL.__version__)' 2>/dev/null)"
-  ok "Pillow (optional)" "installed (v${ver}) — extra formats available"
+  ok "Pillow" "installed (v${ver}) — quality-check measurements available"
 else
-  opt "Pillow (optional)" "not installed. Not needed for the four built-in formats."
+  fail "Pillow" "not installed. Needed to measure outputs in the quality check. Claude installs it for you: python3 -m pip install --user Pillow"
+  FAIL=$((FAIL+1))
 fi
 
 KEY=""

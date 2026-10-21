@@ -18,7 +18,7 @@ from typing import Optional
 
 BASE = "https://api.hedra.com/web-app/public"
 
-# Curated model IDs (pulled from /models on 2026-04-08)
+# Curated model IDs (pulled from /models)
 MODELS = {
     # Image gen — Nano Banana T2I is the best for stylized characters with text/labels.
     "image_nano_banana": "ae01e1fd-5917-4e79-a65c-983b322bc5ce",

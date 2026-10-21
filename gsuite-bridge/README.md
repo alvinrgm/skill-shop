@@ -39,7 +39,7 @@ human may have edited — make in-place edits. Full notes in `SKILL.md` and `SET
 ## Licence
 
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — see [LICENSE.txt](LICENSE.txt).
-Created by Alvin Ding. Feedback → this repo's Issues.
+Feedback → this repo's Issues.
 
 
 ---

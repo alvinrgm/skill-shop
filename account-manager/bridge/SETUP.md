@@ -36,7 +36,7 @@ the exec URL + secret like a credential; don't commit either anywhere public.
 4. **Add the manifest.** Project Settings (⚙️ left rail) → tick **"Show
    appsscript.json manifest file in editor."** Back in the editor, open
    `appsscript.json` and replace its contents with the `appsscript.json` from this
-   folder (this grants the Docs/Sheets/Slides/Drive/Gmail scopes). Save.
+   folder (this grants the Docs/Sheets/Slides/Drive scopes; no Gmail access). Save.
 
 ---
 
@@ -49,7 +49,7 @@ the exec URL + secret like a credential; don't commit either anywhere public.
    - Click **Deploy**.
 2. **Authorize** when prompted → choose your account → "Advanced" → "Go to
    Document Bridge (unsafe)" (normal for your own unverified script) → **Allow**.
-   It will ask for Docs/Sheets/Slides/Drive/Gmail/external-request scopes — that's
+   It will ask for Docs/Sheets/Slides/Drive/external-request scopes — that's
    expected.
 3. **Copy the Web app URL** (ends in `/exec`).
 
@@ -111,7 +111,6 @@ POST JSON to the exec URL; every request must include `"secret": "<your secret>"
   `add_tab`, `delete_tab`, `rename_tab`
 - **Drive:** `delete_file`, `move_file`, `rename_file`, `copy_file`, `list_files`,
   `file_info`, `share_file`
-- **Gmail (drafts only, never sends):** `gmail_search`, `gmail_draft_reply`
 - **Generic passthrough:** `google_api` — call any Docs/Sheets/Drive/Slides REST
   method with the script's OAuth token. Covers anything the convenience actions
   don't (structural doc edits, conditional formatting, charts, the entire Slides
@@ -148,9 +147,9 @@ runs: [
 - "Who has access: Anyone" means anyone with the URL can hit it — but every request
   requires your secret, so the URL alone is useless. Don't paste the URL+secret into
   anything public.
-- The bridge runs with **full Drive + Gmail-compose scope as the deploying account**
-  — it can create/edit/delete files that account owns and create (never send) Gmail
-  drafts. That's the capability the workflow needs; treat the exec URL + secret as a
+- The bridge runs with **full Drive scope as the deploying account** — it can
+  create/edit/delete files that account owns. It requests no Gmail scopes.
+  That's the capability the workflow needs; treat the exec URL + secret as a
   credential.
 
 ## Off-switch

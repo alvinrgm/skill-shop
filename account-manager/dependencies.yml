@@ -13,6 +13,7 @@
 # features are individually OPTIONAL (required: false) — wire up only the ones you use.
 
 package: account-manager
+trust_level: public
 
 # Operational path/targeting vars (set in .env or shell; sensible package-relative defaults).
 path_vars:
@@ -84,7 +85,7 @@ deps:
     id: google_ads
     type: env-key
     required: false
-    powers: Google account-ops diagnose ladder, serving/disapproval checks, ad-spend-monitor Google spend
+    powers: Google live data for account-ops, serving/disapproval checks, ad-spend-monitor Google spend (diagnose queue is bring-your-own)
     key: GOOGLE_ADS_DEVELOPER_TOKEN   # + CLIENT_ID / CLIENT_SECRET / REFRESH_TOKEN / LOGIN_CUSTOMER_ID
     get_url: https://developers.google.com/google-ads/api/docs/first-call/overview
     tier: "free API; needs a developer token + OAuth app"

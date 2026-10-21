@@ -22,7 +22,8 @@
       "needs": "Python, Node 20+, Playwright Chromium, a Gemini API key",
       "version": "1.0.0",
       "published": "2026-10-21",
-      "updated": "2026-10-21"
+      "updated": "2026-10-21",
+      "image": "ad-loop/explainer/explainer-4x5.png"
     },
     {
       "slug": "account-connectors",
@@ -45,7 +46,8 @@
       "needs": "Python, Playwright, ffmpeg, a Gemini API key",
       "version": "1.0.0",
       "published": "2026-08-25",
-      "updated": "2026-08-25"
+      "updated": "2026-08-25",
+      "image": "adlib-creative-intel/explainer/explainer-4x5.png"
     },
     {
       "slug": "account-manager",
@@ -56,7 +58,8 @@
       "needs": "Python, a Google Apps Script bridge, your Meta and Google Ads API access",
       "version": "1.0.0",
       "published": "2026-06-30",
-      "updated": "2026-06-30"
+      "updated": "2026-06-30",
+      "image": "account-manager/explainer/explainer-4x5.png"
     },
     {
       "slug": "adgen-vertical-ad",
@@ -67,7 +70,8 @@
       "needs": "Gemini, ElevenLabs, Higgsfield and Suno accounts, ffmpeg, Final Cut Pro",
       "version": "1.0.0",
       "published": "2026-08-07",
-      "updated": "2026-08-07"
+      "updated": "2026-08-07",
+      "image": "adgen-vertical-ad/explainer/explainer-4x5.png"
     },
     {
       "slug": "multi-size-adapter",
@@ -78,7 +82,8 @@
       "needs": "Python, Pillow, a Gemini API key",
       "version": "1.0.0",
       "published": "2026-08-25",
-      "updated": "2026-08-25"
+      "updated": "2026-08-25",
+      "image": "multi-size-adapter/explainer/explainer-4x5.png"
     },
     {
       "slug": "gsuite-bridge",
@@ -89,7 +94,8 @@
       "needs": "A Google account, Python",
       "version": "1.0.0",
       "published": "2026-06-24",
-      "updated": "2026-06-24"
+      "updated": "2026-06-24",
+      "image": "gsuite-bridge/explainer/explainer-4x5.png"
     },
     {
       "slug": "dialectical-debate",
@@ -100,7 +106,8 @@
       "needs": "Claude Code only",
       "version": "1.0.0",
       "published": "2026-08-25",
-      "updated": "2026-08-25"
+      "updated": "2026-08-25",
+      "image": "dialectical-debate/explainer/explainer-4x5.png"
     },
     {
       "slug": "strategy-crystallizer",
@@ -111,7 +118,8 @@
       "needs": "Claude Code only",
       "version": "1.0.0",
       "published": "2026-09-03",
-      "updated": "2026-09-03"
+      "updated": "2026-09-03",
+      "image": "strategy-crystallizer/explainer/explainer-4x5.png"
     }
   ]
 }

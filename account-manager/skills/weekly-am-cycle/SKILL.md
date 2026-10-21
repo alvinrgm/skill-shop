@@ -15,13 +15,13 @@ description: >-
 ---
 
 <!-- ════════════════════════════════════════════════════════════════════════
-     FIRST-RUN ONBOARDING GATE  (prepended by make-portable)
+     FIRST-RUN ONBOARDING GATE
      Runs BEFORE the workflow on a fresh install. Generated from dependencies.yml.
      ════════════════════════════════════════════════════════════════════════ -->
 
 ## ⚙️ First run? Onboard before doing anything else
 
-**Gate:** locate the `account-manager-portable` package directory (where `SETUP.md`, `doctor.sh`,
+**Gate:** locate the `account-manager` package directory (where `SETUP.md`, `doctor.sh`,
 and `dependencies.yml` live — the repo the skills were copied from). If a `.onboarded` file does
 NOT exist there, do NOT start any reporting/cycle run — onboard first. If it exists, skip this
 section. (Re-onboard anytime: delete `.onboarded` or say "re-run setup".)
@@ -63,7 +63,7 @@ scheduled run). **Execution of approved changes IS the AM's job** — but it hap
 anything to a client; never push to production / deploy.
 
 System home: the package `runtime/` dir ·
-venvs: AM `runtime/.venv/bin/python`, Google `runtime/../google-ads/.venv/bin/python`.
+venv: the package `.venv` (install the optional `google-ads` library into it for the serving check).
 
 ## Roster
 Every client with an `## AM reporting` section in `runtime/clients/<slug>/account.md`
@@ -72,8 +72,8 @@ Every client with an `## AM reporting` section in `runtime/clients/<slug>/accoun
 ## Per-client weekly sequence (the scheduled run)
 1. **Load context:** `runtime/.venv/bin/python weekly_report.py context <client>` — read the
    living strategy + memory first. Honor the refusals and measurement lens.
-2. **Deterministic checks:** `../google-ads/.venv/bin/python serving_check.py --dry` (serving/
-   disapproval) + `weekly_report.py check <client>` (freshness). Note any issues; don't report on
+2. **Deterministic checks:** `runtime/.venv/bin/python serving_check.py --dry` (serving/
+   disapproval; needs the optional `google-ads` library + OAuth — skip if you don't use Google) + `weekly_report.py check <client>` (freshness). Note any issues; don't report on
    stale data.
 3. **Pull the week's data** from the client's **LOCKED `core_data_source`** in account.md
    (e.g. `google_ads`, `triple_whale`, `google_ads_looker`). Show the **actual purchase-value
@@ -87,8 +87,8 @@ Every client with an `## AM reporting` section in `runtime/clients/<slug>/accoun
    LEFT (metric takeaway + bold **Observations** / **Next steps** bullets), and a **screenshot
    PLACEHOLDER on the RIGHT** — the human AM pastes the real data table; **you do NOT render the
    data table**. Additive only; **render-and-eyeball every changed slide** (verify the render, not
-   the API). Reference build: a `/tmp`-style script using the vendored `deck-engine/` + the panel
-   placeholder (see the v3 build pattern).
+   the API). Reference build: a short script using the vendored `deck-engine/` + the panel
+   placeholder (see `runtime/example_report_add.py`).
 6. **Save to memory:** append a dated tactical entry to `<client>/memory.md`; flag any strategy drift.
 7. **Write recommendations** (account-ops) — prioritized.
 
@@ -113,9 +113,9 @@ approved, and never execute in the unattended scheduled run.**
 - Sourced numbers; real-purchase lens.
 
 ## Run modes
-- **Scheduled routine ("AM weekly"):** runs the per-client sequence + tap for the whole roster. No execution.
+- **Scheduled routine (optional, one you set up yourself):** runs the per-client sequence + tap for the whole roster. No execution.
 - **Interactive:** "run the weekly-am-cycle for <client>" (one client) · "execute the approved
   <client> changes" (execution mode).
 
 ## Off-switch
-Delete this skill folder, or disable the "AM weekly" routine.
+Delete this skill folder, or disable any scheduled routine you created for it.

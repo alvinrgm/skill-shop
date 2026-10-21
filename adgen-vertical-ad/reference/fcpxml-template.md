@@ -27,18 +27,18 @@ The `<folder>` element exists in FCPXML's vocabulary for organizing clips inside
 
 **Implication:** if the operator (or any user) wants more than one organizational level after the library, the second level must be encoded into either the **event name** or the **project name**.
 
-## the operator's adgen conventions for FCPXML imports
+## adgen conventions for FCPXML imports
 
 These are codified in `SKILL.md` Phase 7 — repeated here as the canonical schema mapping:
 
-| FCPXML element | the operator's content | Example |
+| FCPXML element | Content | Example |
 |---|---|---|
-| `<library>` | His active library (must be set in FCP before import) | `Client ads` |
-| `<event name="...">` | Client name (ONE event per client) | `Acme Coffee Co`, `Birchwood Pets` |
-| `<project name="...">` | Concept name (siblings within the client event) | `Berto Origin Spot`, `Abuelo v4` |
-| project-name suffix | Timeline iteration | `Berto Origin Spot — v1`, `... — 9x16`, `... — 4x5` |
+| `<library>` | The operator's active library (must be set in FCP before import) | `Client ads` |
+| `<event name="...">` | Client name (ONE event per client) | `Acme Co`, `Example Brand` |
+| `<project name="...">` | Concept name (siblings within the client event) | `Sink Showdown`, `Pharma Parody v4` |
+| project-name suffix | Timeline iteration | `Sink Showdown — v1`, `... — 9x16`, `... — 4x5` |
 
-Re-imports with the same event name **merge in place** (no duplicate events spawn). If a stale event name lingers from a prior convention (e.g., the original 2026-06-02 `Berto Origin Spot` event before it was reorganized into `the coffee brand`), the operator merges it by dragging contents inside the same library — same-library drag is a move, not a copy — then deletes the empty source event.
+Re-imports with the same event name **merge in place** (no duplicate events spawn). If a stale event name lingers from a prior convention (e.g., an older per-concept event created before the one-event-per-client convention), the operator merges it by dragging contents inside the same library — same-library drag is a move, not a copy — then deletes the empty source event.
 
 **Canonical CLI for the generator:**
 ```
@@ -151,7 +151,7 @@ Each clip must be declared as an `<asset>` in `<resources>` BEFORE being referen
        audioChannels="2"
        audioRate="48000">
   <media-rep kind="original-media"
-             src="file://$ADGEN_HOME/acme/concepts/2026-04-acme-ad/clips/shot_01.mp4"/>
+             src="file://$ADGEN_HOME/acme/concepts/2025-03-14-sink-showdown-suds/clips/shot_01.mp4"/>
 </asset>
 ```
 
@@ -212,7 +212,7 @@ Each clip's `offset` = sum of all prior clip durations (since they're back-to-ba
 - `dialogue` for VO + character speech
 - `music` for music beds
 - `effects` for SFX
-- Or custom roles like `dialogue.berto` for sub-lanes
+- Or custom roles like `dialogue.suds` for sub-lanes
 
 ## Multiple audio tracks (lanes)
 

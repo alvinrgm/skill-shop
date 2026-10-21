@@ -8,7 +8,7 @@ afterwards and roll back (delete only the slides WE created) on any mismatch.
 Payload schema (dict):
 {
   "period_label": "6/25",                 # divider headline (date or range)
-  "divider_label": "GDS Dash | ...",      # divider sub-line
+  "divider_label": "Data dash",           # divider sub-line
   "dashboard": {"title": "...", "metrics": ["Spend $X", "ROAS 2.1x", ...]},
   "observations": [{"title","observation":[...],"next_steps":[...]}, ...],
   "deep_dives":   [{"title","observation":[...],"next_steps":[...]}, ...],
@@ -21,7 +21,7 @@ from . import bridge
 
 EMU_W = 9144000
 EMU_H = 5143500
-# Screenshots are DEPRECATED (REPORTING-SPEC.md, 2026-06-26): dashboard screenshots
+# Screenshots are DEPRECATED (see REPORTING-SPEC.md): dashboard screenshots
 # aren't feasible to host/embed, so native tables rendered from the client's locked
 # core_data_source carry the SAME data instead. This placeholder is legacy.
 PLACEHOLDER_TEXT = "[ native data table from core_data_source — screenshots deprecated ]"

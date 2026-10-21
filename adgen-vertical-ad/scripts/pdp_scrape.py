@@ -15,7 +15,7 @@ Extraction cascade (most reliable first — naive <img> crawling fails on JS-ren
 
 Usage:
   pdp_scrape.py --url <PDP_URL> --brand <slug> [--max 12]
-Folders (scaffolded if missing, under $ADGEN_HOME, default $ADGEN_HOME):
+Folders (scaffolded if missing, under $ADGEN_HOME, default ~/adgen):
   <brand>/brand/refs/scraped/      ← auto-downloaded PDP images land here
   <brand>/brand/product-images/    ← MANUAL drop zone if auto-download fails
 Exit 0 if ≥1 image landed; exit 2 (with manual instructions) if none — so the skill gate trips.
@@ -24,7 +24,7 @@ from __future__ import annotations
 import argparse, gzip, io, json, os, re, sys, urllib.request, urllib.parse
 from pathlib import Path
 
-ADGEN = Path(os.environ.get("ADGEN_HOME") or os.environ.get("ADGEN_ROOT") or str(Path.home() / "Claude" / "adgen"))
+ADGEN = Path(os.environ.get("ADGEN_HOME") or os.environ.get("ADGEN_ROOT") or str(Path.home() / "adgen"))
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"
 ICON_HINT = re.compile(r"(logo|icon|sprite|favicon|badge|payment|trust|stamp|placeholder|loading)", re.I)
 

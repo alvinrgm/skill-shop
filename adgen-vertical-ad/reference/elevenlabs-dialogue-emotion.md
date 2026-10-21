@@ -2,7 +2,7 @@
 
 **This is not optional background. It is a PRE-FLIGHT CHECKLIST. Any time you generate ANY ElevenLabs
 audio in the adgen pipeline — character dialogue, narrator VO, the CTA line — you MUST apply the rules
-below before you fire the call.** Researched against ElevenLabs official docs 2026-06-04 (eleven_v3,
+below before you fire the call.** Researched against ElevenLabs official docs (eleven_v3,
 public alpha). Sources at the bottom.
 
 The two capabilities this doc unlocks, both of which past sessions were NOT using:
@@ -25,9 +25,9 @@ POST https://api.elevenlabs.io/v1/text-to-dialogue
 ?output_format=mp3_44100_128
 {
   "inputs": [
-    { "voice_id": "<lefty_id>",  "text": "[nervous] aw c'mon... Righty, I'm STUCK to the wall again." },
-    { "voice_id": "<righty_id>", "text": "[deadpan][tired] The sticking?" },
-    { "voice_id": "<lefty_id>",  "text": "[exasperated] The elastic. It's diggin' a trench again." }
+    { "voice_id": "<fern_id>",  "text": "[nervous] aw c'mon... Spike, my leaves are DROOPING again." },
+    { "voice_id": "<spike_id>", "text": "[deadpan][tired] The drooping?" },
+    { "voice_id": "<fern_id>",  "text": "[exasperated] The soil. It's bone dry again." }
   ],
   "model_id": "eleven_v3",
   "settings": { "stability": 0.4, "similarity_boost": 0.75, "style": 0.12, "use_speaker_boost": true },
@@ -47,8 +47,8 @@ POST https://api.elevenlabs.io/v1/text-to-dialogue
 - Turns are SEQUENTIAL, not overlapping. `[interrupting]` / `[overlapping]` change delivery feel; they do
   not produce true simultaneous audio.
 
-This composes with the contiguous-per-shot-segment method: generate ONE dialogue call PER SHOT (Lefty +
-Righty trading lines within that shot) → that per-shot audio is the `role: audio` ref for that shot's
+This composes with the contiguous-per-shot-segment method: generate ONE dialogue call PER SHOT (Fern +
+Spike trading lines within that shot) → that per-shot audio is the `role: audio` ref for that shot's
 seedance clip → concat. Voice stays locked; each clip lip-syncs to exactly its own audio.
 
 ---
@@ -57,7 +57,7 @@ seedance clip → concat. Voice stays locked; each clip lip-syncs to exactly its
 
 **Never submit a flat, untagged line.** v3 reads untagged text like a bored narrator. Each line carries
 at least one tag matched to that character's emotional beat in that shot — pull the beat straight from
-the character bible's `emotional_range` (e.g. Lefty `panicked`, Righty `defeated`).
+the character bible's `emotional_range` (e.g. Fern `panicked`, Spike `deadpan`).
 
 Tags are inline `[tag]` in the `text` field (v3 only). Categorized, exact syntax:
 
@@ -135,9 +135,9 @@ levers above minimize it; regenerate-and-select closes the rest.
 
 ---
 
-## RULE 6 — Pacing: do NOT over-pause, and budget the duration (added 2026-06-18)
+## RULE 6 — Pacing: do NOT over-pause, and budget the duration
 
-Audio tags and punctuation that add *weight* compound badly with slow/deadpan/authoritative voices and make narration DRAG. This bit the "Undetected" spot: a British-deadpan narrator with `[pause]` tags + `...` ellipses between every sentence read at ~40s total against a 30s target; one 4-sentence product-feature line ran 19s alone.
+Audio tags and punctuation that add *weight* compound badly with slow/deadpan/authoritative voices and make narration DRAG. This bit a past comedy spot: a British-deadpan narrator with `[pause]` tags + `...` ellipses between every sentence read at ~40s total against a 30s target; one 4-sentence product-feature line ran 19s alone.
 
 - **Default to NO `[pause]` between sentences, and no `...` ellipses, in narrator/VO lines.** A plain period is already a beat. Reserve `[pause]` / `...` for a single deliberate comedic hold, not as connective tissue between every sentence.
 - **Slower voices need FEWER pause cues, not more.** Deadpan / authoritative / older-male voices already read slow; pause tags stack on top. Cast-appropriate tags only.
@@ -171,7 +171,7 @@ covers it.
 
 ---
 
-## Sources (ElevenLabs official, pulled 2026-06-04)
+## Sources (ElevenLabs official)
 - Text to Dialogue: https://elevenlabs.io/docs/api-reference/text-to-dialogue/convert · /convert-with-timestamps · https://elevenlabs.io/docs/overview/capabilities/text-to-dialogue
 - Text to Speech: https://elevenlabs.io/docs/api-reference/text-to-speech/convert
 - Audio tags: https://elevenlabs.io/blog/v3-audiotags · https://elevenlabs.io/blog/eleven-v3-character-direction · https://elevenlabs.io/blog/eleven-v3-audio-tags-emulating-accents-with-precision

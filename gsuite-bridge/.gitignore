@@ -12,3 +12,4 @@ __pycache__/
 # Local render/scratch output
 *.png
 /tmp/
+!explainer/*.png

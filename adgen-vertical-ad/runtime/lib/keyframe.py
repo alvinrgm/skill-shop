@@ -60,10 +60,9 @@ load_dotenv(_ADGEN_DIR / ".env")
 # ---------------------------------------------------------------------------
 # Aesthetic lock — prepended to EVERY keyframe prompt.
 #
-# NOTE on provenance: the physics_tokens block is lifted from an earlier UGC pipeline's
-# `lib/photographySpecs.ts` `iphone-ugc` mode — that selector is the reason
-# an earlier UGC pipeline's AI images read as real phone photos rather than AI renders. The
-# key tokens are: 800 ISO digital noise, HDR shadow clipping, 24mm f/1.8
+# NOTE on provenance: the physics_tokens block encodes a standard "iPhone UGC"
+# photography spec — it is the reason these keyframes read as real phone photos
+# rather than AI renders. The key tokens are: 800 ISO digital noise, HDR shadow clipping, 24mm f/1.8
 # barrel distortion, 3° handheld tilt, natural ambient 3000-5500K.
 #
 # Without these, Gemini defaults to clean raytraced-looking output — which
@@ -108,7 +107,7 @@ FULL_BLEED_LOCK = (
 # Gemini model ID.
 #
 # Upgraded from gemini-2.5-flash-image (old Nano Banana) to
-# gemini-3-pro-image-preview per an earlier UGC pipeline's production usage — noticeably more
+# gemini-3-pro-image-preview, based on production usage — noticeably more
 # photoreal output for talking-head and hand scenes. Slightly more expensive
 # but the realism gap is large.
 # ---------------------------------------------------------------------------
@@ -289,7 +288,7 @@ class Keyframe:
 
         # Critical: pass aspect_ratio natively via image_config. Without this,
         # Gemini generates at its default ratio then pads with black bars to
-        # match any aspect hint in the prompt. Source: an earlier UGC pipeline's geminiService.ts
+        # match any aspect hint in the prompt. (Observed Gemini image-API behavior.)
         # `imageConfig: { aspectRatio, imageSize: "1K" }` is the production
         # path that avoids letterboxing.
         response = client.models.generate_content(
