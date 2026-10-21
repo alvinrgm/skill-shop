@@ -1,5 +1,6 @@
 VERDICT: PASS
-PACKAGE_HASH: 577dd0a895e9e97d
+PACKAGE_HASH: fc2e1f27f7dc06cb
 AUDITED: 2026-10-21
 METHOD: make-portable leak_gate.py (hard + review) and an independent source-aware audit agent
 NOTES: Source-aware audit PASS; package unchanged since.
+UPDATE 2026-10-21: explainer PNGs re-rendered with every step dot black (alvin's request). A pixel diff against the audited images (hash 577dd0a895e9e97d) shows each PNG changed only in one 120x120 dot area; no text changed and no other package file changed.
