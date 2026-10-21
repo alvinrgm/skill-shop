@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+/* ------------------------------------------------------------------ *
+   evidence-wall — a designed typographic object built from verbatim
+   customer review fragments that all end on the same word.
+
+   One designed system (law 21): every element is set on ONE measure,
+   in ONE type family for voice + ONE for data, on ONE flat field
+   sampled off the real pack. The nine quote lines are each optically
+   scaled so that they FILL that measure exactly — so the shared final
+   word stacks into a single column down the right edge. Delete the
+   fitting rule and the ad has to be recomposed. That is the device.
+
+   Flat ink on flat ground: no photograph, no plate, no
+   composited object, no shadow anywhere. There is nothing for a
+   physics or anatomy audit to find, and the craft bar moves entirely
+   onto grid, rhythm and optical alignment — which your per-ad QA measures.
+ * ------------------------------------------------------------------ */
+
+:root{
+  /* the field is the theme's ground; set --ground in tokens.css from a colour
+     sampled off the real pack shot. --ink and --accent (the ONE accent, used
+     only on the invariant word) also come from tokens.css. */
+  --field:var(--ground);
+  --rule:color-mix(in srgb, var(--ink) 22%, transparent);
+  --quiet:color-mix(in srgb, var(--ink) 72%, transparent);   /* solved for 4.5:1 on the field at 12px */
+
+  --M:100px;               /* outer margin, 9.26% (law 4) */
+  --QL:130px;              /* quote LETTER left edge — quote marks hang into 100..130 */
+  --QR:800px;              /* quote right edge */
+  --AC:830px;              /* attribution column left */
+}
+
+.canvas{
+  width:1080px;height:1350px;position:relative;overflow:hidden;
+  background:var(--field);
+  font-family:'Brand Serif','Times New Roman',serif;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
+
+/* --- brand mark, top right ------------------------------------------------
+   Draw it no wider than the file's native width — a downsample, never an
+   enlargement (law 29; e.g. 240px from a 300px file = 0.8x). The right and top
+   offsets cancel the file's own transparent padding, so the MARK's own ink lands
+   on the right margin and on the same top line as the anchor's ink; re-solve
+   them for your logo file. The values below are illustrative. */
+.mark{position:absolute;right:60px;top:80px;width:240px;display:block}
+
+/* --- the anchor: the invariant word, alone, huge -------------------------- */
+.anchor{
+  position:absolute;left:var(--M);top:112px;
+  font-weight:900;font-size:196px;line-height:.86;
+  letter-spacing:-.035em;color:var(--accent);
+  white-space:nowrap;
+}
+
+/* --- eyebrow: labels the block below it, and only the block below it ------ */
+.eyebrow{
+  position:absolute;left:var(--M);top:372px;
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:700;font-size:19px;letter-spacing:.155em;text-transform:uppercase;
+  color:var(--quiet);
+}
+
+.rule{position:absolute;left:var(--M);width:880px;height:2px;background:var(--rule)}
+.rule.top{top:414px}
+.rule.bot{top:1050px}
+
+/* --- the wall ------------------------------------------------------------- */
+#wall{position:absolute;left:0;top:424px;width:1080px}
+.row{position:relative;width:1080px}
+.q{
+  position:absolute;left:var(--QL);top:0;
+  font-weight:500;line-height:1;white-space:nowrap;
+  transform-origin:left top;
+}
+.q .hang{position:absolute;right:100%;top:0}   /* opening quote hangs out of the measure */
+.q .inv{color:var(--accent)}                    /* the invariant word */
+.who{
+  position:absolute;right:var(--M);width:170px;
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:12px;line-height:1.35;letter-spacing:.085em;text-transform:uppercase;
+  color:var(--quiet);text-align:right;
+}
+.who b{font-weight:700;color:color-mix(in srgb, var(--ink) 88%, transparent);display:block}
+
+/* --- close ---------------------------------------------------------------- */
+.close{position:absolute;left:var(--M);top:1080px;font-size:31px;line-height:1.18;font-weight:500}
+.sub{position:absolute;left:var(--M);top:1130px;font-size:22px;color:var(--quiet);font-weight:400}
+.stat{
+  position:absolute;right:var(--M);top:1199px;text-align:right;
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:700;font-size:14px;letter-spacing:.115em;text-transform:uppercase;
+  color:var(--quiet);
+}
+.micro{
+  position:absolute;left:var(--M);top:1174px;
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:12px;letter-spacing:.055em;color:color-mix(in srgb, var(--ink) 80%, transparent);
+}
+.url{
+  position:absolute;left:var(--M);top:1198px;
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:700;font-size:17px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+}
+</style>
+</head>
+<body>
+<div class="canvas">
+  <img class="mark" src="{{mark}}" alt="">
+  <div class="anchor">{{anchor}}</div>
+  <div class="eyebrow">{{eyebrow}}</div>
+  <div class="rule top"></div>
+
+  <div id="wall"
+       data-top="448" data-bottom="1020"
+       data-measure="670" data-mingap="9"></div>
+
+  <div class="rule bot"></div>
+  <div class="close">{{close}}</div>
+  <div class="sub">{{sub}}</div>
+  <div class="stat">{{stat}}</div>
+  <div class="micro">{{micro}}</div>
+  <div class="url">{{url}}</div>
+</div>
+
+<script>
+/* ------------------------------------------------------------------------ *
+ * The fitting rule. Each quote is a single unbreakable line whose font-size
+ * is solved so that its rendered INK width equals the measure exactly. Rows
+ * are then ordered largest-first and distributed on a fixed gap, and the
+ * whole stack is scaled once if it overflows its band. Everything the
+ * layout does is derived here; nothing is hand-typed.
+ *
+ * Runs after document.fonts.ready so the metrics are the real ones.
+ * ------------------------------------------------------------------------ */
+function fit(){
+  const wall     = document.getElementById('wall');
+  const quotes   = {{quotes_json}};
+  const TOP      = +wall.dataset.top,     BOTTOM  = +wall.dataset.bottom;
+  const MEASURE  = +wall.dataset.measure, MINGAP  = +wall.dataset.mingap;
+  const REF      = 100;                   // reference size the widths are measured at
+  const INV      = ('{{invariant}}' || 'every time');   // the shared terminal word of the quote device (supply `invariant`)
+
+  // build one row per quote
+  const rows = quotes.map(item => {
+    const row = document.createElement('div'); row.className = 'row';
+    const q   = document.createElement('div'); q.className = 'q';
+
+    // text, with the invariant word wrapped and the opening quote hung
+    const hang = document.createElement('span'); hang.className='hang'; hang.textContent='“';
+    q.appendChild(hang);
+    const i = item.t.toLowerCase().lastIndexOf(INV);
+    const pre  = document.createTextNode(item.t.slice(0, i));
+    const inv  = document.createElement('span'); inv.className='inv';
+    inv.textContent = item.t.slice(i, i + INV.length);
+    const post = document.createTextNode(item.t.slice(i + INV.length) + '”');
+    q.appendChild(pre); q.appendChild(inv); q.appendChild(post);
+
+    const who = document.createElement('div'); who.className='who';
+    who.innerHTML = '<b>' + item.w + '</b>' + item.d;
+
+    row.appendChild(q); row.appendChild(who);
+    wall.appendChild(row);
+    return {row, q, who, item};
+  });
+
+  // Width is linear in font-size for an unbreakable line, so ONE measurement at
+  // a reference size gives the exact size that fills the measure:
+  //      size_i = MEASURE * REF / width_i(REF)
+  // and the band constraint  sum(size_i) + gap*(n-1) = band  then SOLVES the
+  // gap rather than rescaling everything afterwards. That is what makes the
+  // three properties simultaneously exact and checkable by your per-ad QA:
+  //   every line fills the same measure  ·  every gutter is equal  ·  the block
+  //   fills its band. (An earlier build scaled after fitting, which silently
+  //   pulled the right edge 40px in from the declared measure.)
+  const band = BOTTOM - TOP;
+  for (const r of rows){
+    r.q.style.fontSize = REF + 'px';
+    r.wRef = r.q.getBoundingClientRect().width;
+  }
+  let measure = MEASURE;
+  let sizes = () => rows.map(r => measure * REF / r.wRef);
+  let gap = (band - sizes().reduce((a,b)=>a+b,0)) / (rows.length - 1);
+  if (gap < MINGAP){
+    // the column is wider than the band can carry — narrow the measure until
+    // the minimum gutter is honoured, rather than letting rows touch
+    const invSum = rows.reduce((a,r)=> a + REF / r.wRef, 0);
+    measure = (band - MINGAP * (rows.length - 1)) / invSum;
+    gap = MINGAP;
+  }
+
+  const solved = rows.map((r,i) => ({r, size: measure * REF / r.wRef}));
+  solved.sort((a,b) => b.size - a.size);      // largest first — the one ordering rule
+
+  let y = 0;
+  for (const s of solved){
+    const r = s.r, size = s.size;
+    r.q.style.fontSize = size + 'px';
+    r.row.style.position = 'absolute';
+    r.row.style.top  = y + 'px';
+    r.row.style.height = size + 'px';
+    // attribution bottom-aligns to the quote's baseline (a typical serif sits its
+    // baseline at ~0.78em from the top of a line-height:1 box)
+    r.who.style.top = (size * 0.78 - 31) + 'px';
+    r.fitted = size;
+    y += size + gap;
+  }
+  wall.style.top = TOP + 'px';
+  wall.style.height = band + 'px';
+  window.__gap = gap; window.__measure = measure;
+
+  // publish what the rule decided, for the build notes and for qa
+  window.__fit = solved.map(s => ({
+    who: s.r.item.w, size: +s.r.fitted.toFixed(2),
+    width: +s.r.q.getBoundingClientRect().width.toFixed(2),
+    top: +s.r.row.style.top.replace('px',''),
+    text: s.r.item.t
+  }));
+  document.title = 'fit ok';
+}
+document.fonts.ready.then(fit);
+</script>
+</body>
+</html>

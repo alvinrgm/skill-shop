@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  /* PRODUCT RAIL — whole real product as hero, standing on an implied surface, + stat rail.
+     Use THIS one whenever the thing being sold has a package worth showing — which is most
+     of the time.
+
+     Corpus: the consensus grammar of a set of hand-picked North Stars.
+       · a stat-led packaged-goods static: type system, rail geometry, near-white field
+       · a whole-product static              — whole product left / stat rail right / headline top
+       · a grounded-product static           — grounded product, real contact shadow
+
+     ONE DESIGNED SYSTEM (law 21): one continuous sweep, top to bottom, with the product standing
+     on it. There is no panel, no card, no second surface, so a seam is not constructible. The
+     sweep deepens toward the base — that gradient IS the floor. Delete any element and the ad
+     must be re-composed: the pack is the proof of the headline (law 22), the rail is the only
+     benefit, the hairlines are the only structure, the URL is the only destination.
+
+     HERO IS REAL PHOTOGRAPHY. The {{hero}} image must be a real pack shot composited with a
+     contact shadow derived from its own alpha mask (built in your hero-prep step). Never a
+     generated hero: a generated organic/product macro reads procedural under 4x scrutiny and
+     takes the whole ad with it.
+
+     Focal hierarchy (law 25): pack dominant > headline > numerals > labels > URL > microtype.
+     Colour (law 14): none applied. The only colour is the pack's own.
+     Type (law 13): two families, hard cap — serif hook, grotesque data.
+
+     Canvas-parameterized: every geometry number is a token, so the same system re-crops to
+     1:1 / 9:16 without re-deciding the design. */
+
+  :root {
+    --margin:80px;
+    --rail-w:250px;             /* right column */
+    --rail-top:344px;
+    --row-h:165px;              /* FIXED cell height — equal rhythm, no cell drift */
+    --numeral:82px;
+    --label:21px;
+    --fine:15px;
+    --url:22px;
+    --head:102px;
+    --rule:color-mix(in srgb, var(--ink) 16%, transparent);
+    --font-data:'Helvetica Neue','Helvetica','Arial',sans-serif;
+
+    /* hero placement: geometry of the composed hero PNG, so the PACK (not the padded
+       image) lands exactly on the grid. Measure these off your composed hero PNG. */
+    --hero-left:-81px;
+    --hero-top:381px;
+    --hero-w:942px;
+  }
+
+  .canvas {
+    position:relative; width:1080px; height:1350px; overflow:hidden;
+    /* the one continuous sweep — the deepening toward the base is the floor */
+    background:linear-gradient(180deg,var(--paper) 0%,color-mix(in srgb, var(--ground) 40%, var(--paper)) 46%,color-mix(in srgb, var(--ground) 75%, var(--paper)) 78%,var(--ground) 100%);
+  }
+
+  .hero {
+    position:absolute; left:var(--hero-left); top:var(--hero-top);
+    width:var(--hero-w); height:auto; display:block;
+  }
+
+  /* ---- the hook ---------------------------------------------------------- */
+  /* LEFT-ALIGNED to the same margin the pack stands on — the headline sits IN the grid.
+     Centring it over the whole canvas leaves a dead quadrant. */
+  .head {
+    position:absolute; left:var(--margin); top:88px; right:var(--margin);
+    text-align:left;
+    font-family:var(--font-serif); font-weight:400;
+    font-size:var(--head); line-height:1.13; letter-spacing:-.012em;
+    color:var(--ink);
+  }
+
+  /* ---- the rail ---------------------------------------------------------- */
+  .rail {
+    position:absolute; right:var(--margin); top:var(--rail-top);
+    width:var(--rail-w); text-align:center;
+    font-family:var(--font-data); color:var(--ink);
+  }
+  .stat {
+    height:var(--row-h);
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .stat + .stat, .stat.q { border-top:1px solid var(--rule); }
+  .stat .n {
+    display:block; font-size:var(--numeral); font-weight:500;
+    line-height:1; letter-spacing:-.028em;
+    font-variant-numeric:lining-nums tabular-nums;
+  }
+  .stat .l {
+    display:block; font-size:var(--label); font-weight:400; line-height:1.28;
+    letter-spacing:.002em; margin-top:12px; opacity:.72;
+  }
+  /* the qualitative row: label type only, no numeral — the 4th-row slot */
+  .stat.q { height:auto; padding:30px 0 0; }
+  .stat.q .l { margin-top:0; }
+
+  /* ---- the close of the right column -------------------------------------- */
+  /* NO standalone logo lockup. When the hero is the real pack, the pack already carries the
+     wordmark at scale — repeating it small is a doubled logo, an amateur tell, and it burns an
+     element for nothing (law 3). The brand is named by the pack and by the destination.
+
+     Order is fixed and load-bearing: compliance microtype ABOVE, destination BELOW. The ad must
+     never END on the disclaimer — last read = negative = the ad's residue is the warning
+     — a defect. */
+  .close {
+    position:absolute; right:var(--margin); bottom:88px;
+    width:var(--rail-w); text-align:center;
+    font-family:var(--font-data); color:var(--ink);
+  }
+  .close .fine { font-size:var(--fine); font-weight:400; line-height:1.42; opacity:.44; }
+  .close .url  { font-size:var(--url);  font-weight:500; letter-spacing:.004em; opacity:.86;
+                 margin-top:22px; white-space:nowrap; }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <img class="hero" src="{{hero}}">
+
+  <div class="head">{{headline}}</div>
+
+  <div class="rail">
+    <div class="stat"><span class="n">{{n1}}</span><span class="l">{{l1}}</span></div>
+    <div class="stat"><span class="n">{{n2}}</span><span class="l">{{l2}}</span></div>
+    <div class="stat"><span class="n">{{n3}}</span><span class="l">{{l3}}</span></div>
+    <div class="stat q"><span class="l">{{q}}</span></div>
+  </div>
+
+  <div class="close">
+    <div class="fine">{{microtype}}</div>
+    <div class="url">{{url}}</div>
+  </div>
+</div>
+</body>
+</html>

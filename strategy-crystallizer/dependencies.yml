@@ -1,0 +1,9 @@
+# dependencies.yml — strategy-crystallizer. Zero-dependency skill.
+package: strategy-crystallizer
+trust_level: public   # verified: no author identity, client names, or
+                      # personal content. Prose-only reasoning skill; the worked
+                      # example is Southwest Airlines (public record), not a client.
+
+deps:
+  # none — pure reasoning method. Web access is optional (brand research in Step 2);
+  # the skill degrades gracefully to asking more gap questions without it.

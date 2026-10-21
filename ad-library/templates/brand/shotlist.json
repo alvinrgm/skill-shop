@@ -1,0 +1,7 @@
+{
+ "_note": "Every scene the brand needs photographed or generated. Plan it from the roadmap: each shot names the templates and angles it feeds. The usual biggest gap is the CURRENT pack in a real scene; say so at the top of the page.",
+ "shots": [
+  {"id": "S01", "section": "Hero", "name": "Current pack in use, natural light", "priority": 1,
+   "feeds_templates": ["16 In-use hero"], "feeds_angles": ["A1.1"], "source": "either", "have": [], "examples": []}
+ ]
+}

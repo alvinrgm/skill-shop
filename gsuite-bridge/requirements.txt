@@ -1,0 +1,4 @@
+# gsuite-bridge has NO third-party Python dependencies.
+# The client scripts use only the standard library (urllib, json, os),
+# and bridge.py ships its own tiny .env loader — so there's nothing to pip install.
+# Python 3.7+ is all you need.

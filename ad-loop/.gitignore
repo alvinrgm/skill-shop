@@ -1,0 +1,9 @@
+.env
+__pycache__/
+*.pyc
+.DS_Store
+.onboarded
+runtime/static-kit/node_modules/
+runtime/static-kit/fonts/
+runtime/feed-gate/calibration/set.json
+.venv/

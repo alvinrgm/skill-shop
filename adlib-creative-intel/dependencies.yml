@@ -1,0 +1,106 @@
+# dependencies.yml — the manifest. SINGLE SOURCE OF TRUTH for the installer.
+# SETUP.md, doctor.sh, and the SKILL.md onboarding gate are all generated from
+# this file, so a link or verify fixed here propagates to all three.
+
+package: adlib-creative-intel
+trust_level: public
+
+path_vars:
+  - name: ADLIB_DATA
+    default: "<package>/data"
+    purpose: where harvested creatives, sidecars, and the ledger are stored
+  - name: ADLIB_OUTPUT
+    default: "<package>/outputs"
+    purpose: where generated reports are written
+  - name: ADLIB_ENV
+    default: "<package>/.env"
+    purpose: >-
+      path to the .env file holding GEMINI_API_KEY. Only read by the optional
+      creative-analysis step; override if you keep credentials elsewhere.
+
+deps:
+  - name: Python packages
+    id: pypkgs
+    type: python
+    required: true
+    powers: harvesting (playwright), downloading (requests), creative analysis (google-genai)
+    install: "pip install -r requirements.txt"
+    verify: "python3 -c 'import playwright, requests'"
+
+  - name: Chromium browser (Playwright)
+    id: chromium
+    type: cli
+    required: true
+    powers: >-
+      the harvest itself. The Ad Library publishes no creative assets through
+      its API, so the only way to reach the videos is to render the public page.
+    install: "python3 -m playwright install chromium"
+    get_url: https://playwright.dev/python/docs/browsers
+    tier: "free, ~150MB one-time download"
+    verify: "python3 -c 'from playwright.sync_api import sync_playwright; p=sync_playwright().start(); b=p.chromium.launch(); b.close(); p.stop()'"
+
+  - name: ffprobe (ffmpeg)
+    id: ffprobe
+    type: cli
+    required: false
+    powers: >-
+      duration, resolution, and aspect-ratio stats in the advertiser profile.
+      OPTIONAL — every other part of the profile works without it, and the
+      format section is skipped cleanly when it is absent.
+    install: "brew install ffmpeg   # macOS · apt install ffmpeg on Debian/Ubuntu"
+    get_url: https://ffmpeg.org/download.html
+    tier: "free, open source"
+    verify: "ffprobe -version"
+
+  - name: Gemini API key
+    id: gemini
+    type: env-key
+    required: true
+    powers: >-
+      WATCHING THE VIDEOS — the whole point of this tool. Without it you can
+      see that an ad exists and how long it ran; with it you can see what the
+      ad actually DOES: the script, the on-screen text, every shot change, the
+      hook, the pacing, the structure. Content-strategy breakdown is only
+      possible with this key. The package degrades gracefully without one
+      (--no-cv still writes a metadata profile) but that is a fallback, not
+      the intended use.
+    key: GEMINI_API_KEY
+    get_url: https://aistudio.google.com/apikey
+    tier: "free tier covers occasional runs; ~2 minutes to set up, no credit card"
+    where: ".env → GEMINI_API_KEY"
+    setup_steps:
+      - "Open https://aistudio.google.com/apikey"
+      - "Sign in with any Google account"
+      - "Click 'Create API key' (free tier, no card needed)"
+      - "Copy the key into .env as GEMINI_API_KEY=<key>"
+      - "Verify for real: python3 scripts/probe_gemini.py"
+    verify: "python3 scripts/probe_gemini.py"
+
+  - name: A Meta Page ID to analyze
+    id: page_id
+    type: account-manual
+    required: true
+    input: true
+    powers: names the advertiser whose ads you want
+    get_url: https://www.facebook.com/ads/library/
+    acquisition: >-
+      Open the Ad Library (link above), search the advertiser, click into their
+      page, and copy the `view_all_page_id=` value out of the browser URL. That
+      number is the only argument the pipeline needs. No login, no ad account,
+      no API access required. Example (a real public advertiser):
+      178024832922517.
+    where: "passed on the command line: --page-id <ID>"
+
+entry_run: "python3 scripts/full_run.py --page-id 178024832922517 --slug cleanroom --no-cv"
+
+certify:
+  exit_code: 0
+  min_bytes: 200
+  empty_dirs:
+    - data
+    - outputs
+  artifacts:
+    - "outputs/longevity-cleanroom.md"
+    - "outputs/profile-cleanroom.md"
+    - "data/cleanroom/*.mp4"
+  audit: "python3 verify_portable.py ."

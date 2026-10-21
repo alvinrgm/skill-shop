@@ -1,0 +1,6 @@
+# dependencies.yml — dialectical-debate. Zero-dependency skill.
+package: dialectical-debate
+trust_level: public
+
+deps:
+  # none — uses only Claude Code's built-in sub-agent capability.

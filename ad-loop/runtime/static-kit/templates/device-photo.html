@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  /* Concept-device photo (elite-corpus pattern). ONE photograph carries the ad;
+     the headline floats in the negative space the photograph already left empty;
+     one designed device sits in the scene as a real object. */
+  .plate { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .scrim {
+    position:absolute; left:0; right:0; top:0; height:520px;
+    background:linear-gradient(180deg, color-mix(in srgb, var(--ground) 80%, transparent) 0%, color-mix(in srgb, var(--ground) 52%, transparent) 46%, color-mix(in srgb, var(--ground) 0%, transparent) 100%);
+  }
+  .headline {
+    position:absolute; left:96px; top:104px; width:660px;
+    font-family:var(--font-slab); font-size:78px; line-height:1.03;
+    color:var(--support); letter-spacing:-.012em;
+  }
+
+  .note {
+    position:absolute; left:86px; bottom:168px; width:396px;
+    background:var(--ground); border-radius:6px; padding:24px 26px 20px;
+    box-shadow:0 20px 40px color-mix(in srgb, var(--ink) 34%, transparent);
+    transform:rotate(-2.4deg);
+  }
+  .note .ttl {
+    font-family:var(--font-shout); font-size:14px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--support); display:block; margin-bottom:16px;
+  }
+  .note .row {
+    display:flex; align-items:baseline; gap:10px;
+    border-bottom:1px dashed color-mix(in srgb, var(--ink) 30%, transparent); padding:9px 0;
+  }
+  .note .row:last-child { border-bottom:0; }
+  .note .k {
+    font-family:var(--font-shout); font-size:12px; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--support-2); width:68px; flex:none;
+  }
+  .note .v { font-family:var(--font-serif); font-style:italic; font-size:24px; color:var(--ink); white-space:nowrap; }
+
+  .url-line { color:var(--ground); bottom:54px; font-size:22px; text-shadow:0 2px 10px color-mix(in srgb, var(--ink) 55%, transparent); }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <img class="plate" src="{{img}}">
+    <div class="scrim"></div>
+    <div class="headline">{{headline}}</div>
+
+    <div class="note">
+      <span class="ttl">{{note_title}}</span>
+      <div class="row"><span class="k">{{k1}}</span><span class="v">{{v1}}</span></div>
+      <div class="row"><span class="k">{{k2}}</span><span class="v">{{v2}}</span></div>
+      <div class="row"><span class="k">{{k3}}</span><span class="v">{{v3}}</span></div>
+    </div>
+
+    <div class="url-line">{{url}}</div>
+  </div>
+</body>
+</html>

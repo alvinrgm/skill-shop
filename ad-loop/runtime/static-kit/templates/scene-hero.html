@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  /* SCENE HERO — one full-bleed photographic scene carries the ad; type lives ONLY in the
+     negative space the photograph was composed to leave.
+
+     A sibling in the kit, not a fork:
+       · product-rail.html stands a cut-out pack on a drawn gradient sweep
+       · scene-hero.html   THIS — the product is IN a real set, with the set's own physics
+
+     Why it exists: a generated hero can have appetite and read procedural, while a real pack
+     cut out onto a drawn sweep has product truth and zero appetite — the sweep measures as a
+     "row-constant mathematical gradient" with "uniform-density blur, zero radiometric
+     exchange", i.e. a cut-out on a field. The lesson: appetite and product truth are separate axes and must BOTH be in one frame, and a cut-out
+     is detected by physics, not by edges. The only way to win that argument is not to construct
+     the physics at all: photograph (or render) the whole set ONCE, so contact shadow, lateral
+     falloff and bounce are the scene's own.
+
+     HARD RULES BAKED IN
+     1. {{scene}} is ONE image, full-bleed, un-retouched apart from label repair (law 8). Never
+        a cut-out pasted onto a drawn field. Never a second surface, panel or bar — law 1.
+     2. There is NO drawn background. Deleting the photograph deletes the ad, which is the
+        law-21 test passing rather than being argued.
+     3. Type never gets a scrim, plate, card or bar to sit on. If a line is not legible on the
+        photograph itself, the PHOTOGRAPH is recomposed, not patched with a box. Every block's
+        contrast is measured against the real pixels before shipping (record it in build-notes).
+     4. Two type families, hard cap: --font-serif for the voice, --font-data for the proof.
+     5. No second logo. The pack in the scene is the brand mark; the URL is the second mention.
+
+     Focal hierarchy (law 25): scene dominant > headline > star numeral > second numeral >
+     labels > URL > microtype.
+     Colour (law 14): none applied. Every colour in the frame is the photograph's own; type is
+     one ink sampled from the scene's shadows.
+
+     Canvas-parameterized — every geometry number is a token, so the system re-crops to 1:1 or
+     9:16 by re-pointing at a differently-framed scene and moving tokens, never by re-deciding
+     the design. */
+
+  :root {
+    --margin:100px;             /* 9.3% outer margin, law 4 */
+
+    --head:84px;                /* headline, 6.2% of canvas height */
+    --head-top:124px;
+    --reply:30px;               /* the answering line */
+    --reply-top:348px;   /* 2 lines; its foot must clear the product's top edge in YOUR scene
+                            (example: a box lid at y=455 — measure, then adapt) */
+
+    /* The proof column stands in the wall's empty right half. Its top is NOT set by a
+       typographic grid — it is set by the PHOTOGRAPH's light. Worst-case (1st-percentile)
+       ink contrast was measured down this column in 30px bands: 3.90:1 at y330 rising to
+       5.68:1 at y690, then collapsing to 2.89:1 at y750 where the product's shadow starts. So
+       every block of SMALL type is placed below y=480, where the measured worst case clears
+       WCAG AA (4.5:1), and the whole column ends above y=745, clear of the product's top edge
+       (example numbers from one scene; adapt). Move the scene, re-measure, re-place — never
+       eyeball this. */
+    --col-left:650px;
+    --col-w:330px;
+    --col-top:422px;
+    --n1:72px;                  /* star numeral — the biggest number in the ad */
+    --n2:44px;
+    --label:22px;
+    --sub:16px;
+    --fine:14px;                /* compliance microtype, full ink, never dimmed */
+    --url:24px;                 /* >=24px so the URL is WCAG 'large text' where the wall dims */
+
+    --rule:color-mix(in srgb, var(--ink) 20%, transparent);
+    --font-data:'Helvetica Neue','Helvetica','Arial',sans-serif;
+  }
+
+  .canvas { position:relative; width:1080px; height:1350px; overflow:hidden; }
+
+  /* the photograph IS the ad */
+  .scene { position:absolute; inset:0; width:1080px; height:1350px; display:block; }
+
+  /* ---- the voice: a two-beat turn, not two stacked lines --------------------
+     The headline is the buyer's body sentence; the reply is the brand answering. The turn is
+     made by indent, spacing and a change of weight and size — never a drawn quote bar (law 30).
+     That shift is structure, not decoration: without it the two lines collapse into one voice. */
+  .head {
+    position:absolute; left:var(--margin); top:var(--head-top); right:var(--margin);
+    font-family:var(--font-serif); font-weight:500;
+    font-size:var(--head); line-height:1.15; letter-spacing:-.015em;
+    color:var(--ink);
+  }
+  .reply {
+    position:absolute; left:var(--margin); top:var(--reply-top);
+    font-family:var(--font-serif); font-weight:400;
+    font-size:var(--reply); line-height:1.35; letter-spacing:-.004em;
+    color:var(--ink);   /* no quote bar beside the reply (law 30) */
+  }
+
+  /* ---- the proof, standing in the wall's empty half ------------------------- */
+  .proof {
+    position:absolute; left:var(--col-left); top:var(--col-top); width:var(--col-w);
+    font-family:var(--font-data); color:var(--ink);
+  }
+  .proof .n {
+    display:block; font-weight:500; line-height:1; letter-spacing:-.03em;
+    font-variant-numeric:lining-nums tabular-nums;
+  }
+  .proof .n1 { font-size:var(--n1); }
+  .proof .n2 { font-size:var(--n2); }
+  .proof .l  { display:block; font-size:var(--label); line-height:1.25; margin-top:8px; }
+  .proof .s  { display:block; font-size:var(--sub); line-height:1.3; margin-top:5px;   /* NO opacity: dimming small type is how a legible line becomes an
+                          illegible one. Hierarchy here is carried by size alone. */ }
+  .proof hr  { border:0; border-top:1px solid var(--rule); margin:10px 0 8px; }
+
+  /* compliance microtype: FULL ink, never dimmed — a disclaimer nobody can read is not a
+     disclaimer (law 18). It sits above the URL so the ad's last read is the destination, not
+     the warning. */
+  .proof .fine {
+    display:block; font-size:var(--fine); line-height:1.4; margin-top:14px;
+  }
+  .proof .url {
+    display:block; font-size:var(--url); font-weight:500; letter-spacing:.002em; margin-top:8px;
+  }
+</style>
+
+<!-- Per-scene geometry hook (additive + backward compatible).
+     The doctrine above says every geometry number is set by the PHOTOGRAPH's measured light,
+     not by a typographic grid — which means a new scene needs new numbers, not a new template.
+     This block is filled from batch.json's "tokens" field and, being last, overrides anything
+     in the sheet above. Batches that do not set it resolve to "" and the template is unchanged. -->
+<style id="scene-tokens">{{tokens}}</style>
+</head>
+<body>
+<div class="canvas">
+  <img class="scene" src="{{scene}}" alt="">
+
+  <div class="head">{{headline}}</div>
+  <div class="reply">{{reply}}</div>
+
+  <div class="proof">
+    <span class="n n1">{{n1}}</span>
+    <span class="l">{{l1}}</span>
+    <span class="s">{{s1}}</span>
+    <hr>
+    <span class="n n2">{{n2}}</span>
+    <span class="l">{{l2}}</span>
+    <span class="fine">{{microtype}}</span>
+    <span class="url">{{url}}</span>
+  </div>
+</div>
+</body>
+</html>

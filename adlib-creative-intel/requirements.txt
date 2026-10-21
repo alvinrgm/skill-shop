@@ -1,0 +1,7 @@
+# Core — needed for harvest, download, and the longevity report (no API key required)
+playwright>=1.40.0
+requests>=2.28.0
+
+# Optional — only for the per-second creative analysis step (needs GEMINI_API_KEY)
+google-genai>=0.3.0
+python-dotenv>=1.0.0

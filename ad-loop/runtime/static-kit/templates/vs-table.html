@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .logo { position:absolute; top:64px; right:72px; width:84px; }
+  .headline { font-family:var(--font-slab); font-size:62px; color:var(--ink); text-align:left; padding:92px 240px 0 72px; line-height:1.04; }
+  .table-card { width:936px; margin:52px auto 0; border-radius:14px; overflow:hidden; background:var(--paper); box-shadow:0 20px 50px color-mix(in srgb, var(--ink) 14%, transparent); }
+  .row { display:grid; grid-template-columns:230px 1fr 1.15fr; border-top:2px solid color-mix(in srgb, var(--ink) 22%, transparent); min-height:94px; }
+  .table-card .row:first-child { border-top:none; }
+  .cell { display:flex; align-items:center; padding:0 26px; font-size:25px; line-height:1.35; font-family:var(--font-serif); }
+  .cell.attr { font-weight:bold; font-size:24px; background:color-mix(in srgb, var(--ground) 55%, transparent); }
+  .cell.left { color:color-mix(in srgb, var(--ink) 60%, transparent); }
+  .cell.right { font-weight:bold; }
+  .yes { color:var(--accent); font-weight:bold; font-size:26px; margin-right:12px; }
+  .no { color:color-mix(in srgb, var(--ink) 40%, transparent); margin-right:12px; }
+  .row.header .cell { min-height:88px; justify-content:center; text-align:center; }
+  .cell.head-left { background:color-mix(in srgb, var(--ground) 55%, transparent); color:color-mix(in srgb, var(--ink) 75%, transparent); font-family:var(--font-serif); font-weight:bold; font-size:27px; }
+  .cell.head-right { background:var(--accent); color:var(--paper); font-family:var(--font-serif); font-weight:800; font-size:28px; }
+  .pack-wrap { position:absolute; bottom:158px; right:72px; height:340px; }
+  .pack-wrap img { display:block; height:340px; filter:drop-shadow(0 16px 36px color-mix(in srgb, var(--ink) 14%, transparent)); }
+  .cta-pill.fixed { position:absolute; left:72px; bottom:265px; font-size:21px; padding:16px 34px; }
+  .url-line { color:var(--support); }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <img class="logo" src="{{logo}}">
+
+    <div class="headline">{{headline}}</div>
+
+    <div class="table-card">
+      <div class="row header">
+        <div class="cell attr head-attr">{{col_attr}}</div>
+        <div class="cell left head-left">{{col_left}}</div>
+        <div class="cell right head-right">{{col_right}}</div>
+      </div>
+      {{rows}}
+    </div>
+
+    <div class="pack-wrap"><img src="{{img}}"></div>
+
+    <span class="cta-pill fixed">{{cta}}</span>
+
+    <div class="url-line">{{offer}}</div>
+  </div>
+</body>
+</html>

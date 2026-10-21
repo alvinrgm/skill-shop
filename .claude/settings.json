@@ -1,0 +1,12 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|mcp__.*github.*__(push_files|create_or_update_file|delete_file|merge_pull_request)",
+        "hooks": [
+          { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/scripts/publish_guard.py\"" }
+        ]
+      }
+    ]
+  }
+}

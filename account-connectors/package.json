@@ -1,0 +1,32 @@
+{
+	"name": "account-connectors",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Self-hosted remote MCP server: Google Workspace, Meta, Google Ads, Shopify and Klaviyo for Claude, behind Google sign-in and a per-change write gate.",
+	"license": "CC-BY-4.0",
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"check": "tsc --noEmit && npm test && wrangler deploy --dry-run --outdir .wrangler/dry-run",
+		"type-check": "tsc --noEmit",
+		"cf-typegen": "wrangler types",
+		"mint-google-ads-token": "node scripts/mint-google-ads-refresh-token.mjs",
+		"format": "oxfmt --write .",
+		"lint:fix": "oxlint --fix",
+		"test": "esbuild src/gate.ts src/vendors.ts src/vendors-write.ts src/gsuite.ts src/gsuite-parity.ts src/meta-oauth.ts --bundle --format=esm --platform=neutral --main-fields=module,main --outdir=.wrangler/test --out-extension:.js=.mjs --log-level=warning && node test/gate.test.mjs && node test/handlers.test.mjs"
+	},
+	"dependencies": {
+		"@cloudflare/workers-oauth-provider": "^0.10.3",
+		"@modelcontextprotocol/sdk": "1.30.0",
+		"agents": "^0.20.1",
+		"hono": "^4.13.13",
+		"zod": "^4.4.3"
+	},
+	"devDependencies": {
+		"oxfmt": "^0.56.0",
+		"oxlint": "^1.71.0",
+		"typescript": "6.0.3",
+		"wrangler": "^4.105.0"
+	}
+}

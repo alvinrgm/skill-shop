@@ -1,0 +1,100 @@
+{
+ "_note": "The shape of <brand>/state.json after ONBOARD and one batch, for a made-up DTC snack brand. Every id below is a placeholder showing the FORM Figma returns; your file's ids come back from the use_figma calls and are written here as you go. Never guess an id: read it from this file.",
+ "brand": "example-snacks",
+ "brand_name": "Example Snack Co.",
+ "site": "https://www.example.com",
+ "file_key": "YOUR_FILE_KEY",
+ "file_url": "https://www.figma.com/design/YOUR_FILE_KEY",
+ "created": "2025-01-15",
+ "fonts": {
+  "display": ["Playfair Display", "Bold"],
+  "body": ["Inter", "Regular"],
+  "note": "closest Google/Figma fonts to the site's own; the site font itself if it is in Figma's library"
+ },
+ "collection_id": "VariableCollectionId:1:2",
+ "mode_id": "100:7",
+ "vars": {
+  "color/paper": "VariableID:<id>",
+  "color/paper-deep": "VariableID:<id>",
+  "color/accent": "VariableID:<id>",
+  "color/alert": "VariableID:<id>",
+  "color/ink": "VariableID:<id>",
+  "color/warm": "VariableID:<id>",
+  "color/cool": "VariableID:<id>",
+  "space/margin": "VariableID:<id>",
+  "radius/pill": "VariableID:<id>",
+  "safe/top-9x16": "VariableID:<id>",
+  "safe/bottom-9x16": "VariableID:<id>",
+  "safe/bottom-4x5": "VariableID:<id>"
+ },
+ "styles": {
+  "Display/XL": "S:<style-key>,",
+  "Display/L": "S:<style-key>,",
+  "Caps/Label": "S:<style-key>,",
+  "Headline/Serif L": "S:<style-key>,",
+  "Body/L": "S:<style-key>,",
+  "Body/M": "S:<style-key>,",
+  "Body/Disclaimer": "S:<style-key>,",
+  "Quote/M": "S:<style-key>,",
+  "Display/Number": "S:<style-key>,"
+ },
+ "shadow_style_id": "S:<style-key>,",
+ "pages": {
+  "Brand kit": "101:10",
+  "Assets": "102:13",
+  "Templates": "103:16",
+  "Shot list": "104:19",
+  "Roadmap": "105:22",
+  "Creative learnings": "106:25",
+  "B01 · 01/20 · no-sugar vs protein": "107:28"
+ },
+ "components": {
+  "label_set": "108:31",
+  "label_variants": {"No added sugar": "109:34", "10g protein": "110:37", "Free shipping": "111:40"},
+  "pack": "112:43",
+  "pack_image_rect": "113:46",
+  "proof_bar_set": "114:49",
+  "offer_card": "115:52",
+  "assets_core_section": "116:55",
+  "site_photos": "N components in M category sections on Assets"
+ },
+ "templates": {
+  "01 Offer card": {"set_id": "117:58", "variants": {"4x5": "118:61", "9x16": "119:64"},
+                    "props": ["Headline#600:1", "Sub#600:2", "Disclaimer#600:3", "Pack#600:4", "Ratio"]},
+  "07 Benefit callouts": {"set_id": "120:67"},
+  "16 In-use hero": {"set_id": "121:70", "variants": {"4x5": "122:73", "9x16": "123:76"},
+                      "props": ["Photo#600:5", "Photo 9x16#600:6", "Headline#600:7", "Sub#600:8", "Disclaimer#600:9", "Ratio"],
+                      "note": "9:16 has its own photo property: a 4:5 plate has no headroom in 9:16"},
+  "04 Testimonial": {"set_id": "124:79", "role": "support only"}
+ },
+ "meta_ad_account_id": "",
+ "batches": {
+  "B01": {
+   "page": "107:28",
+   "date": "2025-01-20",
+   "name": "no-sugar vs protein",
+   "ads": {
+    "A": {"template": "16 In-use hero", "angle": "A2.1", "hypothesis": "leading with no added sugar beats protein for cold traffic",
+          "instances": {"4x5": "125:82", "9x16": "126:85"}, "copy": "copy/B01.json#A", "plates": ["library/plate/table-top-4x5.png", "library/plate/table-top-9x16.png"]},
+    "B": {"template": "16 In-use hero", "angle": "A2.2", "hypothesis": "same photo and layout, only the headline changes",
+          "instances": {"4x5": "127:88", "9x16": "128:91"}, "copy": "copy/B01.json#B", "plates": ["library/plate/table-top-4x5.png", "library/plate/table-top-9x16.png"]}
+   },
+   "budget_per_ad": 500,
+   "read_after_spend": 500,
+   "keep_at": 12,
+   "kill_below": 6,
+   "ad_name_tag": "B01",
+   "launched": false,
+   "exports": "runs/b01/",
+   "qa": "runs/b01/qa.json"
+  }
+ },
+ "mcp_calls": {
+  "2025-01-15": {"whoami": 1, "create_new_file": 1, "use_figma": 14, "upload_assets": 4, "download_assets": 4, "total_counted": 22}
+ },
+ "lessons": [
+  "download_assets right after upload_assets can export WITHOUT the image fill (tiny file). Check the size; re-export a minute later.",
+  "TEXT nodes: resize() after textAutoResize=HEIGHT locks the height at 10px. Set NONE, resize, then HEIGHT.",
+  "Rotated stickers: position by absoluteRenderBounds, not x."
+ ]
+}

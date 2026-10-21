@@ -1,0 +1,32 @@
+[
+  {
+    "name": "elite_a",
+    "path": "~/ad-loop-work/inspo/<brand>/<file>.jpg",
+    "class": "elite",
+    "brand": "theirbrand"
+  },
+  {
+    "name": "elite_b",
+    "path": "~/ad-loop-work/inspo/<brand>/<file>.jpg",
+    "class": "elite",
+    "brand": "theirbrand"
+  },
+  {
+    "name": "elite_c",
+    "path": "~/ad-loop-work/inspo/<brand>/<file>.jpg",
+    "class": "elite",
+    "brand": "theirbrand"
+  },
+  {
+    "name": "killed_a",
+    "path": "~/ad-loop-work/<client>/statics/<batch>/finals/<file>.png",
+    "class": "killed",
+    "brand": "yourbrand"
+  },
+  {
+    "name": "killed_b",
+    "path": "~/ad-loop-work/<client>/statics/<batch>/finals/<file>.png",
+    "class": "killed",
+    "brand": "yourbrand"
+  }
+]

@@ -1,0 +1,70 @@
+# dependencies.yml — the manifest. SINGLE SOURCE OF TRUTH for the installer.
+# SETUP.md, doctor.sh, and the SKILL.md onboarding gate all derive from this file.
+#
+# Types:
+#   env-key         a value the code reads from .env       → doctor checks it is set
+#   account-manual  a service you set up by hand           → doctor prints the link
+#   cli             a command-line tool                    → doctor checks `command -v`
+#   python          pip packages                           → doctor checks importability
+
+package: gsuite-bridge
+trust_level: public
+
+# No personal paths to parameterize — config lives entirely in .env.
+path_vars: []
+
+deps:
+  - name: Google account (Apps Script deploy)
+    id: gsuite_deploy
+    type: account-manual
+    required: true
+    powers: >
+      The whole thing. You deploy the Apps Script (apps-script/Code.gs) as a Web App
+      under YOUR Google account; it runs AS you, so the agent can create/edit/delete
+      the Docs, Sheets, Slides, and Drive files your account owns — no per-file sharing.
+    get_url: https://script.google.com
+    tier: "free (any Google / Workspace account)"
+    where: "Deployed Web App — see SETUP.md for the 6 deploy steps."
+    verify: "python3 scripts/verify_bridge.py"
+
+  - name: Slides API (enable in the Apps Script project)
+    id: slides_api
+    type: account-manual
+    required: true
+    powers: >
+      The Slides REST passthrough (build decks, read theme/styles, restyle). A fresh
+      Apps Script project has it OFF, so the slides path 403s until you enable it.
+    get_url: https://script.google.com
+    tier: "free"
+    where: "Apps Script editor → Services (+) → Slides API → Add (SETUP.md step 5)."
+    verify: "python3 scripts/verify_bridge.py   # the [slides] line must be OK"
+
+  - name: Bridge URL
+    id: bridge_url
+    type: env-key
+    required: true
+    powers: where the client sends requests (your deployment's /exec URL)
+    key: GSUITE_BRIDGE_URL
+    get_url: https://script.google.com
+    tier: "free"
+    where: ".env → GSUITE_BRIDGE_URL (the /exec URL from your deploy)"
+    verify: "python3 scripts/verify_bridge.py"
+
+  - name: Bridge secret
+    id: bridge_secret
+    type: env-key
+    required: true
+    powers: the shared passphrase that gates every request (must match SECRET in Code.gs)
+    key: GSUITE_BRIDGE_SECRET
+    get_url: ""   # you invent this — generate a random string, set it in BOTH places
+    tier: "free"
+    where: ".env → GSUITE_BRIDGE_SECRET  AND  the SECRET const at the top of Code.gs"
+    verify: "python3 scripts/verify_bridge.py"
+
+  - name: Python 3
+    id: python3
+    type: cli
+    required: true
+    powers: runs the client scripts (bridge / verify / extract_style / apply_style / deckkit)
+    install: "preinstalled on macOS; else https://www.python.org/downloads/"
+    verify: "python3 --version"

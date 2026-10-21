@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .plate { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .line { position:absolute; left:0; right:0; bottom:64px; text-align:center;
+          font-family:var(--font-serif); font-style:italic; font-size:27px;
+          color:var(--ground); text-shadow:0 2px 14px color-mix(in srgb, var(--ink) 55%, transparent); }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <img class="plate" src="{{img}}">
+    <div class="line">{{line}}</div>
+  </div>
+</body>
+</html>

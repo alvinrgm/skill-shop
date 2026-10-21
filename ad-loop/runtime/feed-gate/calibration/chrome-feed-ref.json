@@ -1,0 +1,166 @@
+{
+  "built": "shipped reference (prior run)",
+  "model": "gemini-2.5-flash",
+  "surface": "feed",
+  "aspect_class": "4:5",
+  "aspect_hw_range": [
+    1.15,
+    1.4
+  ],
+  "what_this_is": "meaning-loss distribution of elite 4:5 corpus statics under the identical fold occlusion (chrome mode, feed surface). Fail bar in ablate.py = strictly above max(p75 + CHROME_EXCESS_FAIL, elite max). Built from the corpus, never from a candidate batch \u2014 see README calibration section. Ad names anonymised to elite_NN for distribution; the numbers are unchanged.",
+  "ads": [
+    {
+      "name": "elite_01",
+      "meaning_loss": 0.5,
+      "text_recall": 0.5,
+      "lost": [
+        "offer"
+      ],
+      "drifted": [
+        "product",
+        "hook"
+      ]
+    },
+    {
+      "name": "elite_02",
+      "meaning_loss": 0.375,
+      "text_recall": 0.036,
+      "lost": [
+        "offer"
+      ],
+      "drifted": [
+        "product"
+      ]
+    },
+    {
+      "name": "elite_03",
+      "meaning_loss": 0.625,
+      "text_recall": 0.6,
+      "lost": [
+        "product",
+        "cta"
+      ],
+      "drifted": [
+        "offer"
+      ]
+    },
+    {
+      "name": "elite_04",
+      "meaning_loss": 0.5,
+      "text_recall": 0.429,
+      "lost": [
+        "offer"
+      ],
+      "drifted": [
+        "product",
+        "hook"
+      ]
+    },
+    {
+      "name": "elite_05",
+      "meaning_loss": 0.375,
+      "text_recall": 0.0,
+      "lost": [
+        "offer"
+      ],
+      "drifted": [
+        "product"
+      ]
+    },
+    {
+      "name": "elite_06",
+      "meaning_loss": 0.0,
+      "text_recall": 0.176,
+      "lost": [],
+      "drifted": []
+    },
+    {
+      "name": "elite_07",
+      "meaning_loss": 0.875,
+      "text_recall": 0.154,
+      "lost": [
+        "product",
+        "offer",
+        "cta"
+      ],
+      "drifted": [
+        "hook"
+      ]
+    },
+    {
+      "name": "elite_08",
+      "meaning_loss": 0.875,
+      "text_recall": 0.091,
+      "lost": [
+        "product",
+        "offer",
+        "cta"
+      ],
+      "drifted": [
+        "hook"
+      ]
+    },
+    {
+      "name": "elite_09",
+      "meaning_loss": 0.625,
+      "text_recall": 0.13,
+      "lost": [
+        "product"
+      ],
+      "drifted": [
+        "offer",
+        "cta",
+        "hook"
+      ]
+    },
+    {
+      "name": "elite_10",
+      "meaning_loss": 0.375,
+      "text_recall": 0.0,
+      "lost": [
+        "product"
+      ],
+      "drifted": [
+        "hook"
+      ]
+    },
+    {
+      "name": "elite_11",
+      "meaning_loss": 0.5,
+      "text_recall": 0.0,
+      "lost": [
+        "offer"
+      ],
+      "drifted": [
+        "product",
+        "hook"
+      ]
+    },
+    {
+      "name": "elite_12",
+      "meaning_loss": 0.625,
+      "text_recall": 0.0,
+      "lost": [
+        "product",
+        "offer"
+      ],
+      "drifted": [
+        "hook"
+      ]
+    }
+  ],
+  "stats": {
+    "n": 12,
+    "meaning_loss": {
+      "min": 0.0,
+      "median": 0.5,
+      "p75": 0.625,
+      "max": 0.875
+    },
+    "text_recall": {
+      "min": 0.0,
+      "median": 0.1105,
+      "max": 0.6
+    }
+  }
+}

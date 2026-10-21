@@ -1,0 +1,28 @@
+# multi-size-creative-adapter — YOUR PREFERENCES. Copy to profile.yml.
+# Claude asks these five questions once, on first run, and fills this in with you. No secrets
+# live here, so Claude can read it freely at the start of every run.
+# Anything here can be overridden for a single run just by saying so.
+
+# Where your finished ad files usually live, so you can say "the newest coffee ad" instead
+# of hunting for a path. e.g. "~/Dropbox/Creative/Q3"
+creatives_dir: ""
+
+# Where adapted formats should be written. Blank = ./outputs inside this folder, which is easy
+# to lose; somewhere in your own working folders is better. e.g. "~/Dropbox/Creative/adapted"
+output_dir: ""
+
+# Do your ads carry legal/disclaimer fine print?
+#   true  = the bottom quarter of every generated format is kept clear for you to paste legal
+#           into, and files are named base.NEEDS-LEGAL.jpg so nobody ships one by accident.
+#   false = no space reserved, no marker added.
+# When unsure, leave it true: reserving space you did not need costs canvas, but not reserving
+# it can ship an ad missing a required disclosure.
+has_legal_text: true
+
+# Which formats you actually use: any of square, portrait, story, landscape.
+# Most teams use two or three. Fewer formats = lower cost per creative.
+default_formats: [square, portrait, story, landscape]
+
+# Anything that must never be altered -- a mascot, a lockup, a spokesperson's face. Written
+# into every prompt. Plain English. e.g. "the mascot and the logo lockup"
+never_change: ""

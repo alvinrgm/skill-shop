@@ -1,0 +1,13 @@
+{
+  "_note": "FORMAT EXAMPLE for an invented product (a box of sea-salt crackers). A client's canonical copy lives at <work>/<client>/brand/pack-strings.json: every line of real printed text on the pack, read off the reference photograph at 2x by a human. selftest.py uses this file to prove the print scorer offline.",
+  "strings": [
+    "ACME PANTRY",
+    "ORIGINAL SEA SALT",
+    "CRACKERS",
+    "BAKED WITH OLIVE OIL",
+    "NON GMO",
+    "NET WT 8 OZ (227g)",
+    "NET WT 8 OZ",
+    "227g"
+  ]
+}

@@ -1,0 +1,201 @@
+# dependencies.yml: the manifest. SINGLE SOURCE OF TRUTH for the installer.
+# SETUP.md, doctor.sh / doctor.ps1 and the SKILL.md onboarding gate are written from
+# this file, so a link or verify fixed here must be propagated to all of them.
+
+package: ad-loop
+trust_level: public
+version: 1
+
+path_vars:
+  - name: AD_LOOP_HOME
+    default: "~/ad-loop-work"
+    purpose: "the work root: client folders, loop-state, ledger, north-stars, inspo corpus"
+  - name: AD_LOOP_NORTH_STARS
+    default: "<AD_LOOP_HOME>/north-stars"
+    purpose: "the operator's hand-picked taste bar (judge instrument 3)"
+  - name: AD_LOOP_DESIGN_LAWS
+    default: "<package>/design/design-laws.md"
+    purpose: "override to point at your own design-laws file"
+  - name: AD_LOOP_TASTE_BRIEF
+    default: "<package>/runtime/taste-brief.md"
+    purpose: "judge calibration brief"
+  - name: AD_LOOP_GEN_IMAGE
+    default: "<package>/runtime/gen/gen_image.py"
+    purpose: "image generator script"
+  - name: AD_LOOP_AI_ISMS
+    default: "<package>/runtime/scrub/ai-isms.txt"
+    purpose: "phrase list for the copy gate (point at a per-brand list if you keep one)"
+
+deps:
+  - name: Python packages
+    id: python_deps
+    type: python
+    required: true
+    powers: >-
+      the instruments (pillow, numpy), the Gemini vision calls (google-genai,
+      python-dotenv) and the Python browser automation (playwright)
+    install: "python3 -m venv .venv && . .venv/bin/activate && python3 -m pip install -r requirements.txt"
+    get_url: https://pip.pypa.io/en/stable/installation/
+    verify: "python3 -c 'import PIL, numpy, dotenv, playwright; from google import genai'"
+
+  - name: Node.js
+    id: node
+    type: cli
+    bin: node
+    required: true
+    powers: "the static-kit renderer (render.js): how every ad becomes pixels (Node 20+)"
+    install: "brew install node   # or the installer from nodejs.org (Node 20+)"
+    get_url: https://nodejs.org/
+    verify: "node -e \"process.exit(+process.versions.node.split('.')[0] >= 20 ? 0 : 1)\""
+
+  - name: npm
+    id: npm
+    type: cli
+    bin: npm
+    required: true
+    powers: "installs the static-kit's playwright dependency (ships with Node.js)"
+    install: "brew install node   # npm ships with node"
+    get_url: https://nodejs.org/
+    verify: "npm --version"
+
+  - name: Chromium for the renderer (Node Playwright)
+    id: chromium_node
+    type: cli
+    bin: npx
+    required: true
+    powers: "the headless browser render.js drives to turn HTML templates into PNGs"
+    install: "cd runtime/static-kit && npm install && npx playwright install chromium   # Linux: npx playwright install --with-deps chromium"
+    get_url: https://playwright.dev/docs/browsers
+    tier: "free, ~150MB one-time download, shared with the Python side (both pin Playwright 1.62.0)"
+    verify: "cd runtime/static-kit && node -e \"require('playwright')\""
+
+  - name: Chromium for Python (Python Playwright)
+    id: chromium_python
+    type: cli
+    required: true
+    powers: >-
+      the inspo harvester, the Ad Library page-id lookup in intake, and the
+      in-feed mock of the feed-gate
+    install: "python3 -m playwright install chromium"
+    get_url: https://playwright.dev/python/docs/browsers
+    tier: "free; reuses the renderer's Chromium download because both pin Playwright 1.62.0"
+    verify: "python3 -c 'from playwright.sync_api import sync_playwright; p=sync_playwright().start(); b=p.chromium.launch(); b.close(); p.stop()'"
+
+  - name: ffmpeg and ffprobe
+    id: ffmpeg
+    type: cli
+    bin: ffmpeg
+    required: true
+    powers: >-
+      the feed-gate (judge instrument 4e): compositing each ad into phone feed
+      chrome and running the chrome / phone / desaturation ablations (uses ffmpeg and ffprobe)
+    install: "brew install ffmpeg   # macOS; apt install ffmpeg on Debian/Ubuntu; winget install ffmpeg on Windows"
+    get_url: https://ffmpeg.org/download.html
+    tier: "free, open source"
+    verify: "ffmpeg -version && ffprobe -version"
+
+  - name: Gemini API key
+    id: gemini_key
+    type: env-key
+    key: GEMINI_API_KEY
+    required: true
+    powers: >-
+      ALL plate generation (runtime/gen/gen_image.py) and every vision
+      instrument (print, global illumination, localise, feed-gate, the live
+      selftest). Without it the loop cannot generate or see.
+    get_url: https://aistudio.google.com/apikey
+    tier: "image generation is billed per image by Google (pricing: https://ai.google.dev/gemini-api/docs/pricing); vision calls cost pennies; the spend guard caps each batch"
+    where: ".env -> GEMINI_API_KEY (copy .env.example)"
+    setup_steps: "1) open https://aistudio.google.com/apikey  2) sign in, click 'Create API key'  3) cp .env.example .env and set GEMINI_API_KEY=<key>  4) verify: python3 loop-engine/selftest.py --live"
+    verify: "python3 loop-engine/selftest.py --live"
+
+  - name: Vision model override
+    id: vision_model
+    type: env-key
+    key: AD_LOOP_VISION_MODEL
+    required: false
+    powers: "override the vision-judge model (default gemini-3.1-pro-preview)"
+    get_url: https://ai.google.dev/gemini-api/docs/models
+    where: ".env -> AD_LOOP_VISION_MODEL"
+    verify: "true"
+
+  - name: Spend guard plate cap
+    id: volume_cap
+    type: env-key
+    key: AD_LOOP_VOLUME_CAP
+    required: false
+    powers: "max plates per shot per volume batch (default 15); config.plate_spend(n) refuses above it"
+    get_url: https://ai.google.dev/gemini-api/docs/pricing
+    where: ".env -> AD_LOOP_VOLUME_CAP"
+    verify: "true"
+
+  - name: Spend guard draft size
+    id: volume_size
+    type: env-key
+    key: AD_LOOP_VOLUME_SIZE
+    required: false
+    powers: "draft/triage plate size (default 1K); pass it to gen_image.py --size"
+    get_url: https://ai.google.dev/gemini-api/docs/pricing
+    where: ".env -> AD_LOOP_VOLUME_SIZE"
+    verify: "true"
+
+  - name: Spend guard winner size
+    id: winner_size
+    type: env-key
+    key: AD_LOOP_WINNER_SIZE
+    required: false
+    powers: "size for re-generating ONLY the locked winner plate (default 4K)"
+    get_url: https://ai.google.dev/gemini-api/docs/pricing
+    where: ".env -> AD_LOOP_WINNER_SIZE"
+    verify: "true"
+
+  - name: Client brand URL
+    id: client_url
+    type: account-manual
+    required: true
+    input: true
+    powers: "names the brand whose ads you are making; intake harvests its assets from it"
+    get_url: https://www.example.com
+    acquisition: >-
+      The operator supplies the brand's public homepage (or a product page) in the
+      launch interview. Intake runs: python3 scripts/intake.py --url <url> --slug <client>.
+      No login or account is needed; intake reads only public pages.
+    where: "the launch interview, then --url on scripts/intake.py"
+
+  - name: North Star ads
+    id: north_stars
+    type: file-check
+    required: false
+    input: true
+    manual_fallback: true
+    reason: >-
+      North Stars are the operator's hand-picked taste bar, by definition a human
+      choice. When absent, the launch interview proposes elite same-category
+      candidates from the Meta Ad Library and the operator confirms them.
+    powers: "the blind comparative lineup (judge instrument 3) and the craft judges' references"
+    install: "drop 5-15 elite static ad images (any brand) into <AD_LOOP_HOME>/north-stars/"
+    get_url: https://www.facebook.com/ads/library/
+    verify: "ls \"${AD_LOOP_NORTH_STARS:-${AD_LOOP_HOME:-$HOME/ad-loop-work}/north-stars}\" | head -1"
+
+  - name: Meta Ads connector (optional, draft uploads only)
+    id: meta_ads
+    type: mcp
+    required: false
+    powers: >-
+      OPTIONAL ship step: creating a finished ad as a PAUSED draft in an ad
+      account you administer, then pulling its previews (reference/meta-upload.md).
+      The loop never needs it; without it a shipped concept ends as an upload packet.
+    connect: "add any Meta Ads MCP connector in Claude Code (Settings -> Connectors, or `claude mcp add ...` per the connector's own docs) and sign in with an account that administers the ad account"
+    get_url: https://www.facebook.com/business/help
+    mcp_tool_probe: "Claude confirms a Meta Ads tool that lists ad accounts is available in-session"
+    verify: "Claude confirms a Meta Ads connector is available in-session"
+
+entry_run: null
+certify:
+  manual: >-
+    ad-loop is a Claude-driven interactive loop (launch interview -> harvest ->
+    charter -> generate -> judge -> converge) that needs an operator, a brand URL and
+    a billed Gemini key; there is no single cold-run entry command that produces a
+    deliverable unattended. Structural completeness is covered by verify_portable.py;
+    the instrument engine is covered by python3 loop-engine/selftest.py (8 checks,
+    no API calls).

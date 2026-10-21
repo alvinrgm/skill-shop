@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  /* Orbiting proof bubbles (elite-corpus pattern). Chips are
+     fine when they ORBIT the hero and vary in size and position — what reads as
+     template is a left-aligned column of identically sized bordered pills. */
+  .canvas { background:var(--ground-2); }
+
+  .headline {
+    font-family:var(--font-slab); font-size:96px; line-height:1.0; color:var(--support);
+    text-align:center; padding:100px 90px 0; letter-spacing:-.012em;
+  }
+  .sub {
+    font-family:var(--font-serif); font-style:italic; font-size:30px; color:var(--ink);
+    text-align:center; margin-top:22px; opacity:.88;
+  }
+
+  .macro {
+    position:absolute; left:180px; top:400px; width:720px; height:720px;
+    border-radius:50%; overflow:hidden;
+    box-shadow:0 34px 62px color-mix(in srgb, var(--ink) 16%, transparent);
+  }
+  .macro img { width:100%; height:100%; object-fit:cover; }
+
+  .bub {
+    position:absolute; border-radius:50%; display:flex; align-items:center;
+    justify-content:center; text-align:center;
+    font-family:var(--font-serif); font-weight:600; line-height:1.26;
+  }
+  .bub.one   { left:34px;  top:452px; width:224px; height:224px; background:var(--highlight); color:var(--ink);   font-size:25px; padding:26px; }
+  .bub.two   { left:790px; top:620px; width:250px; height:250px; background:var(--soft); color:var(--support); font-size:26px; padding:30px; }
+  .bub.three { left:646px; top:958px; width:206px; height:206px; background:var(--soft-2); color:var(--ink);   font-size:24px; padding:24px; }
+
+  .pack { position:absolute; left:66px; bottom:96px; width:210px; }
+  .pack img { width:100%; display:block; filter:drop-shadow(0 16px 26px color-mix(in srgb, var(--ink) 28%, transparent)); }
+
+  .url-line { color:var(--support); bottom:50px; font-size:23px; }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="headline">{{headline}}</div>
+    <div class="sub">{{sub}}</div>
+
+    <div class="macro"><img src="{{img}}"></div>
+
+    <div class="bub one">{{b1}}</div>
+    <div class="bub two">{{b2}}</div>
+    <div class="bub three">{{b3}}</div>
+
+    <div class="pack"><img src="{{pack}}"></div>
+
+    <div class="url-line">{{url}}</div>
+  </div>
+</body>
+</html>

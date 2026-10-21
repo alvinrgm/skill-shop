@@ -1,0 +1,13 @@
+.env
+.env.local
+history/spend/*.jsonl
+history/budgets/*.json
+history/alerts/*.jsonl
+history/daily-summary-*.md
+history/launchd-stdout.log
+history/launchd-stderr.log
+state/*.json
+!history/*/.gitkeep
+!state/.gitkeep
+__pycache__/
+*.pyc

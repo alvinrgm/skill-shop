@@ -1,0 +1,4 @@
+{"id": "C01", "kind": "claim", "text": "No added sugar", "status": "candidate", "source": "replace with where this is proven: pack panel, lab report, product page URL"}
+{"id": "C02", "kind": "claim", "text": "10g protein per serving", "status": "candidate", "source": "nutrition panel"}
+{"id": "O01", "kind": "offer", "text": "Free shipping on your first order", "status": "candidate", "source": "offer terms: who approved it, start and end date"}
+{"id": "Q01", "kind": "quote", "text": "The only snack my kids ask for by name.", "status": "candidate", "source": "review id or URL, customer consent if required"}

@@ -1,0 +1,9 @@
+{
+ "_note": "Brand copy rules the copy gate enforces. Edit to taste; every key is optional.",
+ "banned": ["miracle", "cure", "guaranteed results"],
+ "hedges": {"gut": "support"},
+ "required_fields": ["headline", "disclaimer"],
+ "decade_lowercase_s": false,
+ "no_em_dash": true,
+ "max_headline_words": 9
+}

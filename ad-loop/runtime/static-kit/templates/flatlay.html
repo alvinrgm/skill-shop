@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .plate { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .headline { position:relative; font-family:var(--font-slab); font-size:88px; line-height:1.0; color:var(--support); padding:88px 0 0 80px; transform:rotate(-2deg); transform-origin:left top; }
+  .note { position:absolute; font-family:var(--font-hand); font-size:31px; color:var(--support); max-width:240px; line-height:1.25; }
+  .note svg { display:block; margin-top:8px; }
+  .note.a { left:76px; top:560px; }
+  .note.b { right:76px; top:400px; text-align:right; }
+  .note.b svg { margin-left:auto; }
+  .url-line { color:var(--support); left:80px; right:auto; bottom:40px; text-align:left; }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <img class="plate" src="{{img}}">
+    <div class="headline">{{headline}}</div>
+    <div class="note a">{{a1}}
+      <svg width="80" height="56" viewBox="0 0 80 56" fill="none"><path d="M8 6 C 24 18, 48 34, 68 48" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M68 48 L54 44 M68 48 L62 34" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+    </div>
+    <div class="note b">{{a2}}
+      <svg width="80" height="56" viewBox="0 0 80 56" fill="none" style="transform:scaleX(-1)"><path d="M8 6 C 24 18, 48 34, 68 48" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M68 48 L54 44 M68 48 L62 34" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+    </div>
+    <div class="url-line">{{url}}</div>
+  </div>
+</body>
+</html>
