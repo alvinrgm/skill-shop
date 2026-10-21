@@ -1,0 +1,3 @@
+# Core: every local script (QA, cutouts, contact sheets, print gate). Stdlib does the HTTP.
+pillow>=10.0
+numpy>=1.24
