@@ -1,0 +1,9 @@
+# dependencies.yml — bluf. Zero-dependency skill.
+package: bluf
+trust_level: public   # prose-only writing method; the worked example is invented.
+
+deps:
+  # none — pure writing method. Works in any Claude Code install.
+
+certify:
+  manual: "pure-authoring skill: Claude writes the summary interactively; there is no entry command to cold-run"

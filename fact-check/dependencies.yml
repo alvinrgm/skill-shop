@@ -1,0 +1,40 @@
+# dependencies.yml — fact-check.
+package: fact-check
+trust_level: public   # method + a stdlib receipt script + an optional hook; example is invented.
+
+path_vars:
+  - name: FACT_CHECK_HOME
+    default: "~/.claude/fact-check"
+    purpose: "where receipts are saved (receipts/) and where the send gate looks for them"
+  - name: FACT_CHECK_MIN_CHARS
+    default: "500"
+    purpose: "send gate: messages shorter than this pass without a receipt (setting, not a path)"
+  - name: FACT_CHECK_WINDOW_MIN
+    default: "90"
+    purpose: "send gate: how many minutes a receipt stays fresh (setting, not a path)"
+  - name: FCG_INPUT
+    default: "(set internally)"
+    purpose: "internal: the hook passes the tool call to its Python check through this variable; never set it yourself"
+
+deps:
+  - name: Python 3
+    id: python3
+    type: cli
+    bin: python3
+    required: true
+    powers: "scripts/receipt.py, which validates the claims file and writes the receipt + footer (standard library only)"
+    install: "brew install python   # or the installer from python.org"
+    get_url: https://www.python.org/downloads/
+    verify: "python3 --version"
+
+  - name: fact-check-gate hook (optional)
+    id: gate_hook
+    type: account-manual
+    required: false
+    powers: "blocks long Slack posts and emails sent through Claude Code until a fresh receipt exists"
+    install: "copy hooks/fact-check-gate.sh to ~/.claude/hooks/ and add the PreToolUse entry shown in SETUP.md"
+    get_url: https://docs.claude.com/en/docs/claude-code/hooks
+    verify: "test -x ~/.claude/hooks/fact-check-gate.sh"
+
+certify:
+  manual: "pure-authoring skill: the claims and checks depend on the message being sent; scripts/receipt.py has a --dry-run self-test in doctor.sh"

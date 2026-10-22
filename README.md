@@ -13,6 +13,11 @@ Free, working Claude Code skills from [Rise Growth Marketing](https://www.risegm
 | [gsuite-bridge](gsuite-bridge/) | Create fully formatted Google Docs, Sheets, and Slides from Claude Code: headings, tables, styled decks, via your own Apps Script bridge |
 | [dialectical-debate](dialectical-debate/) | Stress-test any claim or decision: opposing agents investigate independently, cross-examine, and return a confidence-rated verdict |
 | [strategy-crystallizer](strategy-crystallizer/) | Force any brand or business question through Rumelt's strategy kernel: falsifiable one-sentence thesis, coherent actions, explicit refusals, graded out of 70. Refuses fluff, demands diagnosis before action |
+| [create-shopify-page](create-shopify-page/) | A Shopify landing page end to end: real store facts, two audience versions in Figma, a 4-agent review, v2 and mobile, then theme code on a hidden test theme. Live only on your yes |
+| [bluf](bluf/) | Turn any long AI output into a Minto pyramid a busy reader acts on in 30 seconds: answer first, reasons under it, proof one layer down |
+| [fact-check](fact-check/) | Check every claim in AI-made work against its source before it goes to someone else, with an adversarial agent, a receipt and an optional send gate |
+| [prospect-sim](prospect-sim/) | Agents roleplay the buyer, the referrer and a rival bidder in a real deal, score what you said, and hand you fixes before the next call |
+| [system-diagram](system-diagram/) | Draw any system, funnel or workflow as an editable FigJam board from its real files, colored by what's built and what's waiting |
 
 ## Adding to the shop
 

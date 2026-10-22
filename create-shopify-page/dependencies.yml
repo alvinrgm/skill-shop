@@ -1,0 +1,65 @@
+# dependencies.yml — create-shopify-page.
+package: create-shopify-page
+trust_level: public   # method, reviewer briefs and a safety checklist; examples are invented.
+
+deps:
+  - name: Node.js 22+
+    id: node
+    type: cli
+    bin: node
+    required: true
+    powers: "runs Shopify CLI"
+    install: "brew install node   # or the installer from nodejs.org"
+    get_url: https://nodejs.org/
+    verify: "node -e \"process.exit(+process.versions.node.split('.')[0] >= 22 ? 0 : 1)\""
+
+  - name: Shopify CLI
+    id: shopify_cli
+    type: cli
+    bin: shopify
+    required: true
+    powers: "pulls and pushes theme code to an unpublished test theme, lists themes"
+    install: "npm install -g @shopify/cli@latest"
+    get_url: https://shopify.dev/docs/api/shopify-cli
+    verify: "shopify version"
+
+  - name: Store access (staff or collaborator, Themes permission)
+    id: store_access
+    type: account-manual
+    required: true
+    powers: "lets the CLI read and write themes on the store"
+    install: "ask the store owner for staff or collaborator access with the Themes permission, then run: shopify theme list --store <store>.myshopify.com"
+    get_url: https://help.shopify.com/en/manual/your-account/staff-accounts
+    verify: "shopify theme list --store <store>.myshopify.com lists the themes"
+
+  - name: Figma MCP server
+    id: figma_mcp
+    type: mcp
+    required: true
+    powers: "builds the page designs in Figma (use_figma) and reads them back for code (get_design_context)"
+    connect: "claude plugin install figma@claude-plugins-official   (or: claude mcp add --transport http figma https://mcp.figma.com/mcp), then /mcp > figma > authenticate"
+    get_url: https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/
+    mcp_tool_probe: "mcp__*figma*__use_figma"
+    verify: "use_figma and get_design_context are listed in the session"
+
+  - name: Figma edit seat
+    id: figma_seat
+    type: account-manual
+    required: true
+    powers: "writing frames into the design file"
+    install: "a Figma account with edit access to the brand's design file"
+    get_url: https://www.figma.com/pricing/
+    verify: "use_figma can create a page in the file"
+
+  - name: Shopify store connector (optional)
+    id: shopify_mcp
+    type: mcp
+    required: false
+    powers: "reads products, prices and reviews without the CLI; without it, read the live site and admin"
+    connect: "add a Shopify connector for the store in Claude"
+    get_url: https://claude.ai/settings/connectors
+    mcp_tool_probe: "a Shopify product or shop-info tool"
+    verify: "the Shopify connector's tools are listed in the session"
+
+certify:
+  manual: "design and build happen interactively against the user's own store and Figma file, with a human approval gate before launch; there is no entry command to cold-run"

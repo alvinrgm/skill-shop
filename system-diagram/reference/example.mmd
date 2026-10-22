@@ -1,0 +1,47 @@
+%% Invented example: service bookings at a neighborhood bike repair shop.
+flowchart LR
+  subgraph s1["1. Discover"]
+    mapsListing["Maps listing"]
+    shopWindow["Shop window sign"]
+  end
+  subgraph s2["2. Book"]
+    bookingForm[/"Booking form"/]
+    calendar[("Booking calendar")]
+  end
+  subgraph s3["3. Prepare"]
+    partsCheck{"Parts in stock?"}
+    orderParts[["Nightly parts order"]]
+    reminderText[["Reminder text"]]
+  end
+  subgraph s4["4. Serve"]
+    dropOff(["Bike drop-off"])
+    jobSize{"Repair over 1 hour?"}
+    sameDay["Same-day fix"]
+    overnight["Overnight queue"]
+  end
+  subgraph s5["5. Follow up"]
+    pickupText["Ready for pickup text"]
+    reviewAsk["Priya asks for a review"]
+    done(["Picked up"])
+  end
+  mapsListing --> bookingForm
+  shopWindow --> bookingForm
+  bookingForm --> calendar
+  calendar --> partsCheck
+  partsCheck -- "No" --> orderParts
+  partsCheck -- "Yes" --> reminderText
+  orderParts -.->|"Supplier delay"| reminderText
+  reminderText --> dropOff
+  dropOff --> jobSize
+  jobSize -- "Under 1 hour" --> sameDay
+  jobSize -- "Over 1 hour" --> overnight
+  sameDay --> pickupText
+  overnight --> pickupText
+  pickupText --> done
+  done --> reviewAsk
+  classDef built fill:#D9F2E3,stroke:#2E8B57
+  classDef waiting fill:#FFF1C9,stroke:#C99A00
+  classDef todo fill:#ECECEC,stroke:#888888
+  class mapsListing,bookingForm,calendar,partsCheck,reminderText,dropOff,jobSize,sameDay,overnight,pickupText,done built
+  class orderParts,shopWindow waiting
+  class reviewAsk todo

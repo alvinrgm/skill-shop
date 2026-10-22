@@ -1,0 +1,51 @@
+# dependencies.yml — prospect-sim.
+package: prospect-sim
+trust_level: public   # method + persona briefs + a blank facts template; no client material.
+
+path_vars:
+  - name: PROSPECT_SIM_HOME
+    default: "~/prospect-sims"
+    purpose: "one folder per prospect (dossier, sims, readout) plus approved-facts.md and weak-spots.md"
+
+deps:
+  - name: Work folder and approved facts
+    id: work_home
+    type: account-manual
+    required: false
+    input: true
+    powers: "where sims are saved; approved-facts.md is the only proof agents may quote"
+    install: "mkdir -p ~/prospect-sims && cp reference/approved-facts-template.md ~/prospect-sims/approved-facts.md, then fill it in"
+    get_url: https://github.com/alvinrgm/skill-shop/tree/main/prospect-sim/reference
+    verify: "test -f \"${PROSPECT_SIM_HOME:-$HOME/prospect-sims}/approved-facts.md\""
+
+  - name: Call notes connector (optional)
+    id: notes_connector
+    type: mcp
+    required: false
+    powers: "pulls call transcripts automatically for debriefs (Granola, Fireflies, Otter, Fathom, Gong, Wispr Flow...). Without it, paste the transcript."
+    connect: "add your notes tool's connector in Claude, then restart Claude Code"
+    get_url: https://claude.ai/settings/connectors
+    mcp_tool_probe: "a meeting search or transcript tool from your notes app"
+    verify: "check that the notes tool's MCP tools are listed in the session"
+
+  - name: CRM or email connector (optional)
+    id: crm_connector
+    type: mcp
+    required: false
+    powers: "adds deal history, titles and past email threads to the dossier (HubSpot, Attio, Salesforce, Gmail...)"
+    connect: "add your CRM or mail connector in Claude, then restart Claude Code"
+    get_url: https://claude.ai/settings/connectors
+    mcp_tool_probe: "a record or email search tool from your CRM or mail app"
+    verify: "check that the CRM or mail MCP tools are listed in the session"
+
+  - name: Web access
+    id: web
+    type: account-manual
+    required: false
+    powers: "agents read the prospect's site and LinkedIn, and the rival researches alternatives"
+    install: "allow WebSearch / WebFetch when Claude Code asks"
+    get_url: https://docs.claude.com/en/docs/claude-code/settings
+    verify: "Claude Code's built-in web tools are available"
+
+certify:
+  manual: "agent roleplay over a real prospect's call; there is no entry command to cold-run without a live deal"
