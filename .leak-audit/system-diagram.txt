@@ -1,0 +1,5 @@
+VERDICT: PASS
+PACKAGE_HASH: 2fbb373866942014
+AUDITED: 2026-10-22
+METHOD: make-portable leak_gate.py (hard + review, private denylist and client roots, run on the maintainer's machine) and an independent source-aware audit agent
+NOTES: Audit flagged two phrases carried over from the owner's own funnel (an owner label and a revenue routing rule) plus stage names; all replaced, and the example diagram rewritten as an invented bike repair shop flow. Figma plan key and paths removed. Machine gate re-run on the final bytes: hard checks PASS, 0 review items.

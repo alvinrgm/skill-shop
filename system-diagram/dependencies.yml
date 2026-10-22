@@ -1,0 +1,40 @@
+# dependencies.yml — system-diagram.
+package: system-diagram
+trust_level: public   # method + an invented example; no client material.
+
+path_vars:
+  - name: SYSTEM_DIAGRAM_HOME
+    default: "~/diagrams"
+    purpose: "where .mmd sources go when the system has no project folder"
+
+deps:
+  - name: Figma MCP server
+    id: figma_mcp
+    type: mcp
+    required: true
+    powers: "generate_diagram, which turns the Mermaid source into an editable FigJam board"
+    connect: "claude mcp add --transport http figma https://mcp.figma.com/mcp   (then restart Claude Code and sign in to Figma)"
+    get_url: https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/
+    mcp_tool_probe: "mcp__*figma*__generate_diagram"
+    verify: "the generate_diagram tool is listed in the session"
+
+  - name: Figma account
+    id: figma_account
+    type: account-manual
+    required: true
+    powers: "owns the FigJam boards (a free account works for drafts)"
+    install: "sign up at figma.com"
+    get_url: https://www.figma.com/
+    verify: "signing in to the Figma MCP server succeeds"
+
+  - name: Figma plan key (optional)
+    id: plan_key
+    type: account-manual
+    required: false
+    powers: "sends new boards to a specific team or plan when the account has more than one"
+    install: "cp config.example.json config.local.json and set plan_key"
+    get_url: https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/
+    verify: "test -f config.local.json"
+
+certify:
+  manual: "Claude writes the Mermaid interactively from the user's system and calls the Figma MCP; there is no entry command to cold-run"

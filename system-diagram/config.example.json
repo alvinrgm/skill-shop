@@ -1,0 +1,4 @@
+{
+  "_comment": "Copy to config.local.json. plan_key is optional: the Figma team or plan new boards go to, if your account has more than one. Format team::<digits> or organization::<digits>. Leave empty to use your default.",
+  "plan_key": ""
+}

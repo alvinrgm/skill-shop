@@ -2,6 +2,18 @@
   "_readme": "The one list of what this shop publishes. risegm.com/skills renders its cards from this file, so a new entry here is a new card on the site. Slugs are published anchors (risegm.com/skills#<slug>): never rename or remove one. Optional field image: a repo-relative path to the card image. Check with: python3 scripts/check_catalog.py",
   "items": [
     {
+      "slug": "create-shopify-page",
+      "kind": "plugin",
+      "tag": "Landing pages",
+      "name": "Shopify landing page builder",
+      "summary": "Two audience versions designed in Figma from your real store facts, reviewed by four agents, then built on a hidden test theme. Live only on your yes.",
+      "needs": "Figma (edit seat), Shopify CLI, theme access",
+      "version": "1.0.0",
+      "published": "2026-10-22",
+      "updated": "2026-10-22",
+      "image": "create-shopify-page/explainer/explainer-4x5.png"
+    },
+    {
       "slug": "ad-library",
       "kind": "plugin",
       "tag": "Static ad production",
@@ -72,6 +84,54 @@
       "published": "2026-08-07",
       "updated": "2026-08-07",
       "image": "adgen-vertical-ad/explainer/explainer-4x5.png"
+    },
+    {
+      "slug": "bluf",
+      "kind": "skill",
+      "tag": "Writing",
+      "name": "BLUF (Minto) summaries",
+      "summary": "Turn any long AI output into a 30-second read: the answer first, two to four reasons, proof one layer down, plain words.",
+      "needs": "Claude Code only",
+      "version": "1.0.0",
+      "published": "2026-10-22",
+      "updated": "2026-10-22",
+      "image": "bluf/explainer/explainer-4x5.png"
+    },
+    {
+      "slug": "fact-check",
+      "kind": "skill",
+      "tag": "Method",
+      "name": "Fact-check before you send",
+      "summary": "Checks every claim in AI-made work against its source, sends a fresh agent to break them, then fixes or labels what fails.",
+      "needs": "Claude Code, Python 3",
+      "version": "1.0.0",
+      "published": "2026-10-22",
+      "updated": "2026-10-22",
+      "image": "fact-check/explainer/explainer-4x5.png"
+    },
+    {
+      "slug": "prospect-sim",
+      "kind": "skill",
+      "tag": "Sales",
+      "name": "Prospect sim",
+      "summary": "Agents play the buyer, the referrer and a rival bidder, score what you said, and hand you fixes before your next sales call.",
+      "needs": "Claude Code only (call notes and CRM optional)",
+      "version": "1.0.0",
+      "published": "2026-10-22",
+      "updated": "2026-10-22",
+      "image": "prospect-sim/explainer/explainer-4x5.png"
+    },
+    {
+      "slug": "system-diagram",
+      "kind": "skill",
+      "tag": "Ops",
+      "name": "System diagram",
+      "summary": "Draws any system, funnel or workflow as an editable FigJam board from its real files, colored by what's built and what's waiting.",
+      "needs": "Figma account, Figma MCP",
+      "version": "1.0.0",
+      "published": "2026-10-22",
+      "updated": "2026-10-22",
+      "image": "system-diagram/explainer/explainer-4x5.png"
     },
     {
       "slug": "multi-size-adapter",
